@@ -37,7 +37,7 @@ class Map {
     generateMap(){
        for (let i=0;i<this._state.length;i++){
            for (let j=0;j<this._state[i].length;j++){
-               this._state[i][j][0]=new floorEnvironment (0,"floor",new Sprite(getBaseSprite('BlueFloor'),new PositionOnCanvas(i*32,j*32)))
+               this._state[i][j][0]=new floorEnvironment (0,"floor",new Sprite(FloorsArray[2],new PositionOnCanvas(i*32,j*32)))
            }
        }
 	   for (let i=0;i<this._state.length;i++){

@@ -1,7 +1,9 @@
 var BaseSprites={};
 var BaseTextures={};
+
 var FloorsArray=[];//Массив разноцветных полов
 var WallsArray=[];//Массив разноцветных стен
+
 function AddBaseTexture(url,dx,dy,name)
 {
     BaseTextures[name]=new Texture(url, dx, dy);
@@ -38,12 +40,12 @@ function MakeTextures()
 
 
     //////////////////////////////////////////////////////////// Все базовые скины после этой строчки
-    FloorsArray.push(AddBaseSkin("BlueWall" ,"BlueWalls&Floor",baseSize,0));
-    WallsArray.push(AddBaseSkin("BlueFloor" ,"BlueWalls&Floor",baseSize,1));
-    FloorsArray.push(AddBaseSkin("GreyWall" ,"GreyWalls&Floor",baseSize,0));
-    WallsArray.push(AddBaseSkin("GreyFloor" ,"GreyWalls&Floor",baseSize,1));
-    FloorsArray.push(AddBaseSkin("WhiteWall" ,"WhiteWalls&Floor",baseSize,0));
-    WallsArray.push(AddBaseSkin("WhiteFloor" ,"WhiteWalls&Floor",baseSize,1));
+    WallsArray.push(AddBaseSkin("BlueWall" ,"BlueWalls&Floor",baseSize,0));
+    FloorsArray.push(AddBaseSkin("BlueFloor" ,"BlueWalls&Floor",baseSize,1));
+    WallsArray.push(AddBaseSkin("GreyWall" ,"GreyWalls&Floor",baseSize,0));
+    FloorsArray.push(AddBaseSkin("GreyFloor" ,"GreyWalls&Floor",baseSize,1));
+    WallsArray.push(AddBaseSkin("WhiteWall" ,"WhiteWalls&Floor",baseSize,0));
+    FloorsArray.push(AddBaseSkin("WhiteFloor" ,"WhiteWalls&Floor",baseSize,1));
     FloorsArray.push(AddBaseSkin("Void" ,"VoidTexture",baseSize,0));
 }
 
