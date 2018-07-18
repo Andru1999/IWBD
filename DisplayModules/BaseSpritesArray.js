@@ -1,6 +1,7 @@
 var BaseSprites={};
 var BaseTextures={};
-
+var FloorsArray=[];//Массив разноцветных полов
+var WallsArray=[];//Массив разноцветных стен
 function AddBaseTexture(url,dx,dy,name)
 {
     BaseTextures[name]=new Texture(url, dx, dy);
@@ -9,6 +10,7 @@ function AddBaseTexture(url,dx,dy,name)
 function AddBaseSkin(name, basetexture, size, index)
 {
     BaseSprites[name]=new BaseSprite(BaseTextures[basetexture], size, index);
+    return BaseSprites[name];
 }
 
 
@@ -19,26 +21,30 @@ resources.onReady(init);
 (function preLoad()
 {
     resources.load([
-        'Assets/WallAndFloor.png'
+        'Assets/BlueWallAndFloor.png',
+        'Assets/GreyWallAndFloor.png',
+        'Assets/WhiteWallAndFloor.png',
+        "Assets/Void.png"
     ]);
 })();
 
 var baseSize=new Size(32,32);
 function MakeTextures()
 {
-    AddBaseTexture('Assets/WallAndFloor.png',64,64,"Walls&Floor");
-
-
-
-
-
+    AddBaseTexture('Assets/BlueWallAndFloor.png',64,64,"BlueWalls&Floor");
+    AddBaseTexture('Assets/GreyWallAndFloor.png',64,64,"GreyWalls&Floor");
+    AddBaseTexture('Assets/WhiteWallAndFloor.png',64,64,"WhiteWalls&Floor");
+    AddBaseTexture('Assets/Void.png',64,64,"VoidTexture");
 
 
     //////////////////////////////////////////////////////////// Все базовые скины после этой строчки
-    AddBaseSkin("HorWall" ,"Walls&Floor",baseSize,1);
-    AddBaseSkin("Conner" ,"Walls&Floor",baseSize,0);
-    AddBaseSkin("VertWall" ,"Walls&Floor",baseSize, 3);
-    AddBaseSkin("Floor" ,"Walls&Floor",baseSize, 2);
+    FloorsArray.push(AddBaseSkin("BlueWall" ,"BlueWalls&Floor",baseSize,0));
+    WallsArray.push(AddBaseSkin("BlueFloor" ,"BlueWalls&Floor",baseSize,1));
+    FloorsArray.push(AddBaseSkin("GreyWall" ,"GreyWalls&Floor",baseSize,0));
+    WallsArray.push(AddBaseSkin("GreyFloor" ,"GreyWalls&Floor",baseSize,1));
+    FloorsArray.push(AddBaseSkin("WhiteWall" ,"WhiteWalls&Floor",baseSize,0));
+    WallsArray.push(AddBaseSkin("WhiteFloor" ,"WhiteWalls&Floor",baseSize,1));
+    FloorsArray.push(AddBaseSkin("Void" ,"VoidTexture",baseSize,0));
 }
 
 function getBaseSprite(name)
