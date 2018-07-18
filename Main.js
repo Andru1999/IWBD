@@ -22,10 +22,6 @@ window.onload=()=>
 
 }
 
-
-
-
-
 var World;
 function init()
 {
@@ -35,11 +31,14 @@ function init()
 
 function render()
 {
-    for (var i=0;i<20;i++)
+    for (var i3=0;i3<World._depth;i3++)
     {
-        for (var j=0;j<20;j++)
+        for (var i1=0;i1<World._width;i1++)
         {
-            World._state[i][j][0].draw(ctx);
+            for (var i2=0;i2<World._height;i2++)
+            {
+                World._state[i1][i2][i3].draw(ctx);
+            }
         }
     }
 }
