@@ -1,3 +1,5 @@
+"use strict"
+
 var requestAnimFrame = (function()
     {
         return window.requestAnimationFrame       ||
@@ -9,7 +11,6 @@ var requestAnimFrame = (function()
 
 var canvas;
 var ctx;
-
 window.onload=()=>
 {
     canvas = document.getElementById("main_canvas");
@@ -17,6 +18,8 @@ window.onload=()=>
     canvas.width = 700;
     canvas.height = 480;
     requestAnimFrame(main);
+
+
 }
 
 resources.onReady(init);
@@ -29,16 +32,24 @@ resources.onReady(init);
     ]);
 })();
 var TileSets={};
-var testCell
+var testCells=new Array(16);
+var World;
 function init()
 {
     TileSets["test"]=new TileSet('Assets/Arrea/TestTileSet.png',32 ,32);
-    testCell=new Sprite(TileSets["test"], new Position(50,50), new Size(64,64))
+    World=new Map(20,20,1);
+    World.generateMap();
 }
 
 function render()
 {
-    testCell.draw(ctx);
+    for (var i=0;i<20;i++)
+    {
+        for (var j=0;j<20;j++)
+        {
+            World._state[i][j][0]._texture.draw(ctx);
+        }
+    }
 }
 
 var lastTime;

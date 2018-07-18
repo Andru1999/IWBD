@@ -1,10 +1,11 @@
+
 function Size(width,height)
 {
     this.width=width;
     this.height=height;
 }
 
-function Position(x,y)
+function PositionOnCanvas(x,y)
 {
     this.x=x;
     this.y=y;
@@ -35,7 +36,7 @@ function TileSet(url, dx, dy)
     this.url = url;
 }
 
-function Sprite(tile_set, position, size)
+function Sprite(tile_set, position, size, index)
 {
     this.tiles=tile_set;
     this.size=size;
@@ -51,12 +52,8 @@ function Sprite(tile_set, position, size)
         let width = this.size.width;
         let height = this.size.height;
         ctx.drawImage(img,img_x,img_y,img_dx,img_dy,x,y,width,height);
-        this.index++;
-        if (this.index>190)
-        {
-            this.index = 0;
-        }
+
     };
     this.position=position;
-    this.index = 30;
+    this.index = index;
 }
