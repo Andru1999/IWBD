@@ -22,21 +22,13 @@ window.onload=()=>
 
 }
 
-resources.onReady(init);
 
-(function preLoad()
-{
-    resources.load([
-        'Assets/Arrea/TestTileSet.png',
-        'Assets/Buttons/Buttons.png',
-    ]);
-})();
-var TileSets={};
-var testCells=new Array(16);
+
+
+
 var World;
 function init()
 {
-    TileSets["test"]=new TileSet('Assets/Arrea/TestTileSet.png',32 ,32);
     World=new Map(20,20,1);
     World.generateMap();
 }
@@ -47,7 +39,7 @@ function render()
     {
         for (var j=0;j<20;j++)
         {
-            World._state[i][j][0]._texture.draw(ctx);
+            World._state[i][j][0].draw(ctx);
         }
     }
 }

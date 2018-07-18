@@ -30,23 +30,30 @@ function getframe(url, dx, dy)
     return frame;
 }
 
-function TileSet(url, dx, dy)
+function Texture(url, dx, dy)
 {
     this.frame=getframe(url, dx, dy);
     this.url = url;
 }
 
-function Sprite(tile_set, position, size, index)
+function BaseSprite(texture, size, index)
 {
-    this.tiles=tile_set;
+    this.texture=texture;
     this.size=size;
+    this.index=index;
+}
+
+function Sprite(base_sprite, position)
+{
+    this.texture=base_sprite.texture;
+    this.size=base_sprite.size;
     this.draw=(ctx)=>
     {
-        let img = resources.getTexture(this.tiles.url);
-        let img_x = this.tiles.frame[this.index].x;
-        let img_y = this.tiles.frame[this.index].y;
-        let img_dx = this.tiles.frame[this.index].w;
-        let img_dy = this.tiles.frame[this.index].h;
+        let img = resources.getTexture(this.texture.url);
+        let img_x = this.texture.frame[this.index].x;
+        let img_y = this.texture.frame[this.index].y;
+        let img_dx = this.texture.frame[this.index].w;
+        let img_dy = this.texture.frame[this.index].h;
         let x = this.position.x;
         let y = this.position.y;
         let width = this.size.width;
@@ -55,5 +62,5 @@ function Sprite(tile_set, position, size, index)
 
     };
     this.position=position;
-    this.index = index;
+    this.index = base_sprite.index;
 }

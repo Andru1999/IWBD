@@ -37,7 +37,7 @@ class Map {
     generateMap(){
        for (let i=0;i<this._state.length;i++){
            for (let j=0;j<this._state[i].length;j++){
-               this._state[i][j][0]=new floorEnvironment (0,"floor",new Sprite(TileSets["test"],new PositionOnCanvas(i*32,j*32),new Size(32,32),0))
+               this._state[i][j][0]=new floorEnvironment (0,"floor",new Sprite(getBaseSprite('Floor'),new PositionOnCanvas(i*32,j*32)))
            }
        }
 	   for (let i=0;i<this._state.length;i++){
@@ -113,15 +113,14 @@ class GameObject {
     constructor(id,name,texture,walkable){
         this._id = id;
         this._name = name;
-        this._texture = texture;
+        this.sprite = texture;
         this._walkable = walkable;
     }
 
 
-
-    draw ()
+    draw (ctx)
     {
-
+        this.sprite.draw(ctx);
     }
 }
 
