@@ -35,7 +35,11 @@ function render()
     {
         for (var i1=0;i1<World._width;i1++)
         {
+<<<<<<< HEAD
             for (var i2=0;i2<World._height;i2++)
+=======
+            for (var i3=0;i3<World._height;i3++)
+>>>>>>> 5b3cd45de3bddbd5c751920c08dd819580a01cab
             {
                 World._state[i1][i2][i3].draw(ctx);
             }
