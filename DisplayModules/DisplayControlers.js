@@ -1,17 +1,34 @@
 "use strict"
+class MousePositionOnCanvas
+{
+    constructor(x,y)
+    {
+        this.x = x;
+        this.y = y;
+    }
 
-var LastXY = new PositionOnCanvas(0,0);
-var CurentXY = new PositionOnCanvas(0,0);
+    set (x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+Ofset=new MousePositionOnCanvas(0,0);
+
+var LastXY = new MousePositionOnCanvas(0,0);
+var CurentXY = new MousePositionOnCanvas(0,0);
 var IsMooving = false;
-var MaxDragDist=4;//Дистанция в пикселях при которой начинается drag&drop
+var MaxDragDist=10;//Дистанция в пикселях при которой начинается drag&drop
+var MosePresed=false;
 
 function mousedown(event)
 {
     if(event.originalEvent.button==0)
     {
         LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
-        IsMooving = true;
+        MosePresed=true;
     }
+
 }
 
 function mouseup(event)
@@ -19,6 +36,7 @@ function mouseup(event)
     if(event.originalEvent.button==0)
     {
         LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
+        MosePresed = false;
     }
     if (IsMooving) {
         IsMooving = false;
@@ -33,18 +51,18 @@ function distance(a,b)
 
 function mousemove(event)
 {
-    CurentXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
-    if (IsMooving&&
-        (CurentXY.x<canvas.width||CurentXY.x>0||
-        CurentXY.y<canvas.height||CurentXY.y>0))
-    {
-        var dis = distance(LastXY, CurentXY);
-        if ((dis > MaxDragDist)) {
-            Ofset.x += (CurentXY.x - LastXY.x);
-            Ofset.y += (CurentXY.y - LastXY.y);
-            LastXY.set(CurentXY.x, CurentXY.y);
-            IsMooving == true;
-            IsNeedToDraw=true;
+    if (MosePresed) {
+        CurentXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
+        if (CurentXY.x < canvas.width || CurentXY.x > 0 ||
+            CurentXY.y < canvas.height || CurentXY.y > 0) {
+            var dis = distance(LastXY, CurentXY);
+            if ((dis > MaxDragDist) || IsMooving) {
+                Ofset.x += (CurentXY.x - LastXY.x);
+                Ofset.y += (CurentXY.y - LastXY.y);
+                LastXY.set(CurentXY.x, CurentXY.y);
+                IsMooving = true;
+                IsNeedToDraw = true;
+            }
         }
     }
 }

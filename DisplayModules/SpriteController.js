@@ -24,7 +24,6 @@ class PositionOnCanvas
     }
 }
 
-Ofset=new PositionOnCanvas(0,0);
 
 
 function getframe(url, dx, dy)
