@@ -1,5 +1,6 @@
 "use strict"
 // JavaScript source code
+
 function getRandomInt(min, max)
 {
     var x=0;
@@ -38,7 +39,7 @@ class GameMap {
     
     generateMap(){
 		let ID;
-		ID=getRandomInt(0,FloorsArray.length);	
+		ID=getRandomInt(0,FloorsArray.length);
 
        for (let i=0;i<this._state.length;i++){
            for (let j=0;j<this._state[i].length;j++){
@@ -56,7 +57,7 @@ class GameMap {
 	   for (let i=0;i<this._height;i++){
            this._state[0][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(0,i*32)));
        }
-	   for (let i=0;i<this._state.length;i++){
+	   for (let i=0;i<this._height;i++){
            this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas((this._width-1)*32,i*32)));
        }
 	   
@@ -153,7 +154,7 @@ class GameObject {
         this._name = name;
         this._sprite = texture;
         this._walkable = walkable;
-		this._visibility = visibility;
+		this._visibility = visibility ? visibility : 1;
     }
 
 
@@ -184,7 +185,7 @@ class Entity extends  GameObject{
         this._position = position;
         this._id = id;
         this._name = name;
-        this._texture = texture;
+        this._sprite = texture;
         this._hitPoint = hitPoint;
         this._armor = armor;
         this._baseDamage = baseDamage;
@@ -210,20 +211,20 @@ class Entity extends  GameObject{
     calcDamage (){
         switch(this._entiteType) {
             case '0':
-                return this._strength*this._baseDamage;
-                [break]
+                return this._strength * this._baseDamage;
+                break;
 
             case '1':
                 return this._dexterity*this._baseDamage;
-                [break]
+                break;
 
             case '2':
                 return this._intelligence*this._baseDamage;
-               [break]
+               break;
 
             default:
                 return this._baseDamage;
-                [break]
+                break;
         }
     }
 }
