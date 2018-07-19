@@ -26,14 +26,18 @@ window.onload=()=>
 
 function render()
 {
-    for (var i3=0;i3<World._depth;i3++)
+    for (var i3=0;i3<gameWorld._depth;i3++)
     {
-        for (var i1=0;i1<World._width;i1++)
+        for (var i1=0;i1<gameWorld._width;i1++)
         {
-            for (var i2=0;i2<World._height;i2++)
+            for (var i2=0;i2<gameWorld._height;i2++)
             {
-                if  (World._state[i1][i2][i3] != undefined)
-                    World._state[i1][i2][i3].draw(ctx);
+                if (i1==1&& (i2==1) &&(i3==1))
+                {
+             //      alert(1);
+                }
+                if  (gameWorld._state[i1][i2][i3] != undefined)
+                    gameWorld._state[i1][i2][i3].draw(ctx);
             }
         }
     }
