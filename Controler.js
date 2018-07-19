@@ -1,5 +1,6 @@
 "use strict"
 // JavaScript source code
+
 let gameWorld;
 let heroes = [];
 let monsters;
