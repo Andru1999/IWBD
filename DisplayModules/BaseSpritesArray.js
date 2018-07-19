@@ -17,7 +17,7 @@ function AddBaseSkin(name, basetexture, size, index)
 }
 
 
-resources.onReady(MakeTextures)
+resources.onReady(MakeTextures);
 resources.onReady(Start);
 
 

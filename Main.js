@@ -32,10 +32,6 @@ function render()
         {
             for (var i2=0;i2<gameWorld._height;i2++)
             {
-                if (i1==1&& (i2==1) &&(i3==1))
-                {
-             //      alert(1);
-                }
                 if  (gameWorld._state[i1][i2][i3] != undefined)
                     gameWorld._state[i1][i2][i3].draw(ctx);
             }
