@@ -6,6 +6,7 @@ var IsMooving = false;
 
 function mousedown(event)
 {
+    if
     LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
     IsMooving=true;
 }
@@ -34,6 +35,7 @@ function mousemove(event)
             Ofset.y += (CurentXY.y - LastXY.y);
             LastXY.set(CurentXY.x, CurentXY.y);
             IsMooving == true;
+            IsNeedToDraw=true;
         }
     }
 }

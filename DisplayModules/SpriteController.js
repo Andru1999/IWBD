@@ -56,7 +56,7 @@ function Sprite(base_sprite, position)
     this.size=base_sprite.size;
     this.draw=(ctx,vis )=>
     {
-        if (vis==1|| vis==1) {
+        if (this.position.x > -32 && this.position.x < canvas.width + 32 && this.position.y - 32 < canvas.height && this.position.y > -32) {
             let img = resources.getTexture(this.texture.url);
             let img_x = this.texture.frame[this.index].x;
             let img_y = this.texture.frame[this.index].y;
@@ -66,13 +66,8 @@ function Sprite(base_sprite, position)
             let y = this.position.y + Ofset.y;
             let width = this.size.width;
             let height = this.size.height;
-            if (x > -32 && x < canvas.width + 32 && y - 32 < canvas.height && y > -32)
-                ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
-            if(vis=1)
-            return;
-          // ctx.drawImage( , img_x, img_y, img_dx, img_dy, x, y, width, height);
+            ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
         }
-
     };
     this.position=position;
     this.index = base_sprite.index;

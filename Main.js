@@ -23,19 +23,19 @@ window.onload=()=>
     $("body").mousemove(mousemove);
 
 }
-
+var IsNeedToDraw=true;
 function render()
 {
-    for (var i3=0;i3<gameWorld._depth;i3++)
-    {
-        for (var i1=0;i1<gameWorld._width;i1++)
-        {
-            for (var i2=0;i2<gameWorld._height;i2++)
-            {
-                if  (gameWorld._state[i1][i2][i3] != undefined)
-                    gameWorld._state[i1][i2][i3].draw(ctx);
+    if (IsNeedToDraw) {
+        for (var i3 = 0; i3 < gameWorld._depth; i3++) {
+            for (var i1 = 0; i1 < gameWorld._width; i1++) {
+                for (var i2 = 0; i2 < gameWorld._height; i2++) {
+                    if (gameWorld._state[i1][i2][i3] != undefined)
+                        gameWorld._state[i1][i2][i3].draw(ctx);
+                }
             }
         }
+        IsNeedToDraw=false;
     }
 }
 
