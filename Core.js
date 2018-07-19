@@ -16,7 +16,7 @@ class Position {
     }
 }
 
-class Map {
+class GameMap {
 
 
     constructor(width, height , depth) {
