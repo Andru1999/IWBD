@@ -8,16 +8,17 @@ function getRandomInt(min, max)
 }
 
 class Position {
-    constructor(x,y,z,wayLenght){
+    constructor(x,y,z,wayLenght,previousIndexInQ){
         this.coordinates=new Array(3);
         this.coordinates[0]=x;
         this.coordinates[1]=y;
         this.coordinates[2]=z;
         this.wayLenght=wayLenght;
+        this.previousIndexInQ=previousIndexInQ;
     }
 }
 
-class Map {
+class GameMap {
 
 
     constructor(width, height , depth) {
@@ -36,38 +37,58 @@ class Map {
     }
     
     generateMap(){
+		let ID;
+		ID=getRandomInt(0,FloorsArray.length);	
+
        for (let i=0;i<this._state.length;i++){
            for (let j=0;j<this._state[i].length;j++){
-               this._state[i][j][0]=new floorEnvironment (0,"floor",new Sprite(FloorsArray[0],new PositionOnCanvas(i*32,j*32)));
+               this._state[i][j][0]=new floorEnvironment (ID*1,"floor",new Sprite(FloorsArray[ID],new PositionOnCanvas(i*32,j*32)));
            }
        }
 	   
 	   
-	   for (let i=0;i<this._width;i++){
-           this._state[i][0][1]=new wallsEnvironment (0,"wall",new Sprite(WallsArray[0],new PositionOnCanvas(i*32,0)));
+	   for (let i=0;i<this._width;i++){//make walls
+           this._state[i][0][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(i*32,0)));
        }
 	   for (let i=0;i<this._width;i++){
-           this._state[i][(this._height-1)][1]=new wallsEnvironment (0,"wall",new Sprite(WallsArray[0],new PositionOnCanvas(i*32,(this._height-1)*32)));
+           this._state[i][(this._height-1)][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(i*32,(this._height-1)*32)));
        }
 	   for (let i=0;i<this._height;i++){
-           this._state[0][i][1]=new wallsEnvironment (0,"wall",new Sprite(WallsArray[0],new PositionOnCanvas(0,i*32)));
+           this._state[0][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(0,i*32)));
        }
 	   for (let i=0;i<this._state.length;i++){
-           this._state[this._width-1][i][1]=new wallsEnvironment (0,"wall",new Sprite(WallsArray[0],new PositionOnCanvas((this._width-1)*32,i*32)));
+           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas((this._width-1)*32,i*32)));
        }
 	   
-	   for (let i=0;i<1;i++){
-		   let randomPosition=new Position(getRandomInt(7,7),getRandomInt(7,7),1,0);
-		   let _wall=this.allAdmissibleCells(randomPosition,5);
+	   for (let i=0;i<this._width*this._height/100;i++){
+		   
+		   let randomPosition=new Position(getRandomInt(1,this._width-1),getRandomInt(1,this._height-1),1,0,-1);
+		   
+		   let _wall=this.allAdmissibleCells(randomPosition,getRandomInt(1,5));
 		   for (let i=0;i<_wall.length;i++){
-				   this._state[_wall[i].coordinates[0]][_wall[i].coordinates[1]][_wall[i].coordinates[2]]  =new wallsEnvironment (0,"wall",new Sprite(WallsArray[2],new PositionOnCanvas(_wall[i].coordinates[0]*32,_wall[i].coordinates[1]*32)));
-				}	
-			
+				   this._state[_wall[i].coordinates[0]][_wall[i].coordinates[1]][_wall[i].coordinates[2]]  =new wallsEnvironment (0,"wall",new Sprite(WallsArray[getRandomInt(0,WallsArray.length)],new PositionOnCanvas(_wall[i].coordinates[0]*32,_wall[i].coordinates[1]*32)));
+				}
 	   }
+	   
     }
 
-    findWay(first, second) {
+    findWay(queue, point) {
+        let currentIndex;
+        for (let i=0;i<queue.length;i++){
+            if (queue[i].coordinates==point.coordinates){
+                currentIndex=i;
+                break;
+            }
+        }
 
+        let wayPoints;
+        while (queue[currentIndex].previousIndexInQ!=-1)
+        {
+            wayPoints.push(queue[currentIndex]);
+            currentIndex=queue[currentIndex].previousIndexInQ;
+        }
+        wayPoints.push(queue[currentIndex]);
+        return(wayPoints);
     }
 
     instance(object, position) {
@@ -97,7 +118,7 @@ class Map {
             if (queue[l].wayLenght * 1.0 < dist * 1.0) {
                 for (let i = 0; i < 3; i++) {
                     for (let j = 0; j < 3; j++) {
-                        let currentCoord = new Position(queue[l].coordinates[0] * 1.0 + moveSetX[i] * 1.0, queue[l].coordinates[1] * 1.0 + moveSetY[j] * 1.0, queue[l].coordinates[2] * 1.0, queue[l].wayLenght+1);
+                        let currentCoord = new Position(queue[l].coordinates[0] * 1.0 + moveSetX[i] * 1.0, queue[l].coordinates[1] * 1.0 + moveSetY[j] * 1.0, queue[l].coordinates[2] * 1.0, queue[l].wayLenght+1,l);
                         if (_visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] == false) {
                             if (this._state[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] == null) {
                                     queue.push(currentCoord);
