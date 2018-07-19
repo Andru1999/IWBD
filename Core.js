@@ -8,11 +8,12 @@ function getRandomInt(min, max)
 }
 
 class Position {
-    constructor(x,y,z){
+    constructor(x,y,z,wayLenght){
         this.coordinates=new Array(3);
         this.coordinates[0]=x;
         this.coordinates[1]=y;
         this.coordinates[2]=z;
+        this.wayLenght=wayLenght;
     }
 }
 
@@ -56,8 +57,8 @@ class Map {
        }
 	   
 	   for (let i=0;i<1;i++){
-		   let randomPosition=new Position(getRandomInt(7,7),getRandomInt(7,7),1);
-		   let _wall=this.allAdmissibleCells(randomPosition,8);
+		   let randomPosition=new Position(getRandomInt(7,7),getRandomInt(7,7),1,0);
+		   let _wall=this.allAdmissibleCells(randomPosition,5);
 		   for (let i=0;i<_wall.length;i++){
 				   this._state[_wall[i].coordinates[0]][_wall[i].coordinates[1]][_wall[i].coordinates[2]]  =new wallsEnvironment (0,"wall",new Sprite(WallsArray[2],new PositionOnCanvas(_wall[i].coordinates[0]*32,_wall[i].coordinates[1]*32)));
 				}	
@@ -90,42 +91,31 @@ class Map {
         let moveSetX = [-1, 0, 1];
         let moveSetY = [-1, 0, 1];
         var queue= new Array();
-        let l = 0;
-        let r = 0;
+        _visitid[position.coordinates[0]][position.coordinates[1]][position.coordinates[2]]=true;
         queue.push(position);
-        let wayLength=0;
-		let count = 0;
-		_visitid[position.coordinates[0]][position.coordinates[1]][position.coordinates[2]]=true;
-        while (l <= r) {
-            for (let k = l; k <= r; k++) { 
-				if (wayLength*1.0 < dist*1.0){
-					for (let i = 0; i < 3; i++) {
-						for (let j = 0; j < 3; j++) {
-							let currentCoord = new Position(queue[k].coordinates[0]*1.0 + moveSetX[i]*1.0,queue[k].coordinates[1]*1.0 + moveSetY[j]*1.0, queue[k].coordinates[2]*1.0);
-							if (_visitid[currentCoord.coordinates[0]*1.0][currentCoord.coordinates[1]*1.0][currentCoord.coordinates[2]*1.0] == false){
-								if (this._state[currentCoord.coordinates[0]*1.0][currentCoord.coordinates[1]*1.0][currentCoord.coordinates[2]*1.0] == null){
-									queue.push(currentCoord);
-									count++;
-								}
-								else{
-									if (this._state[currentCoord.coordinates[0]*1.0][currentCoord.coordinates[1]*1.0][currentCoord.coordinates[2]*1.0]._walkable==true){
-										queue.push(currentCoord);
-										count++;
-									}
-								}
-								_visitid[currentCoord.coordinates[0]*1.0][currentCoord.coordinates[1]*1.0][currentCoord.coordinates[2]*1.0] =true;
-							}
-						}
-					}
-				}
-			}
-            l=r+1;
-            r=r+count;
-            count=0;
-            wayLength++;
+        for (let l=0; l <queue.length; l++) {
+            if (queue[l].wayLenght * 1.0 < dist * 1.0) {
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        let currentCoord = new Position(queue[l].coordinates[0] * 1.0 + moveSetX[i] * 1.0, queue[l].coordinates[1] * 1.0 + moveSetY[j] * 1.0, queue[l].coordinates[2] * 1.0, queue[l].wayLenght+1);
+                        if (_visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] == false) {
+                            if (this._state[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] == null) {
+                                    queue.push(currentCoord);
+                            }
+                            else{
+                                if (this._state[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0]._walkable == true) {
+                                        queue.push(currentCoord);
+                                }
+                            }
+                                _visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] = true;
+                        }
+                    }
+                }
+            }
         }
         return queue;
     }
+
     move (from,to){
         let buff;
         buff=this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]];
@@ -135,7 +125,6 @@ class Map {
 }
 
 class GameObject {
-
 
     constructor(id,name,texture,walkable){
         this._id = id;
