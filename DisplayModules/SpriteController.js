@@ -1,6 +1,7 @@
 "use strict"
-var Ofset=new PositionOnCanvas(0,0);
 var BaseCellSize = 32;
+var Ofset=new PositionOnCanvas(0,0);
+
 function Size(width,height)
 {
     this.width=width;
@@ -54,7 +55,7 @@ function Sprite(base_sprite, position)
 {
     this.texture=base_sprite.texture;
     this.size=base_sprite.size;
-    this.draw=(ctx,vis )=>
+    this.draw=(ctx)=>
     {
         if (this.position.x > -32 && this.position.x < canvas.width + 32 && this.position.y - 32 < canvas.height && this.position.y > -32) {
             let img = resources.getTexture(this.texture.url);
