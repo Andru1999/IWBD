@@ -1,5 +1,4 @@
 "use strict"
-alert("main.js");
 var requestAnimFrame = (function()
     {
         return window.requestAnimationFrame       ||
@@ -15,20 +14,14 @@ window.onload=()=>
 {
     canvas = document.getElementById("main_canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 700;
-    canvas.height = 480;
+    canvas.width = 2000;
+    canvas.height = 1000;
     requestAnimFrame(main);
+    lastTime=Date.now();
     $("#main_canvas").mousedown(mousedown);
-    $("#main_canvas").mouseup(mouseup);
-    $("#main_canvas").mousemove(mousemove);
+    $("body").mouseup(mouseup);
+    $("body").mousemove(mousemove);
 
-}
-
-var World;
-function init()
-{
-    World=new GameMap(20,20,2);
-    World.generateMap();
 }
 
 function render()
@@ -46,17 +39,20 @@ function render()
     }
 }
 
-var lastTime;
-
+var lastTime=0;
+var test=0;
 function main() {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
-    ctx.fillStyle = "black";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    test+=dt;
+
     //update(dt);
-
-    render();
-
+    if(test>.03) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        render();
+        test=0;
+    }
     lastTime = now;
     requestAnimFrame(main);
 };

@@ -54,18 +54,24 @@ function Sprite(base_sprite, position)
 {
     this.texture=base_sprite.texture;
     this.size=base_sprite.size;
-    this.draw=(ctx)=>
+    this.draw=(ctx,vis )=>
     {
-        let img = resources.getTexture(this.texture.url);
-        let img_x = this.texture.frame[this.index].x;
-        let img_y = this.texture.frame[this.index].y;
-        let img_dx = this.texture.frame[this.index].w;
-        let img_dy = this.texture.frame[this.index].h;
-        let x = this.position.x;
-        let y = this.position.y;
-        let width = this.size.width;
-        let height = this.size.height;
-        ctx.drawImage(img,img_x,img_y,img_dx,img_dy,x+Ofset.x,y+Ofset.y,width,height);
+        if (vis==1|| vis==1) {
+            let img = resources.getTexture(this.texture.url);
+            let img_x = this.texture.frame[this.index].x;
+            let img_y = this.texture.frame[this.index].y;
+            let img_dx = this.texture.frame[this.index].w;
+            let img_dy = this.texture.frame[this.index].h;
+            let x = this.position.x + Ofset.x;
+            let y = this.position.y + Ofset.y;
+            let width = this.size.width;
+            let height = this.size.height;
+            if (x > -32 && x < canvas.width + 32 && y - 32 < canvas.height && y > -32)
+                ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
+            if(vis=1)
+            return;
+            ctx.drawImage(, img_x, img_y, img_dx, img_dy, x, y, width, height);
+        }
 
     };
     this.position=position;
