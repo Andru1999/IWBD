@@ -1,3 +1,5 @@
+"use strict"
+var Ofset=new PositionOnCanvas(0,0);
 
 function Size(width,height)
 {
@@ -9,6 +11,11 @@ function PositionOnCanvas(x,y)
 {
     this.x=x;
     this.y=y;
+    this.set=function (x,y)
+    {
+        this.x=x;
+        this.y=y;
+    }
 }
 
 function getframe(url, dx, dy)
@@ -58,7 +65,7 @@ function Sprite(base_sprite, position)
         let y = this.position.y;
         let width = this.size.width;
         let height = this.size.height;
-        ctx.drawImage(img,img_x,img_y,img_dx,img_dy,x,y,width,height);
+        ctx.drawImage(img,img_x,img_y,img_dx,img_dy,x+Ofset.x,y+Ofset.y,width,height);
 
     };
     this.position=position;

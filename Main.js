@@ -1,5 +1,5 @@
 "use strict"
-
+alert("main.js");
 var requestAnimFrame = (function()
     {
         return window.requestAnimationFrame       ||
@@ -18,14 +18,16 @@ window.onload=()=>
     canvas.width = 700;
     canvas.height = 480;
     requestAnimFrame(main);
-
+    $("#main_canvas").mousedown(mousedown);
+    $("#main_canvas").mouseup(mouseup);
+    $("#main_canvas").mousemove(mousemove);
 
 }
 
 var World;
 function init()
 {
-    World=new Map(20,20,1);
+    World=new GameMap(20,20,2);
     World.generateMap();
 }
 
@@ -37,7 +39,8 @@ function render()
         {
             for (var i2=0;i2<World._height;i2++)
             {
-                World._state[i1][i2][i3].draw(ctx);
+                if  (World._state[i1][i2][i3] != undefined)
+                    World._state[i1][i2][i3].draw(ctx);
             }
         }
     }
