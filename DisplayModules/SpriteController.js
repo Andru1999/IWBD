@@ -1,6 +1,6 @@
 "use strict"
 var Ofset=new PositionOnCanvas(0,0);
-
+var BaseCellSize = 32;
 function Size(width,height)
 {
     this.width=width;
@@ -9,12 +9,12 @@ function Size(width,height)
 
 function PositionOnCanvas(x,y)
 {
-    this.x=x;
-    this.y=y;
+    this.x=x*BaseCellSize;
+    this.y=y*BaseCellSize;
     this.set=function (x,y)
     {
-        this.x=x;
-        this.y=y;
+        this.x=x*BaseCellSize;
+        this.y=y*BaseCellSize;
     }
 }
 
@@ -73,7 +73,6 @@ function Sprite(base_sprite, position)
     this.index = base_sprite.index;
     this.setPosition=(x,y)=>
     {
-        this.x=x*32;
-        this.y=y*32;
+        this.position.set(x,y);
     }
 };
