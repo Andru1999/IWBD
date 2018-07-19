@@ -1,5 +1,4 @@
 "use strict"
-
 var requestAnimFrame = (function()
     {
         return window.requestAnimationFrame       ||
@@ -15,54 +14,46 @@ window.onload=()=>
 {
     canvas = document.getElementById("main_canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 700;
-    canvas.height = 480;
+    canvas.width = 2000;
+    canvas.height = 1000;
     requestAnimFrame(main);
-
+    lastTime=Date.now();
+    $("#main_canvas").mousedown(mousedown);
+    $("body").mouseup(mouseup);
+    $("body").mousemove(mousemove);
 
 }
-
-resources.onReady(init);
-
-(function preLoad()
-{
-    resources.load([
-        'Assets/Arrea/TestTileSet.png',
-        'Assets/Buttons/Buttons.png',
-    ]);
-})();
-var TileSets={};
-var testCells=new Array(16);
-var World;
-function init()
-{
-    TileSets["test"]=new TileSet('Assets/Arrea/TestTileSet.png',32 ,32);
-    World=new Map(20,20,1);
-    World.generateMap();
-}
-
+var IsNeedToDraw=true;
 function render()
 {
-    for (var i=0;i<20;i++)
+    if (IsNeedToDraw)
     {
-        for (var j=0;j<20;j++)
-        {
-            World._state[i][j][0]._texture.draw(ctx);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        for (var i3 = 0; i3 < gameWorld._depth; i3++) {
+            for (var i1 = 0; i1 < gameWorld._width; i1++) {
+                for (var i2 = 0; i2 < gameWorld._height; i2++) {
+                    if (gameWorld._state[i1][i2][i3] != undefined)
+                        gameWorld._state[i1][i2][i3].draw(ctx);
+                }
+            }
         }
+        IsNeedToDraw=false;
     }
 }
 
-var lastTime;
-
+var lastTime=0;
+var test=0;
 function main() {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
-    ctx.fillStyle = "black";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    test+=dt;
+
     //update(dt);
-
-    render();
-
+    if(test>.03) {
+        render();
+        test=0;
+    }
     lastTime = now;
     requestAnimFrame(main);
 };
