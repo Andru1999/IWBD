@@ -26,7 +26,10 @@ window.onload=()=>
 var IsNeedToDraw=true;
 function render()
 {
-    if (IsNeedToDraw) {
+    if (IsNeedToDraw)
+    {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
         for (var i3 = 0; i3 < gameWorld._depth; i3++) {
             for (var i1 = 0; i1 < gameWorld._width; i1++) {
                 for (var i2 = 0; i2 < gameWorld._height; i2++) {
@@ -48,8 +51,6 @@ function main() {
 
     //update(dt);
     if(test>.03) {
-        ctx.fillStyle = "black";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
         render();
         test=0;
     }

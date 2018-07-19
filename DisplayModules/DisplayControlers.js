@@ -6,16 +6,23 @@ var IsMooving = false;
 
 function mousedown(event)
 {
-    if
-    LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
-    IsMooving=true;
+    if(event.originalEvent.button==0)
+    {
+        LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
+        IsMooving = true;
+    }
 }
 
 function mouseup(event)
 {
-    LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
-
-    IsMooving=false;
+    if(event.originalEvent.button==0)
+    {
+        LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
+    }
+    if (IsMooving) {
+        IsMooving = false;
+        return;
+    }
 }
 function distance(a,b)
 {
