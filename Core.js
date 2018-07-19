@@ -142,22 +142,24 @@ class GameMap {
         buff=this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]];
         this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]]=null;
         this._state[to.coordinates[0]][to.coordinates[1]][to.coordinates[2]]=buff;
+		buff._texture.position.set(to.coordinates[0]*32,to.coordinates[1]*32)
     }
 }
 
 class GameObject {
 
-    constructor(id,name,texture,walkable){
+    constructor(id,name,texture,walkable,visibility){
         this._id = id;
         this._name = name;
         this._sprite = texture;
         this._walkable = walkable;
+		this._visibility = visibility;
     }
 
 
     draw (ctx)
     {
-        this._sprite.draw(ctx);
+        this._sprite.draw(ctx,this._visibility);
     }
 }
 
@@ -175,11 +177,8 @@ class wallsEnvironment extends GameObject{
 
 class Entity extends  GameObject{
 
-
-
-
     constructor(position,id,name,texture,walkable,hitPoint,armor,baseDamage,
-                actionPoints,speed,strength,dexterity,intelligence,perception,entiteType)
+                actionPoints,speed,strength,dexterity,intelligence,perception,entiteType,attackRange)
     {
         super(position,id,name,texture,walkable);
         this._position = position;
@@ -196,6 +195,7 @@ class Entity extends  GameObject{
         this._intelligence = intelligence;
         this._perception = perception;
         this._entiteType = entiteType;
+		this._attackRange = attackRange;
     }
 
     takeDamage (damage){
@@ -209,21 +209,21 @@ class Entity extends  GameObject{
 
     calcDamage (){
         switch(this._entiteType) {
-            case 'strongman':
+            case '0':
                 return this._strength*this._baseDamage;
-                break;
+                [break]
 
-            case 'trickster':
+            case '1':
                 return this._dexterity*this._baseDamage;
-                break;
+                [break]
 
-            case 'wizard':
+            case '2':
                 return this._intelligence*this._baseDamage;
-                break;
+               [break]
 
             default:
                 return this._baseDamage;
-                break;
+                [break]
         }
     }
 }
