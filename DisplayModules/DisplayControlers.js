@@ -1,8 +1,9 @@
 "use strict"
-var MaxDragDist=4;
+
 var LastXY = new PositionOnCanvas(0,0);
 var CurentXY = new PositionOnCanvas(0,0);
 var IsMooving = false;
+var MaxDragDist=4;//Дистанция в пикселях при которой начинается drag&drop
 
 function mousedown(event)
 {
@@ -29,6 +30,7 @@ function distance(a,b)
     return Math.sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
 
 }
+
 function mousemove(event)
 {
     CurentXY.set(event.originalEvent.clientX, event.originalEvent.clientY);

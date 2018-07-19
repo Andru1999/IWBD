@@ -23,7 +23,7 @@ window.onload=()=>
     $("body").mousemove(mousemove);
 
 }
-var IsNeedToDraw=true;
+
 function render()
 {
     if (IsNeedToDraw)

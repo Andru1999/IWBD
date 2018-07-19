@@ -1,9 +1,14 @@
-var BaseSprites={};
-var BaseTextures={};
+(function preLoad()
+{
+    LoadResources([
+        'Assets/BlueWallAndFloor.png',
+        'Assets/GreyWallAndFloor.png',
+        'Assets/WhiteWallAndFloor.png',
+        "Assets/Void.png",
+        "Assets/Hero.png"
+    ]);
+})();
 
-var FloorsArray=[];//Массив разноцветных полов
-var WallsArray=[];//Массив разноцветных стен
-var HeroesTextureArray =[]; //Массив моделек героев
 
 function AddBaseTexture(url,dx,dy,name)
 {
@@ -17,22 +22,14 @@ function AddBaseSkin(name, basetexture, size, index)
 }
 
 
-resources.onReady(MakeTextures);
-resources.onReady(Start);
+readyCallbacks.push(MakeTextures);
+readyCallbacks.push(Start);
 
 
-(function preLoad()
-{
-    resources.load([
-        'Assets/BlueWallAndFloor.png',
-        'Assets/GreyWallAndFloor.png',
-        'Assets/WhiteWallAndFloor.png',
-        "Assets/Void.png",
-        "Assets/Hero.png"
-    ]);
-})();
 
-var baseSize=new Size(32,32);
+
+baseSize=new Size(BaseCellSize,BaseCellSize);
+
 function MakeTextures()
 {
     AddBaseTexture('Assets/BlueWallAndFloor.png',64,64,"BlueWalls&Floor");
@@ -41,8 +38,7 @@ function MakeTextures()
     AddBaseTexture('Assets/Void.png',64,64,"VoidTexture");
     AddBaseTexture('Assets/Hero.png',16,21,"Heroes");
 
-
-    //////////////////////////////////////////////////////////// Все базовые скины после этой строчки
+    //////////////////////////////////////////////////////////// Все базовые задаются скины после этой строчки
     WallsArray.push(AddBaseSkin("BlueWall" ,"BlueWalls&Floor",baseSize,0));
     FloorsArray.push(AddBaseSkin("BlueFloor" ,"BlueWalls&Floor",baseSize,1));
     WallsArray.push(AddBaseSkin("GreyWall" ,"GreyWalls&Floor",baseSize,0));
@@ -53,9 +49,6 @@ function MakeTextures()
     HeroesTextureArray.push(AddBaseSkin("HeroWarior" ,"Heroes",baseSize,0))
 }
 
-function getBaseSprite(name)
-{
-    return BaseSprites[name];
-}
+getBaseSprite = function(name){return BaseSprites[name];};
 
 
