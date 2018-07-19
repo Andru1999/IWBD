@@ -71,4 +71,9 @@ function Sprite(base_sprite, position)
     };
     this.position=position;
     this.index = base_sprite.index;
-}
+    this.setPosition=(x,y)=>
+    {
+        this.x=x*32;
+        this.y=y*32;
+    }
+};
