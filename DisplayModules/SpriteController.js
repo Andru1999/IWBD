@@ -70,7 +70,7 @@ function Sprite(base_sprite, position)
                 ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
             if(vis=1)
             return;
-            ctx.drawImage(, img_x, img_y, img_dx, img_dy, x, y, width, height);
+          // ctx.drawImage( , img_x, img_y, img_dx, img_dy, x, y, width, height);
         }
 
     };

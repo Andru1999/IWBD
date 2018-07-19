@@ -3,6 +3,7 @@ var BaseTextures={};
 
 var FloorsArray=[];//Массив разноцветных полов
 var WallsArray=[];//Массив разноцветных стен
+var HeroesTextureArray =[]; //Массив моделек героев
 
 function AddBaseTexture(url,dx,dy,name)
 {
@@ -26,7 +27,8 @@ resources.onReady(init);
         'Assets/BlueWallAndFloor.png',
         'Assets/GreyWallAndFloor.png',
         'Assets/WhiteWallAndFloor.png',
-        "Assets/Void.png"
+        "Assets/Void.png",
+        "Assets/Hero.png"
     ]);
 })();
 
@@ -37,6 +39,7 @@ function MakeTextures()
     AddBaseTexture('Assets/GreyWallAndFloor.png',64,64,"GreyWalls&Floor");
     AddBaseTexture('Assets/WhiteWallAndFloor.png',64,64,"WhiteWalls&Floor");
     AddBaseTexture('Assets/Void.png',64,64,"VoidTexture");
+    AddBaseTexture('Assets/Hero.png',16,21,"Heroes");
 
 
     //////////////////////////////////////////////////////////// Все базовые скины после этой строчки
@@ -47,6 +50,7 @@ function MakeTextures()
     WallsArray.push(AddBaseSkin("WhiteWall" ,"WhiteWalls&Floor",baseSize,0));
     FloorsArray.push(AddBaseSkin("WhiteFloor" ,"WhiteWalls&Floor",baseSize,1));
     AddBaseSkin("Void" ,"VoidTexture",baseSize,0);
+    HeroesTextureArray.push(AddBaseSkin("HeroWarior" ,"Heroes",baseSize,0))
 }
 
 function getBaseSprite(name)
