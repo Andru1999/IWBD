@@ -15,8 +15,8 @@ window.onload=()=>
 {
     canvas = document.getElementById("main_canvas");
     ctx = canvas.getContext("2d");
-    canvas.width = 700;
-    canvas.height = 480;
+    canvas.width = 1400;
+    canvas.height = 960;
     requestAnimFrame(main);
 
 
@@ -25,7 +25,7 @@ window.onload=()=>
 var World;
 function init()
 {
-    World=new Map(20,20,1);
+    World=new Map(20,20,2);
     World.generateMap();
 }
 
@@ -37,6 +37,7 @@ function render()
         {
             for (var i2=0;i2<World._height;i2++)
             {
+				if (World._state[i1][i2][i3]!=null)
                 World._state[i1][i2][i3].draw(ctx);
             }
         }
