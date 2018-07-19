@@ -46,7 +46,7 @@ function MakeTextures()
     FloorsArray.push(AddBaseSkin("GreyFloor" ,"GreyWalls&Floor",baseSize,1));
     WallsArray.push(AddBaseSkin("WhiteWall" ,"WhiteWalls&Floor",baseSize,0));
     FloorsArray.push(AddBaseSkin("WhiteFloor" ,"WhiteWalls&Floor",baseSize,1));
-    FloorsArray.push(AddBaseSkin("Void" ,"VoidTexture",baseSize,0));
+    AddBaseSkin("Void" ,"VoidTexture",baseSize,0);
 }
 
 function getBaseSprite(name)
