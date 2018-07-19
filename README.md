@@ -1,3 +1,0 @@
-# IWBD
-
-sammer practices

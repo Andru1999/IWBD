@@ -43,22 +43,22 @@ class GameMap {
 
        for (let i=0;i<this._state.length;i++){
            for (let j=0;j<this._state[i].length;j++){
-               this._state[i][j][0]=new floorEnvironment (ID*1,"floor",new Sprite(FloorsArray[ID],new PositionOnCanvas(i*32,j*32)));
+               this._state[i][j][0]=new floorEnvironment (ID*1,"floor",new Sprite(FloorsArray[ID],new PositionOnCanvas(i,j)));
            }
        }
 	   
 	   
 	   for (let i=0;i<this._width;i++){//make walls
-           this._state[i][0][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(i*32,0)));
+           this._state[i][0][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(i,0)));
        }
 	   for (let i=0;i<this._width;i++){
-           this._state[i][(this._height-1)][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(i*32,(this._height-1)*32)));
+           this._state[i][(this._height-1)][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(i,this._height-1)));
        }
 	   for (let i=0;i<this._height;i++){
-           this._state[0][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(0,i*32)));
+           this._state[0][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(0,i)));
        }
 	   for (let i=0;i<this._height;i++){
-           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas((this._width-1)*32,i*32)));
+           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(this._width-1,i));
        }
 	   
 	   for (let i=0;i<this._width*this._height/100;i++){
@@ -67,7 +67,7 @@ class GameMap {
 		   
 		   let _wall=this.allAdmissibleCells(randomPosition,getRandomInt(1,5));
 		   for (let i=0;i<_wall.length;i++){
-				   this._state[_wall[i].coordinates[0]][_wall[i].coordinates[1]][_wall[i].coordinates[2]]  =new wallsEnvironment (0,"wall",new Sprite(WallsArray[getRandomInt(0,WallsArray.length)],new PositionOnCanvas(_wall[i].coordinates[0]*32,_wall[i].coordinates[1]*32)));
+				   this._state[_wall[i].coordinates[0]][_wall[i].coordinates[1]][_wall[i].coordinates[2]]  =new wallsEnvironment (0,"wall",new Sprite(WallsArray[getRandomInt(0,WallsArray.length)],new PositionOnCanvas(_wall[i].coordinates[0],_wall[i].coordinates[1])));
 				}
 	   }
 	   
@@ -139,11 +139,12 @@ class GameMap {
     }
 
     move (from,to){
-        let buff;
-        buff=this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]];
-        this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]]=null;
-        this._state[to.coordinates[0]][to.coordinates[1]][to.coordinates[2]]=buff;
-		buff._texture.position.set(to.coordinates[0]*32,to.coordinates[1]*32)
+        this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]]._position=to;
+        this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]]._sprite.setPosition(from.coordinates[0],from.coordinates[1]);
+
+        this._state[to.coordinates[0]][to.coordinates[1]][to.coordinates[2]] = this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]];
+		this._state[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]]=null;
+
     }
 }
 
@@ -202,9 +203,10 @@ class Entity extends  GameObject{
     takeDamage (damage){
         if (this._dexterity<getRandomInt(0,100)){
             this._hitPoint=this._hitPoint-damage*this._armor/100;
+            return "попал"
         }
         else{
-            //мы уклонились
+            return "уклонился"
         }
     }
 
