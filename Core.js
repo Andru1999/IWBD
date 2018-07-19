@@ -1,6 +1,5 @@
 "use strict"
 // JavaScript source code
-
 function getRandomInt(min, max)
 {
     var x=0;
@@ -58,7 +57,7 @@ class GameMap {
            this._state[0][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(0,i)));
        }
 	   for (let i=0;i<this._height;i++){
-           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(this._width-1,i));
+           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(this._width-1,i)));
        }
 	   
 	   for (let i=0;i<this._width*this._height/100;i++){
@@ -161,7 +160,7 @@ class GameObject {
 
     draw (ctx)
     {
-        this._sprite.draw(ctx,this._visibility);
+        this._sprite.draw(ctx);
     }
 }
 
