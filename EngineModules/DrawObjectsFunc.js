@@ -1,0 +1,12 @@
+drawMap()
+{
+
+}
+drawHero()
+{
+
+}
+drawMob()
+{
+
+}
