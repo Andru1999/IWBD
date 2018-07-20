@@ -1,8 +1,5 @@
-
-(function() {
-    var resourceCache = {};
-    var readyCallbacks = [];
-
+(()=>
+{
     // Load an image url or an array of image urls
     function load(urlOrArr) {
         if(urlOrArr instanceof Array) {
@@ -39,8 +36,8 @@
 
     function isReady() {
         var ready = true;
-        for(var k in resourceCache) {
-            if(resourceCache.hasOwnProperty(k) &&
+        for (var k in resourceCache) {
+            if (resourceCache.hasOwnProperty(k) &&
                 !resourceCache[k]) {
                 ready = false;
             }
@@ -48,14 +45,7 @@
         return ready;
     }
 
-    function onReady(func) {
-        readyCallbacks.push(func);
-    }
+    LoadResources=load;
+    getResurse=get;
 
-    window.resources = {
-        load: load,
-        getTexture: get,
-        onReady: onReady,
-        isReady: isReady
-    };
 })();

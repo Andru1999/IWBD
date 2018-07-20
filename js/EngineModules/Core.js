@@ -1,6 +1,5 @@
 "use strict"
 // JavaScript source code
-
 function getRandomInt(min, max)
 {
     var x=0;
@@ -58,7 +57,7 @@ class GameMap {
            this._state[0][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(0,i)));
        }
 	   for (let i=0;i<this._height;i++){
-           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(this._width-1,i));
+           this._state[this._width-1][i][1]=new wallsEnvironment (ID,"wall",new Sprite(WallsArray[ID],new PositionOnCanvas(this._width-1,i)));
        }
 	   
 	   for (let i=0;i<this._width*this._height/100;i++){
@@ -156,25 +155,27 @@ class GameObject {
         this._sprite = texture;
         this._walkable = walkable;
 		this._visibility = visibility ? visibility : 1;
+		this.drawMap = ()=>{};
     }
 
 
-    draw (ctx)
-    {
-        this._sprite.draw(ctx,this._visibility);
-    }
+
 }
 
 class floorEnvironment extends GameObject{
     constructor(id,name,texture){
         super(id,name,texture,true);
+        this.drawMap=drawMap;
     }
+
 }
 
 class wallsEnvironment extends GameObject{
     constructor(id,name,texture){
         super(id,name,texture,false);
+        this.drawMap=drawMap;
     }
+
 }
 
 class Entity extends  GameObject{
@@ -198,6 +199,8 @@ class Entity extends  GameObject{
         this._perception = perception;
         this._entiteType = entiteType;
 		this._attackRange = attackRange;
+        this.drawHero = drawHero;
+        this.drawMob = drawMob;
     }
 
     takeDamage (damage){

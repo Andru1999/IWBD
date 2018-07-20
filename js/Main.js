@@ -12,7 +12,7 @@ var canvas;
 var ctx;
 window.onload=()=>
 {
-    canvas = document.getElementById("main_canvas");
+    canvas = document.getElementById("main_game_canva");
     ctx = canvas.getContext("2d");
     canvas.width = 2000;
     canvas.height = 1000;
@@ -23,7 +23,7 @@ window.onload=()=>
     $("body").mousemove(mousemove);
 
 }
-var IsNeedToDraw=true;
+
 function render()
 {
     if (IsNeedToDraw)
