@@ -178,6 +178,15 @@ class wallsEnvironment extends GameObject{
 
 }
 
+class actionFieldEnvironment extends GameObject{
+    constructor(id,name,texture){
+        super(id,name,texture,true);
+        this.drawMap=drawMap;
+    }
+
+}
+
+
 class Entity extends  GameObject{
 
     constructor(position,id,name,texture,walkable,hitPoint,armor,baseDamage,

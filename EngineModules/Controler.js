@@ -6,7 +6,8 @@ let heroes = [];
 let monsters;
 let currentMob=null;
 let actionType;//0 - nothing , 1 - move , 2 - attack
-
+let attackField;
+let walkableField;
 function getActionType() {
     return actionType;
 }
@@ -52,7 +53,7 @@ function setGameWorld(x) {
 function Start(){
     gameWorld= new GameMap(getRandomInt(25, 50),getRandomInt(25, 50),3);
     gameWorld.generateMap();
-    spawnHeroes(1);
+    spawnHeroes(5);
     //spawnMonsters();
 }
 
@@ -106,19 +107,23 @@ function getClick(x,y,mouseButton){
                     break;
 
                 case '1':
-                    if (gameWorld._state[x][y][1] == null || gameWorld._state[x][y][1]._walkable == true) {
+                    if ((gameWorld._state[x][y][1] == null || gameWorld._state[x][y][1]._walkable == true) && (gameWorld_state[x][y][2]._name=="walkPlate")) {
                         gameWorld.move(currentMob._position, new Position(x, y, 1, 0, -1));
                         currentMob._actionPoints--;
+						calcActionSpaces();
+						drawActionSpace()
                         return "move successfully";
                     }
                     else return "move unsuccessfully"
                     break;
 
                 case '2':
-                    if (gameWorld._state[x][y][1] != null && gameWorld._state[x][y][1]._name == "mob") {
+                    if (gameWorld._state[x][y][1] != null && gameWorld._state[x][y][1]._name == "mob" && gameWorld_state[x][y][2]._name=="attackPlate") {
                         currentMob._actionPoints--;
                         gameWorld._state[x][y][1].takeDamage(currentMob.calcDamage());
-                        return "attack successfully"
+						calcActionSpaces();
+						drawActionSpace()
+                        return "attack successfully";
                     }
                     else return "unsuccessfully";
                     break;
@@ -128,10 +133,40 @@ function getClick(x,y,mouseButton){
     if (mouseButton=0) {
         if (gameWorld._state[x][y][1] != null && gameWorld._state[x][y][1]._name == "mob") {
             currentMob = gameWorld._state[x][y][1];
+			calcActionSpaces();
+			drawActionSpace();
         }
     }
 }
 
+function calcActionSpaces(){
+	for (let i=0;i<walkableField.length;i++){
+		gameWorld._state[walkableField[i].coordinates[0]][walkableField[i].coordinates[1]][2]=null;
+	}
+	for (let i=0;i<attackField.length;i++){
+		gameWorld._state[attackField[i].coordinates[0]][attackField[i].coordinates[1]][2]=null;
+	}
+	walkableField = allAdmissibleCells(currentMob._position, currentMob._speed);
+	attackField = allAdmissibleCells(currentMob._position, currentMob.__attackRange);
+}
+
+function drawActionSpace(){
+	if (actionType==1){
+		for (let i=0;i<walkableField.length;i++){
+			gameWorld._state[walkableField[i].coordinates[0]][walkableField[i].coordinates[1]][2]=actionFieldEnvironment (0,"walkPlate", new Sprite(ActionField[id], new PositionOnCanvas(walkableField[i].coordinates[0], walkableField[i].coordinates[1])));
+		}
+	}
+	if (actionType==2){
+		for (let i=0;i<attackField.length;i++){
+			gameWorld._state[attackField[i].coordinates[0]][attackField[i].coordinates[1]][2]=actionFieldEnvironment (1,"attackPlate", new Sprite(ActionField[id], new PositionOnCanvas(attackField[i].coordinates[0], attackField[i].coordinates[1])));;
+		}
+	}
+}
+
+function changeAction(x){
+	actionType = x;
+	drawActionSpace();
+}
 
 function Update(){
 
