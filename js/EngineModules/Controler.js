@@ -1,59 +1,23 @@
 "use strict"
 // JavaScript source code
 
-let gameWorld;
-let heroes = [];
-let monsters;
-let currentMob=null;
-let actionType;//0 - nothing , 1 - move , 2 - attack
-
-function getActionType() {
-    return actionType;
+class Scene {
+    construcor(gameWorld) {
+        this.gameWorld = gameWorld;
+        this.heroes = [];
+        this.monsters = null;
+        this.currentMob = null;
+        this.actionType = null;//0 - nothing , 1 - move , 2 - attack
+    }
 }
-
-function setActionType(x) {
-    actionType = x;
-}
-
-function getMonsters() {
-    return monsters;
-}
-
-function setMonsters(x) {
-    monsters = x;
-}
-
-function getCurrentMob() {
-    return currentMob;
-}
-
-function setCurrentMob(x) {
-    currentMob = x;
-}
-
-function getHeroes() {
-    return heroes;
-}
-
-function setHeroes(x) {
-    heroes = x;
-}
-
-function getGameWorld() {
-    return gameWorld;
-}
-
-function setGameWorld(x) {
-    heroes = x;
-}
-
-
-
+var scene; //todo: Убрать
 function Start(){
-    gameWorld= new GameMap(getRandomInt(25, 50),getRandomInt(25, 50),3);
-    gameWorld.generateMap();
+    scene = Scene(
+        new GameMap(getRandomInt(25, 50),getRandomInt(25, 50),3),
+    );
+    scene.gameWorld.generateMap();
     spawnHeroes(1);
-    //spawnMonsters();
+    spawnMonsters();
 }
 
 function createMob(position)
@@ -76,10 +40,11 @@ function createMob(position)
     if (entiteType != 0) {
         attackRange = perception;
     }
+
     return (new Entity(position, id, name, texture, walkable, hitPoint, armor, baseDamage, actionPoints, speed, strength, dexterity, intelligence, perception, entiteType, attackRange));
 }
 
-function spawnHeroes(count){
+function spawnHeroes(count,heroes){
     for (let i=1; i<=count; i++){
         for (let j=1; j<=count; j++){
             heroes.push(createMob(new Position(i,j,1,0,-1)))
@@ -88,7 +53,7 @@ function spawnHeroes(count){
     }
 }
 
-function spawnMonsters(count){
+function spawnMonsters(count, monsters){
     for (let i=1; i<=count; i++){
         for (let j=1; j<=count; j++){
             monsters.push(createMob(new Position(i,j,1,0,-1)))
@@ -133,7 +98,5 @@ function getClick(x,y,mouseButton){
 }
 
 
-function Update(){
 
-}
 

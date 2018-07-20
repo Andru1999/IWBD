@@ -1,15 +1,3 @@
-(function preLoad()
-{
-    LoadResources([
-        'Assets/BlueWallAndFloor.png',
-        'Assets/GreyWallAndFloor.png',
-        'Assets/WhiteWallAndFloor.png',
-        "Assets/Void.png",
-        "Assets/Hero.png"
-    ]);
-})();
-
-
 function AddBaseTexture(url,dx,dy,name)
 {
     BaseTextures[name]=new Texture(url, dx, dy);
@@ -22,8 +10,7 @@ function AddBaseSkin(name, basetexture, size, index)
 }
 
 
-readyCallbacks.push(MakeTextures);
-readyCallbacks.push(Start);
+
 
 
 

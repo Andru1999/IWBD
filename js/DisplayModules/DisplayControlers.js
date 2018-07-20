@@ -37,6 +37,7 @@ function mouseup(event)
     {
         LastXY.set(event.originalEvent.clientX, event.originalEvent.clientY);
         MosePresed = false;
+
     }
     if (IsMooving) {
         IsMooving = false;
