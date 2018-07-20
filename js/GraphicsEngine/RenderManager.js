@@ -1,4 +1,4 @@
-class RenderController {
+class RenderManager {
     constructor(arr, canvas) {
         this.sprites = arr;
         this.canvas = canvas;

@@ -66,11 +66,11 @@ class ResuseLoader
     {
         function AddBaseSkin(name, basetexture, size, index,obj)
         {
-            if (obj.BaseSpritesArr[name]==undefined)
+            if (obj.sprites[name]==undefined)
             {
-                obj.BaseSpritesArr[name]=[];
+                obj.sprites[name]=[];
             }
-            obj.BaseSpritesArr[name].push(new BaseSprite(obj.TexturesArr[basetexture], size, index));
+            obj.sprites[name].push(new BaseSprite(obj.TexturesArr[basetexture], size, index));
         }
 
         AddBaseSkin("wall" ,"BlueWalls&Floor",BaseCellSize,0,this);
