@@ -6,4 +6,3 @@ $(document).ready(() => {
         });
     })
 });
-var test  = new RenderController((x)=>{x});
