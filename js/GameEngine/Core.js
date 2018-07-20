@@ -1,25 +1,24 @@
-"use strict"
+"use strict";
 
 // JavaScript source code
 function getRandomInt(min, max) {
-    var x = 0;
-    x = (Math.floor(Math.random() * (max - min)) * 1.0 + min * 1.0);
-    return x;
+    return (Math.floor(Math.random() * (max - min)) + min * 1.0);
 }
 
 class Position {
+    /* Класс описывающий координаты точек */
     constructor(x, y, z, wayLenght, previousIndexInQ) {
-        this.coordinates = new Array(3);
-        this.coordinates[0] = x;
-        this.coordinates[1] = y;
-        this.coordinates[2] = z;
+        this.coordinates = [x, y, z];
+        this.x = x;
+        this.y = y;
+        this.z = z;
         this.wayLenght = wayLenght;
         this.previousIndexInQ = previousIndexInQ;
     }
 }
 
 class GameMap {
-    constructor(width, height, depth) {
+    constructor(width, height, depth, need_generate_map = true) {
         this._height = height;
         this._width = width;
         this._depth = depth;
@@ -30,7 +29,9 @@ class GameMap {
                 this._cells[i][j] = new Array(this._depth);
             }
         }
-        this.generateMap();
+
+        if (need_generate_map)
+            this.generateMap();
     }
 
     generateMap() {
@@ -64,7 +65,7 @@ class GameMap {
             let randomPosition = new Position(getRandomInt(1, this._width - 1), getRandomInt(1, this._height - 1), 2, 0, -1);
             let obstacle = this.allAdmissibleCells(randomPosition, getRandomInt(1, 5));
             for (let i = 0; i < obstacle.length; i++) {
-                this._cells[obstacle[i].coordinates[0]][obstacle[i].coordinates[1]][obstacle[i].coordinates[2]] = wall;
+                this._cells[obstacle[i].x][obstacle[i].y][obstacle[i].z] = wall;
             }
         }
 
@@ -115,23 +116,23 @@ class GameMap {
         let moveSetX = [-1, 0, 1];
         let moveSetY = [-1, 0, 1];
         let queue = [];
-        _visitid[position.coordinates[0]][position.coordinates[1]][position.coordinates[2]] = true;
+        _visitid[position.x][position.y][position.z] = true;
         queue.push(position);
         for (let l = 0; l < queue.length; l++) {
             if (queue[l].wayLenght * 1.0 < dist * 1.0) {
                 for (let i = 0; i < 3; i++) {
                     for (let j = 0; j < 3; j++) {
-                        let currentCoord = new Position(queue[l].coordinates[0] * 1.0 + moveSetX[i] * 1.0, queue[l].coordinates[1] * 1.0 + moveSetY[j] * 1.0, queue[l].coordinates[2] * 1.0, queue[l].wayLenght + 1, l);
-                        if (_visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] === false) {
-                            if (this._cells[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] === null) {
+                        let currentCoord = new Position(queue[l].x * 1.0 + moveSetX[i] * 1.0, queue[l].y * 1.0 + moveSetY[j] * 1.0, queue[l].z * 1.0, queue[l].wayLenght + 1, l);
+                        if (_visitid[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0] === false) {
+                            if (this._cells[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0] === null) {
                                 queue.push(currentCoord);
                             }
                             else {
-                                if (this._cells[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0]._walkable === true) {
+                                if (this._cells[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0]._walkable === true) {
                                     queue.push(currentCoord);
                                 }
                             }
-                            _visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] = true;
+                            _visitid[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0] = true;
                         }
                     }
                 }
@@ -141,15 +142,14 @@ class GameMap {
     }
 
     move(from, to) {
-        let currentObject = this._cells[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]];
-        if (currentObject._objectType === "hero" || currentObject._objectType === "mob") {
+        let currentObject = this._cells[from.x][from.y][from.z];
+        if (currentObject._objectType === "hero" || currentObject._objectType === "mob")
             currentObject._position = to;
-        }
-        this._cells[to.coordinates[0]][to.coordinates[1]][to.coordinates[2]] = currentObject;
-        this._cells[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]] = null;
+        this._cells[to.x][to.y][to.z] = currentObject;
+        this._cells[from.x][from.y][from.z] = null;
     }
 
-    sendInf() {
+    sendInfo() {
         for (let z = 0; z < this._depth; z++) {
             for (let y = 0; y < this._height; y++) {
                 for (let x = 0; x < this._width; x++) {
