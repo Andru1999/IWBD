@@ -1,21 +1,28 @@
-"use strict"
+"use strict";
 
 // JavaScript source code
 function getRandomInt(min, max) {
-    var x = 0;
-    x = (Math.floor(Math.random() * (max - min)) * 1.0 + min * 1.0);
-    return x;
+    return (Math.floor(Math.random() * (max - min)) + min * 1.0);
 }
 
 class Position {
     constructor(x, y, z, wayLenght, previousIndexInQ) {
-        this.coordinates = new Array(3);
-        this.coordinates[0] = x;
-        this.coordinates[1] = y;
-        this.coordinates[2] = z;
+        this.x = x;
+        this.y = y;
+        this.z = z;
         this.wayLenght = wayLenght;
         this.previousIndexInQ = previousIndexInQ;
     }
+}
+
+function getVector3(x, y, z) {
+    let arr = new Array(x);
+    for (let i = 0; i < x; i++) {
+        arr[i] = new Array(y);
+        for (let j = 0; j < y; j++)
+            arr[i][j] = new Array(z);
+    }
+    return arr;
 }
 
 class GameMap {
@@ -23,19 +30,12 @@ class GameMap {
         this._height = height;
         this._width = width;
         this._depth = depth;
-        this._cells = new Array(this._width);
-        for (let i = 0; i < this._cells.length; i++) {
-            this._cells[i] = new Array(this._height);
-            for (let j = 0; j < this._cells[i].length; j++) {
-                this._cells[i][j] = new Array(this._depth);
-            }
-        }
+        this._cells = getVector3(width, height, depth);
         this.generateMap();
     }
 
     generateMap() {
-        let variant;
-        variant = getRandomInt(0, 3);
+        let variant = getRandomInt(0, 3);
         let wall = new GameObject("wall", variant, "wall", false, 1);
         let floor = new GameObject("floor", variant, "floor", true, 1);
 
@@ -44,7 +44,6 @@ class GameMap {
                 this._cells[i][j][0] = floor;
             }
         }
-
 
         for (let i = 0; i < this._width; i++) {//make walls
             this._cells[i][0][2] = wall;
@@ -64,7 +63,7 @@ class GameMap {
             let randomPosition = new Position(getRandomInt(1, this._width - 1), getRandomInt(1, this._height - 1), 2, 0, -1);
             let obstacle = this.allAdmissibleCells(randomPosition, getRandomInt(1, 5));
             for (let i = 0; i < obstacle.length; i++) {
-                this._cells[obstacle[i].coordinates[0]][obstacle[i].coordinates[1]][obstacle[i].coordinates[2]] = wall;
+                this._cells[obstacle[i].x][obstacle[i].y][obstacle[i].z] = wall;
             }
         }
 
@@ -83,56 +82,53 @@ class GameMap {
 
     }
 
-    /*findWay(queue, point) { //не сделал ещё
+    findWay(queue, point) {
         let currentIndex;
-        for (let i=0;i<queue.length;i++){
-            if (queue[i].coordinates==point.coordinates){
-                currentIndex=i;
+        for (let i = 0; i < queue.length; i++) {
+            if (queue[i].coordinates.x == point.coordinates.x
+                && queue[i].coordinates.y == point.coordinates.y
+                && queue[i].coordinates.y == point.coordinates.y) {
+                currentIndex = i;
                 break;
             }
         }
-        let wayPoints= new Array();
-        while (queue[currentIndex].previousIndexInQ!=-1)
-        {
+        let wayPoints = new Array();
+        while (queue[currentIndex].previousIndexInQ != -1) {
             wayPoints.push(queue[currentIndex]);
-            currentIndex=queue[currentIndex].previousIndexInQ;
+            currentIndex = queue[currentIndex].previousIndexInQ;
         }
         wayPoints.push(queue[currentIndex]);
-        return(wayPoints);
-    }*/
+        return (wayPoints);
+    }
 
     allAdmissibleCells(position, dist) {
-        let _visitid = new Array(this._width);
-        for (let i = 0; i < _visitid.length; i++) {
-            _visitid[i] = new Array(this._height);
-            for (let j = 0; j < _visitid[i].length; j++) {
-                _visitid[i][j] = new Array(this._depth);
-                for (let k = 0; k < _visitid[i][j].length; k++) {
+        let _visitid = getVector3(this._width, this._height, this._depth)
+        for (let i = 0; i < _visitid.length; i++)
+            for (let j = 0; j < _visitid[i].length; j++)
+                for (let k = 0; k < _visitid[i][j].length; k++)
                     _visitid[i][j][k] = false;
-                }
-            }
-        }
+
+
         let moveSetX = [-1, 0, 1];
         let moveSetY = [-1, 0, 1];
         let queue = [];
-        _visitid[position.coordinates[0]][position.coordinates[1]][position.coordinates[2]] = true;
+        _visitid[position.x][position.y][position.z] = true;
         queue.push(position);
         for (let l = 0; l < queue.length; l++) {
-            if (queue[l].wayLenght * 1.0 < dist * 1.0) {
-                for (let i = 0; i < 3; i++) {
-                    for (let j = 0; j < 3; j++) {
-                        let currentCoord = new Position(queue[l].coordinates[0] * 1.0 + moveSetX[i] * 1.0, queue[l].coordinates[1] * 1.0 + moveSetY[j] * 1.0, queue[l].coordinates[2] * 1.0, queue[l].wayLenght + 1, l);
-                        if (_visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] === false) {
-                            if (this._cells[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] === null) {
-                                queue.push(currentCoord);
-                            }
-                            else {
-                                if (this._cells[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0]._walkable === true) {
-                                    queue.push(currentCoord);
-                                }
-                            }
-                            _visitid[currentCoord.coordinates[0] * 1.0][currentCoord.coordinates[1] * 1.0][currentCoord.coordinates[2] * 1.0] = true;
+            if (queue[l].wayLenght * 1.0 >= dist * 1.0) continue;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    let currentCoord = new Position(
+                        queue[l].x * 1.0 + moveSetX[i] * 1.0,
+                        queue[l].y * 1.0 + moveSetY[j] * 1.0,
+                        queue[l].z * 1.0, queue[l].wayLenght + 1, l);
+
+                    if (_visitid[currentCoord.x][currentCoord.y][currentCoord.z] === false) {
+                        let curObj = this._cells[currentCoord.x][currentCoord.y][currentCoord.z];
+                        if (curObj == null || curObj._walkable) {
+                            queue.push(currentCoord);
                         }
+                        _visitid[currentCoord.x][currentCoord.y][currentCoord.z] = true;
                     }
                 }
             }
@@ -141,23 +137,11 @@ class GameMap {
     }
 
     move(from, to) {
-        let currentObject = this._cells[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]];
-        if (currentObject._objectType === "hero" || currentObject._objectType === "mob") {
+        let currentObject = this._cells[from.x][from.y][from.z];
+        if (currentObject._position)
             currentObject._position = to;
-        }
-        this._cells[to.coordinates[0]][to.coordinates[1]][to.coordinates[2]] = currentObject;
-        this._cells[from.coordinates[0]][from.coordinates[1]][from.coordinates[2]] = null;
-    }
-
-    sendInf() {
-        for (let z = 0; z < this._depth; z++) {
-            for (let y = 0; y < this._height; y++) {
-                for (let x = 0; x < this._width; x++) {
-                    let currentObject = this._cells[x][y][z];
-                    renderSprite(currentObject._objectType, currentObject._variant, x, y);
-                }
-            }
-        }
+        this._cells[to.x][to.y][to.z] = currentObject;
+        this._cells[from.x][from.y][from.z] = null;
     }
 }
 
@@ -203,15 +187,15 @@ class Creature extends GameObject {
 
     calcDamage() {
         switch (this._creatureType) {
-            case '0':
+            case 0:
                 return this._strength * this._baseDamage;
                 break;
 
-            case '1':
+            case 1:
                 return this._dexterity * this._baseDamage;
                 break;
 
-            case '2':
+            case 2:
                 return this._intelligence * this._baseDamage;
                 break;
 
@@ -221,12 +205,5 @@ class Creature extends GameObject {
         }
     }
 }
-
-
-
-
-
-
-
 
 
