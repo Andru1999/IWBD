@@ -1,5 +1,5 @@
 var Main = (function() {})();
-"use strict"
+"use strict";
 var requestAnimFrame =
         window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||

@@ -1,4 +1,5 @@
-class RenderController {
+class ResuseLoader
+{
     constructor(func) {
         this.TexturesArr = {};
         this.BaseSpritesArr = {};
@@ -65,11 +66,11 @@ class RenderController {
     {
         function AddBaseSkin(name, basetexture, size, index,obj)
         {
-            if (obj.BaseSpritesArr[name]==undefined)
+            if (obj.sprites[name]==undefined)
             {
-                obj.BaseSpritesArr[name]=[];
+                obj.sprites[name]=[];
             }
-            obj.BaseSpritesArr[name].push(new BaseSprite(obj.TexturesArr[basetexture], size, index));
+            obj.sprites[name].push(new BaseSprite(obj.TexturesArr[basetexture], size, index));
         }
 
         AddBaseSkin("wall" ,"BlueWalls&Floor",BaseCellSize,0,this);
@@ -84,11 +85,6 @@ class RenderController {
         AddBaseSkin("areas" ,"AttakSpase",BaseCellSize,0,this);
         AddBaseSkin("smoke" ,"Smoke",BaseCellSize,0,this);
         func();
-    }
-
-    renderSprite(type, variant, canvas, x, y){
-        (this.sprites[type][(Math.abs(variant)%this.sprites[type].length)]).draw(canvas,x,y); // Символ дибилизма
-        //Отрисовка справйта
     }
 
 }
