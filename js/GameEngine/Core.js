@@ -6,12 +6,7 @@ function getRandomInt(min, max) {
 }
 
 class Position {
-    /* Класс описывающий координаты точек */
     constructor(x, y, z, wayLenght, previousIndexInQ) {
-<<<<<<< HEAD
-=======
-        this.coordinates = [x, y, z];
->>>>>>> dev
         this.x = x;
         this.y = y;
         this.z = z;
@@ -31,25 +26,12 @@ function getVector3(x, y, z) {
 }
 
 class GameMap {
-    constructor(width, height, depth, need_generate_map = true) {
+    constructor(width, height, depth) {
         this._height = height;
         this._width = width;
         this._depth = depth;
-<<<<<<< HEAD
         this._cells = getVector3(width, height, depth);
         this.generateMap();
-=======
-        this._cells = new Array(this._width);
-        for (let i = 0; i < this._cells.length; i++) {
-            this._cells[i] = new Array(this._height);
-            for (let j = 0; j < this._cells[i].length; j++) {
-                this._cells[i][j] = new Array(this._depth);
-            }
-        }
-
-        if (need_generate_map)
-            this.generateMap();
->>>>>>> dev
     }
 
     generateMap() {
@@ -133,7 +115,6 @@ class GameMap {
         _visitid[position.x][position.y][position.z] = true;
         queue.push(position);
         for (let l = 0; l < queue.length; l++) {
-<<<<<<< HEAD
             if (queue[l].wayLenght * 1.0 >= dist * 1.0) continue;
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
@@ -146,22 +127,6 @@ class GameMap {
                         let curObj = this._cells[currentCoord.x][currentCoord.y][currentCoord.z];
                         if (curObj == null || curObj._walkable) {
                             queue.push(currentCoord);
-=======
-            if (queue[l].wayLenght * 1.0 < dist * 1.0) {
-                for (let i = 0; i < 3; i++) {
-                    for (let j = 0; j < 3; j++) {
-                        let currentCoord = new Position(queue[l].x * 1.0 + moveSetX[i] * 1.0, queue[l].y * 1.0 + moveSetY[j] * 1.0, queue[l].z * 1.0, queue[l].wayLenght + 1, l);
-                        if (_visitid[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0] === false) {
-                            if (this._cells[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0] === null) {
-                                queue.push(currentCoord);
-                            }
-                            else {
-                                if (this._cells[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0]._walkable === true) {
-                                    queue.push(currentCoord);
-                                }
-                            }
-                            _visitid[currentCoord.x * 1.0][currentCoord.y * 1.0][currentCoord.z * 1.0] = true;
->>>>>>> dev
                         }
                         _visitid[currentCoord.x][currentCoord.y][currentCoord.z] = true;
                     }
@@ -173,28 +138,10 @@ class GameMap {
 
     move(from, to) {
         let currentObject = this._cells[from.x][from.y][from.z];
-<<<<<<< HEAD
         if (currentObject._position)
             currentObject._position = to;
         this._cells[to.x][to.y][to.z] = currentObject;
         this._cells[from.x][from.y][from.z] = null;
-=======
-        if (currentObject._objectType === "hero" || currentObject._objectType === "mob")
-            currentObject._position = to;
-        this._cells[to.x][to.y][to.z] = currentObject;
-        this._cells[from.x][from.y][from.z] = null;
-    }
-
-    sendInfo() {
-        for (let z = 0; z < this._depth; z++) {
-            for (let y = 0; y < this._height; y++) {
-                for (let x = 0; x < this._width; x++) {
-                    let currentObject = this._cells[x][y][z];
-                    renderSprite(currentObject._objectType, currentObject._variant, x, y);
-                }
-            }
-        }
->>>>>>> dev
     }
 }
 
