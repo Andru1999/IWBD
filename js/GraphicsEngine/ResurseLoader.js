@@ -1,90 +1,84 @@
-class ResuseLoader
+function LoadBaseResurses(func)
 {
-    constructor(func) {
-        this.TexturesArr = {};
-        this.BaseSpritesArr = {};
+    var TexturesArr = {};
+    var BaseSpritesArr = {};
+    var ImgArr = {};
 
-        function LoadImg(urlArr,func,obj) {
-            var SothigToFixAJAX=urlArr.length;
-            var resourceCache={};
-            var _obj= obj;
-            var _func= func;
-            function _load(url) {
+    LoadImg(
+        [
+            'Assets/BlueWallAndFloor.png',
+            'Assets/GreyWallAndFloor.png',
+            'Assets/WhiteWallAndFloor.png',
+            "Assets/Void.png",
+            "Assets/Hero.png",
+            "Assets/AttakSpase.png",
+            "Assets/Smoke.png",
+            "Assets/WalkableSpase.png"
+        ], func);
 
-                var img = new Image();
-                img.onload = function()
+    function LoadImg(urlArr, func) {
+        let SothigToFixAJAX = urlArr.length;
+        function _load(url) {
+
+            let img = new Image();
+            img.onload = function () {
+                SothigToFixAJAX--;
+                if (SothigToFixAJAX == 0) 
                 {
-                    SothigToFixAJAX--;
-                    if (SothigToFixAJAX==0)
-                    {
-                        _obj.genTextures(_func);
-                    }
-                };
-                img.src = url;
-                return img;
-            }
-
-            urlArr.forEach(function(url){
-                resourceCache[url] = _load(url);
-            });
-
-            return resourceCache;
+                    genTextures(func);
+                }
+            };
+            img.src = url;
+            return img;
         }
 
-        this.ImgArr=LoadImg(
-            [
-                'Assets/BlueWallAndFloor.png',
-                'Assets/GreyWallAndFloor.png',
-                'Assets/WhiteWallAndFloor.png',
-                "Assets/Void.png",
-                "Assets/Hero.png",
-                "Assets/AttakSpase.png",
-                "Assets/Smoke.png",
-                "Assets/WalkableSpase.png"
-            ],func,this
-        );
+        urlArr.forEach(function (url) {
+            ImgArr[url] = _load(url);
+        });
 
-    }
-    genTextures(func)
-    {
-        function AddBaseTexture(img,dx,dy,name,obj)
-        {
-            obj.TexturesArr[name]=new Texture(img, dx, dy);
-        }
-        AddBaseTexture(this.ImgArr['Assets/BlueWallAndFloor.png'],64,64,"BlueWalls&Floor",this);
-        AddBaseTexture(this.ImgArr['Assets/GreyWallAndFloor.png'],64,64,"GreyWalls&Floor",this);
-        AddBaseTexture(this.ImgArr['Assets/WhiteWallAndFloor.png'],64,64,"WhiteWalls&Floor",this);
-        AddBaseTexture(this.ImgArr['Assets/Void.png'],64,64,"VoidTexture",this);
-        AddBaseTexture(this.ImgArr['Assets/Smoke.png'],64,64,"Smoke",this);
-        AddBaseTexture(this.ImgArr['Assets/WalkableSpase.png'],64,64,"WalkableSpase",this);
-        AddBaseTexture(this.ImgArr['Assets/AttakSpase.png'],64,64,"AttakSpase",this);
-        AddBaseTexture(this.ImgArr['Assets/Hero.png'],16,21,"Hero",this);
-        this.genBaseSprites(func);
+        return resourceCache;
     }
 
-    genBaseSprites(func)
+
+    function genTextures(func)
     {
-        function AddBaseSkin(name, basetexture, size, index,obj)
-        {
-            if (obj.sprites[name]==undefined)
-            {
-                obj.sprites[name]=[];
-            }
-            obj.sprites[name].push(new BaseSprite(obj.TexturesArr[basetexture], size, index));
+        function AddBaseTexture(img, dx, dy, name) {
+            TexturesArr[name] = new Texture(img, dx, dy);
         }
 
-        AddBaseSkin("wall" ,"BlueWalls&Floor",BaseCellSize,0,this);
-        AddBaseSkin("floor" ,"BlueWalls&Floor",BaseCellSize,1,this);
-        AddBaseSkin("wall" ,"GreyWalls&Floor",BaseCellSize,0,this);
-        AddBaseSkin("floor" ,"GreyWalls&Floor",BaseCellSize,1,this);
-        AddBaseSkin("wall" ,"WhiteWalls&Floor",BaseCellSize,0,this);
-        AddBaseSkin("floor" ,"WhiteWalls&Floor",BaseCellSize,1,this);
-        AddBaseSkin("void" ,"VoidTexture",BaseCellSize,0,this);
-        AddBaseSkin("hero" ,"Hero",BaseCellSize,0,this);
-        AddBaseSkin("areas" ,"WalkableSpase",BaseCellSize,0,this);
-        AddBaseSkin("areas" ,"AttakSpase",BaseCellSize,0,this);
-        AddBaseSkin("smoke" ,"Smoke",BaseCellSize,0,this);
-        func();
+        AddBaseTexture(ImgArr['Assets/BlueWallAndFloor.png'], 64, 64, "BlueWalls&Floor");
+        AddBaseTexture(ImgArr['Assets/GreyWallAndFloor.png'], 64, 64, "GreyWalls&Floor");
+        AddBaseTexture(ImgArr['Assets/WhiteWallAndFloor.png'], 64, 64, "WhiteWalls&Floor");
+        AddBaseTexture(ImgArr['Assets/Void.png'], 64, 64, "VoidTexture");
+        AddBaseTexture(ImgArr['Assets/Smoke.png'], 64, 64, "Smoke");
+        AddBaseTexture(ImgArr['Assets/WalkableSpase.png'], 64, 64, "WalkableSpase");
+        AddBaseTexture(ImgArr['Assets/AttakSpase.png'], 64, 64, "AttakSpase");
+        AddBaseTexture(ImgArr['Assets/Hero.png'], 16, 21, "Hero");
+        genBaseSprites(func);
+    }
+
+    function genBaseSprites(func)
+    {
+        function AddBaseSkin(name, basetexture, size, index) {
+            if (BaseSpritesArr[name] == undefined) {
+                BaseSpritesArr[name] = [];
+            }
+            BaseSpritesArr[name].push(new BaseSprite(TexturesArr[basetexture], size, index));
+        }
+
+        AddBaseSkin("wall", "BlueWalls&Floor", BaseCellSize, 0);
+        AddBaseSkin("floor", "BlueWalls&Floor", BaseCellSize, 1);
+        AddBaseSkin("wall", "GreyWalls&Floor", BaseCellSize, 0);
+        AddBaseSkin("floor", "GreyWalls&Floor", BaseCellSize, 1);
+        AddBaseSkin("wall", "WhiteWalls&Floor", BaseCellSize, 0);
+        AddBaseSkin("floor", "WhiteWalls&Floor", BaseCellSize, 1);
+        AddBaseSkin("void", "VoidTexture", BaseCellSize, 0);
+        AddBaseSkin("hero", "Hero", BaseCellSize, 0);
+        AddBaseSkin("areas", "WalkableSpase", BaseCellSize, 0);
+        AddBaseSkin("areas", "AttakSpase", BaseCellSize, 0);
+        AddBaseSkin("smoke", "Smoke", BaseCellSize, 0);
+        func(BaseSpritesArr);
     }
 
 }
+
