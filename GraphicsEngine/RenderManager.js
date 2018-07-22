@@ -18,7 +18,7 @@ class RenderManager {
         let ctx=this.canvas.getContext("2d");
         ctx.fillStyle = "black";
         ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
-        for (let z=0;z<this.worldInfo.depth;z++) {
+        for (let z=0;z<this.worldInfo.depth;z++) { //todo оптимизировать
             for (let x = 0; x < this.worldInfo.width; x++) {
                 for (let y = 0; y < this.worldInfo.height; y++) {
                     let cell = this.engine.getCellInfo(x,y,z);
