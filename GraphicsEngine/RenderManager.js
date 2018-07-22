@@ -1,10 +1,10 @@
 "use strict"
 class RenderManager {
-    constructor(arr, canvas, engine)
+    constructor(arr, canvas, cellInfo)
     {
         this.sprites = arr;
         this.canvas = canvas;
-        this.engine = engine;
+        this.cellInfo = cellInfo;
     }
 
     renderSprite(type, variant, x, y) {
@@ -19,7 +19,7 @@ class RenderManager {
         for (let z=0;z<10;z++) {
             for (let x = 0; x < 1000; x++) {
                 for (let y = 0; y < 1000; y++) {
-                    let cell = this.engine.getCellInfo(x,y,z);
+                    let cell = this.cellInfo(x,y,z);
                     if (cell!="empty")
                     {
                         this.renderSprite(cell.type,cell.variant,x*BaseCellWidth,y*BaseCellHeight);

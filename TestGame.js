@@ -5,7 +5,6 @@ var requestAnimFrame =
         window.mozRequestAnimationFrame    ||
         window.oRequestAnimationFrame      ||
         window.msRequestAnimationFrame;
-
 var game;
 window.onload=()=>
 {
@@ -24,7 +23,7 @@ class Game {
         canvas.height=800;
 
         this.engine = new SpaceWorld();
-        this.renderManager=new RenderManager(SpriteArr,canvas,this.engine);
+        this.renderManager=new RenderManager(SpriteArr,canvas,this.engine.getCellInfo);
     }
 
 

@@ -73,8 +73,8 @@ function LoadBaseResurses(func)
         AddBaseSkin("floor", "WhiteWalls&Floor", BaseCellSize, 1);
         AddBaseSkin("void", "VoidTexture", BaseCellSize, 0);
         AddBaseSkin("hero", "Hero", BaseCellSize, 0);
-        AddBaseSkin("areas", "WalkableSpase", BaseCellSize, 0);
-        AddBaseSkin("areas", "AttakSpase", BaseCellSize, 0);
+        AddBaseSkin("area", "WalkableSpase", BaseCellSize, 0);
+        AddBaseSkin("area", "AttakSpase", BaseCellSize, 0);
         AddBaseSkin("smoke", "Smoke", BaseCellSize, 0);
         func(BaseSpritesArr);
     }
