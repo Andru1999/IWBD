@@ -26,6 +26,7 @@ class Game {
         $(maincanvas).mousedown(game.renderManager.DisplControler.mousedown);
         $("body").mouseup(game.renderManager.DisplControler.mouseup);
         $("body").mousemove(game.renderManager.DisplControler.mousemove);
+        $("#action_button").click(game.renderManager.DisplControler.actionButtonClick);
     }
 
 
