@@ -38,10 +38,11 @@ class DisplayControler
             if(event.originalEvent.button==0)
             {
                 LastXY.set(event.originalEvent.offsetX, event.originalEvent.offsetY);
-                if(MosePresed&&!IsMooving)
-                    engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x)/32),Math.floor(((event.originalEvent.offsetY - this.Offset.y))/32),event.originalEvent.button);
+
                 MosePresed = false;
             }
+            if (!IsMooving)
+                engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x)/32),Math.floor(((event.originalEvent.offsetY - this.Offset.y))/32),event.originalEvent.button);
             IsMooving = false;
 90
         };
