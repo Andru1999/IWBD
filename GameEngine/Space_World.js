@@ -25,6 +25,10 @@ class SpaceWorld {
 		else return "empty";			
     }
 	
+	getWorldSize (){
+		return this._world._map.getMapSize();
+	}
+	
     doAction(x, y, mouseButton) {
 		if (x<0 || y<0 || x>this._world._map._width || y>this._world._map._height) return "not in map"
 		if (mouseButton === 2) {

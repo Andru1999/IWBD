@@ -33,6 +33,10 @@ class GameMap {
         this._cells = getVector3(width, height, depth);
         this.generateMap();
     }
+	
+	getMapSize(){
+		return {width:this._width,height:this._height,depth:this._depth}
+	}
 
     generateMap() {
         let variant = getRandomInt(0, 3);
