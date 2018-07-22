@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IWDB</title>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="css/index.css">
-    <script type="text/javascript" src="js/Libs/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <title>IWBD</title>
+    <script type="text/javascript" src="Jquery.js"></script>
+    <script type="text/javascript" src="GraphicsEngine/GlobalDisplayVariables.js"></script>
+    <script type="text/javascript" src="GraphicsEngine/SpriteManager.js"></script>
+    <script type="text/javascript" src="GraphicsEngine/RenderManager.js"></script>
+    <script type="text/javascript" src="GraphicsEngine/ResurseLoader.js"></script>
+    <script type="text/javascript" src="GameEngine/Core.js"></script>
+    <script type="text/javascript" src="GameEngine/WorldGenerationModule.js"></script>
+    <script type="text/javascript" src="GameEngine/Space_World.js"></script>
+    <script type="text/javascript" src="TestGame.js"></script>
 </head>
 <body>
-    <iframe id="start_menu" src="menu.html" frameborder="0"></iframe>
-    <iframe id="game"       src="game.html" frameborder="0" hidden></iframe>
-    <iframe id="endgame"    src="endgame.html" frameborder="0" hidden></iframe>
+    <canvas id="main_game_canvas"></canvas>
 </body>
 </html>

@@ -1,9 +1,10 @@
+"use strict"
 function LoadBaseResurses(func)
 {
     var TexturesArr = {};
     var BaseSpritesArr = {};
     var ImgArr = {};
-
+    var BaseCellSize= new Size(BaseCellHeight,BaseCellWidth);
     LoadImg(
         [
             'Assets/BlueWallAndFloor.png',
@@ -35,8 +36,6 @@ function LoadBaseResurses(func)
         urlArr.forEach(function (url) {
             ImgArr[url] = _load(url);
         });
-
-        return resourceCache;
     }
 
 

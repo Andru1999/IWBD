@@ -9,8 +9,6 @@ class Size
     }
 }
 
-BaseCellSize = new Size(BaseCellWidth,BaseCellHeight);
-
 class Texture {
     constructor(img, dx, dy)
     {
@@ -48,20 +46,16 @@ class BaseSprite
     this.size = size;
     this.index = index;
     }
-    draw(canvas, x, y)
+    draw(ctx, x, y)
     {
-        if (x > -32 && x < canvas.width + 32 && y - 32 < canvas.height && y > -32)
-        {
-            let ctx=canvas.getContext("2d");
-            let img = this.texture.img;
-            let img_x = this.texture.frame[this.index].x;
-            let img_y = this.texture.frame[this.index].y;
-            let img_dx = this.texture.frame[this.index].w;
-            let img_dy = this.texture.frame[this.index].h;
-            let width = this.size.width;
-            let height = this.size.height;
-            ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
-        }
+        let img = this.texture.img;
+        let img_x = this.texture.frame[this.index].x;
+        let img_y = this.texture.frame[this.index].y;
+        let img_dx = this.texture.frame[this.index].w;
+        let img_dy = this.texture.frame[this.index].h;
+        let width = this.size.width;
+        let height = this.size.height;
+        ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
     }
 }
 

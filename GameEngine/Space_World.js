@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 class SpaceWorld {
     constructor() {
@@ -17,9 +17,12 @@ class SpaceWorld {
     }
 
     getCellInfo(x, y, z) {
-		let currentCell = this._world._map._cells[x][y][z];
-		if (currentCell)
-			return [currentCell._objectType , currentCell._variant];
+        let currentCell = this._world._map._cells[x][y][z];
+        if (currentCell)
+            return {
+                type:currentCell._objectType,
+                variant:currentCell._variant
+                };
 		return "empty";
     }
 
