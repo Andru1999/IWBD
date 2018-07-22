@@ -1,11 +1,11 @@
-"use strict"
+"use strict";
 
 class SpaceWorld {
     constructor() {
         this._actionType = 0;//0 - nothing , 1 - move , 2 - attack
         this._attackField = [];
         this._walkableField = [];
-        this._world = new World(new GameMap(getRandomInt(25, 50), getRandomInt(25, 50), 3), 1, 0);
+        this._world = new World(new GameMap(25, 25, 3), 1, 0);
         this._currentCreature = null;
     }
 
@@ -17,16 +17,16 @@ class SpaceWorld {
     }
 
     getCellInfo(x, y, z) {
-        let currentCell = this._world._map._cells[x][y][z];
-        if (currentCell)
-            return {
-                type:currentCell._objectType,
-                variant:currentCell._variant
-                };
-		return "empty";
+		let currentCell = this._world._map._cells[x][y][z];
+		if (currentCell)
+			return {type:currentCell._objectType , 
+					variant:currentCell._variant, 
+					visibility:currentCell._visibility};
+		else return "empty";			
     }
-
+	
     doAction(x, y, mouseButton) {
+		if (x<0 || y<0 || x>this._world._map._width || y>this._world._map._height) return "not in map"
 		if (mouseButton === 2) {
 			if (this._currentCreature != null && this._currentCreature._actionPoints > 0) {
             
