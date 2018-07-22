@@ -31,22 +31,32 @@ class DisplayControler
                 LastXY.set(event.originalEvent.offsetX, event.originalEvent.offsetY);
                 MosePresed=true;
             }
-        }
+        };
+
         this.mouseup = (event)=>
         {
             if(event.originalEvent.button==0)
             {
                 LastXY.set(event.originalEvent.offsetX, event.originalEvent.offsetY);
+                if(MosePresed&&!IsMooving)
+                    engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x)/32),Math.floor(((event.originalEvent.offsetY - this.Offset.y))/32),event.originalEvent.button);
                 MosePresed = false;
             }
-            if (IsMooving) {
-                IsMooving = false;
-                return;
-            }else
-            {
-                engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x)/32),Math.floor(((event.originalEvent.offsetY - this.Offset.y))/32),event.originalEvent.button);
-            }
+            IsMooving = false;
+90
+        };
+
+        this.actionButtonClick=(event)=>{
+        if (event.currentTarget.defaultValue=="Атаковать")
+        {
+            event.currentTarget.defaultValue="Двигаться";
+            engine.setAction("attack");
         }
+        else{
+            event.currentTarget.defaultValue="Атаковать";
+            engine.setAction("move");
+        }
+        };
         this.mousemove = (event)=>
         {
             function distance(a,b)
