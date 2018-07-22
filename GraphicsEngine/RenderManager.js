@@ -6,6 +6,7 @@ class RenderManager {
         this.canvas = canvas;
         this.engine = engine;
         this.worldInfo=worldInfo;
+        this.DisplControler= new DisplayControler(engine,canvas);
     }
 
     renderSprite(type, variant, x, y) {
@@ -23,7 +24,7 @@ class RenderManager {
                     let cell = this.engine.getCellInfo(x,y,z);
                     if (cell!="empty")
                     {
-                        this.renderSprite(cell.type,cell.variant,x*BaseCellWidth,y*BaseCellHeight);
+                        this.renderSprite(cell.type,cell.variant,x*BaseCellWidth+this.DisplControler.Offset.x,y*BaseCellHeight+this.DisplControler.Offset.y);
                     }
                 }
             }
