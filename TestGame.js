@@ -23,7 +23,7 @@ class Game {
         canvas.height=800;
 
         this.engine = new SpaceWorld();
-        this.renderManager=new RenderManager(SpriteArr,canvas,this.engine.getCellInfo);
+        this.renderManager=new RenderManager(SpriteArr,canvas,this.engine,this.engine.getWorldSize());
     }
 
 
