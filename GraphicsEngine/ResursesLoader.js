@@ -14,7 +14,12 @@ function LoadBaseResurses(func)
             "Assets/Hero.png",
             "Assets/AttakSpase.png",
             "Assets/Smoke.png",
-            "Assets/WalkableSpase.png"
+            "Assets/WalkableSpase.png",
+            "Assets/ExitButton.png",
+            "Assets/StartButton.png",
+            "Assets/OptionButton.png",
+            "Assets/BackButton.png",
+            "Assets/AttackMoveButton.png",
         ], func);
 
     function LoadImg(urlArr, func) {
@@ -53,6 +58,11 @@ function LoadBaseResurses(func)
         AddBaseTexture(ImgArr['Assets/WalkableSpase.png'], 64, 64, "WalkableSpase");
         AddBaseTexture(ImgArr['Assets/AttakSpase.png'], 64, 64, "AttakSpase");
         AddBaseTexture(ImgArr['Assets/Hero.png'], 16, 21, "Hero");
+        AddBaseTexture(ImgArr["Assets/ExitButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "ExitButton");
+        AddBaseTexture(ImgArr["Assets/StartButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "StartButton");
+        AddBaseTexture(ImgArr["Assets/BackButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "BacktButton");
+        AddBaseTexture(ImgArr["Assets/OptionButton.png"], ImgArr["Assets/OptionButton.png"].width, ImgArr["Assets/OptionButton.png"].height, "OptionButton");
+        AddBaseTexture(ImgArr["Assets/AttackMoveButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "AttackMoveButton");
         genBaseSprites(func);
     }
 
@@ -76,6 +86,11 @@ function LoadBaseResurses(func)
         AddBaseSkin("area", "WalkableSpase", BaseCellSize, 0);
         AddBaseSkin("area", "AttakSpase", BaseCellSize, 0);
         AddBaseSkin("smoke", "Smoke", BaseCellSize, 0);
+        AddBaseSkin("buttons", "StartButton",new Size(ImgArr["Assets/ExitButton.png"].width/6, ImgArr["Assets/ExitButton.png"].height/6), 0);           //0
+        AddBaseSkin("buttons", "ExitButton", new Size(ImgArr["Assets/ExitButton.png"].width/6, ImgArr["Assets/ExitButton.png"].height/6) , 0);          //1
+        AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width/6, ImgArr["Assets/ExitButton.png"].height/6) , 0);         //2
+        AddBaseSkin("buttons", "AttackMoveButton", new Size(ImgArr["Assets/ExitButton.png"].width/8, ImgArr["Assets/ExitButton.png"].height/12) , 0);    //3
+        AddBaseSkin("buttons", "OptionButton",new Size(ImgArr["Assets/OptionButton.png"].width/8, ImgArr["Assets/OptionButton.png"].height/8) , 0);     //4
         func(BaseSpritesArr);
     }
 

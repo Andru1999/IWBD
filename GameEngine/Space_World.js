@@ -2,18 +2,19 @@
 
 class SpaceWorld {
     constructor() {
-        this._actionType = 0;//0 - nothing , 1 - move , 2 - attack
+        this._actionType = 1;//0 - nothing , 1 - move , 2 - attack
         this._attackField = [];
         this._walkableField = [];
-        this._world = new World(new GameMap(25, 25, 3), 1, 0);
+        this._world = new World(new GameMap(25, 25, 3), 2, 0);
         this._currentCreature = null;
     }
 
-    changeAction(x) {
+    setAction(x) {
         this.deleteActionSpace();
-        this._actionType = x;
+		if (x=="attack") this._actionType = 2;
+		if (x=="move") this._actionType = 1;
         this.makeActionSpace();
-		return "action type="+x;
+		return "action type="+this._actionType;
     }
 
     getCellInfo(x, y, z) {
@@ -30,7 +31,12 @@ class SpaceWorld {
 	}
 	
     doAction(x, y, mouseButton) {
-		if (x<0 || y<0 || x>this._world._map._width || y>this._world._map._height) return "not in map"
+		if (x<0 || y<0 || x>this._world._map._width || y>this._world._map._height) return "not in map";
+		
+		if (mouseButton === 0) {
+           return this.SelectUnit(x,y); 
+        }
+		
 		if (mouseButton === 2) {
 			if (this._currentCreature != null && this._currentCreature._actionPoints > 0) {
             
@@ -44,16 +50,12 @@ class SpaceWorld {
                         break;
 
                     case 2:
-						return this.Attack(x,y);
+						return this.AttackUnit(x,y);
                         break;
                 }
             }
         }
 		else return "no hero selected";
-		
-        if (mouseButton === 0) {
-           return SelectUnit(x,y); 
-        }
     }
 	
 	MoveUnit(x,y){
@@ -61,7 +63,7 @@ class SpaceWorld {
         let currentBottomCell = this._world._map._cells[x][y][1];
         let actionPosition = new Position(x, y, 2, 0, -1);
 		
-		if ((currentTopCell == null || currentTopCell._walkable === true)
+		if ((currentTopCell == null || currentTopCell._walkable === true) && (currentBottomCell!= null)
 			&& (currentBottomCell._objectType === "area") && (currentBottomCell._variant === 0)) {
             this._world._map.move(this._currentCreature._position, actionPosition);
             this._currentCreature._actionPoints--;
@@ -77,7 +79,7 @@ class SpaceWorld {
 		let currentTopCell = this._world._map._cells[x][y][2];
         let currentBottomCell = this._world._map._cells[x][y][1];
        		
-		if (currentTopCell != null && currentTopCell._objectType === "mob"
+		if (currentBottomCell!=null && currentTopCell != null && currentTopCell._objectType === "mob"
             && currentBottomCell._objectType === "area" && currentBottomCell._variant === 1) {
             this._currentCreature._actionPoints--;
             currentTopCell.takeDamage(this._currentCreature.calcDamage());
@@ -99,7 +101,11 @@ class SpaceWorld {
                 this.makeActionSpace();
 				return "select successfully";
             }
-			else return "select successfully";
+			else {
+				this.deleteActionSpace();
+				this._currentCreature=null;
+				return "select successfully";
+			}
 	}
 
     calcActionSpaces() {

@@ -11,7 +11,7 @@ window.onload=()=>
     LoadBaseResurses((SpriteArr)=>
     {
         game=new Game();
-        game.init(SpriteArr, $("#main_game_canvas")[0]);
+        game.init(SpriteArr, { maincanvas:$("#main_game_canvas")[0] });
         requestAnimFrame(()=>
         {
             loop(Date.now());
@@ -20,21 +20,21 @@ window.onload=()=>
 };
 
 class Game {
-    init(SpriteArr,maincanvas)
+    init(SpriteArr,canvases)
     {
-        maincanvas.width=1400;
-        maincanvas.height=800;
+        canvases.maincanvas.width=1400;
+        canvases.maincanvas.height=800;
         this.engine = new SpaceWorld();
-        this.renderManager=new RenderManager(SpriteArr,maincanvas,this.engine,this.engine.getWorldSize());
-        $(maincanvas).mousedown(game.renderManager.DisplControler.mousedown);
-        $("body").mouseup(game.renderManager.DisplControler.mouseup);
-        $("body").mousemove(game.renderManager.DisplControler.mousemove);
-        $("#action_button").click(game.renderManager.DisplControler.actionButtonClick);
+        this.Gui= new GUI(SpriteArr,{},{},canvases);
+        $(canvases.maincanvas).mousedown(game.Gui.controler.mousedown);
+        $("body").mouseup(game.Gui.controler.mouseup);
+        $("body").mousemove(game.Gui.controler.mousemove);
+        //  $("#action_button").click(game.renderManager.DisplControler.actionButtonClick);
     }
     render()
     {
-        this.renderManager.renderAll();
-        //todo this.renderManager.renderGui();
+        this.Gui.updateGui();
+        this.Gui.render();
     }
     update(dt)
     {
@@ -48,7 +48,7 @@ class Game {
 
 function loop(lastTime)
 {
-    var curentTime=Date.now();
+    let curentTime=Date.now();
     let dt = (curentTime - lastTime)/1000;
     game.render();
     game.update(dt);
