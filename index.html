@@ -22,20 +22,22 @@
     <script type="text/javascript" src="Game/TestGame.js"></script>
 </head>
 <body>
-    <script type="text/javascript">
+<script type="text/javascript">
+    $(document).ready(() => {
         // Отключаем контекстное меню на двух канвасах
         $("#main_game_canvas").on("contextmenu", false);
         $("#info_game_canvas").on("contextmenu", false);
-    </script>
-    <table>
-        <tr>
-            <td>
+    });
+</script>
+<table>
+    <tr>
+        <td>
             <canvas id="main_game_canvas"></canvas>
-            </td>
-            <td valign="top">
-                <canvas id="info_game_canvas"></canvas>
-            </td>
-        </tr>
+        </td>
+        <td valign="top">
+            <canvas id="info_game_canvas"></canvas>
+        </td>
+    </tr>
 </table>
 
 </body>
