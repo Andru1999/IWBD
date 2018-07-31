@@ -20,15 +20,15 @@ class World {
         let dexterity = getRandomInt(5, 20);
         let intelligence = getRandomInt(5, 20);
         let rangeVision = getRandomInt(5, 9);
-        let basicСharacteristic = getRandomInt(0, 3);
+        let basicCharacteristic = getRandomInt(0, 3);
         let hitPoint = getRandomInt(5, 20);
         let attackRange = 1;
         let visibility = 1;
-        if (basicСharacteristic != 0) {
+        if (basicCharacteristic != 0) {
             attackRange = rangeVision;
         }
         let mob = new Creature(objectType, variant, name, walkable, visibility, position, hitPoint, armor, baseDamage,
-            actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicСharacteristic, attackRange);
+            actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange);
         return mob;
     }
 

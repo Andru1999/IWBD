@@ -108,7 +108,7 @@ class GameMap {
             }
         }
 		
-        let wayPoints = new Array();
+        let wayPoints = [];
         while (queue[currentIndex].previousIndexInQ != -1 && currentIndex>0) {
             wayPoints.push(queue[currentIndex]);
             currentIndex = queue[currentIndex].previousIndexInQ;
@@ -179,7 +179,7 @@ class GameObject {
         this._variant = variant;
         this._name = name;
         this._walkable = walkable;
-		this._referenceСount= 0;
+		this._referenceCount= 0;
     }	
 }
 
@@ -187,7 +187,7 @@ class GameObject {
 class Creature extends GameObject {
 
     constructor(objectType, variant, name, walkable, visibility, position, hitPoint, armor, baseDamage,
-                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicСharacteristic, attackRange) {
+                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange) {
         super(objectType, variant, name, walkable, visibility);
         this._position = position;
         this._hitPoint = hitPoint;
@@ -199,7 +199,7 @@ class Creature extends GameObject {
         this._dexterity = dexterity;
         this._intelligence = intelligence;
         this._rangeVision = rangeVision;
-        this._basicСharacteristic = basicСharacteristic;
+        this._basicCharacteristic = basicCharacteristic;
         this._attackRange = attackRange;
     }
 	
@@ -217,7 +217,7 @@ class Creature extends GameObject {
     }
 
     calcDamage() {
-        switch (this._basicСharacteristic) {
+        switch (this._basicCharacteristic) {
             case 0:
                 return (this._strength/100+1) * this._baseDamage;
                 break;
