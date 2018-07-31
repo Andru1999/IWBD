@@ -7,6 +7,9 @@ class SpaceWorld {
         this._walkableField = [];
         this._world = new World(new GameMap(20, 20, 3), 1, 1);
         this._currentCreature = null;
+		for (let elem of this._world._heroes){
+			this.setScope(true,elem);
+		}
     }
 
     setAction(x) {
