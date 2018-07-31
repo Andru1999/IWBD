@@ -13,7 +13,7 @@ class GUI
     render()
     {
         this.renderControler.renderBackground();
-        this.renderControler.renderMap(this.fases[this.curentFase].canDrawMap,);
+        this.renderControler.renderMap(this.fases[this.curentFase].canDrawMap,this.controler.Offset);
         this.renderControler.renderGui(this.fases[this.curentFase].GuiElements);
     }
     switchFase(index)

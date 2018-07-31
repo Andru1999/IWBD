@@ -5,17 +5,45 @@ class RenderControler {
         this.sprites = sprites;
         this.canvases=canvases;
         this.engine = engine;
+        this.worldSize = this.engine.getWorldSize();
     }
 
     renderSprite(type, variant, x, y) {
         this.sprites[type][Math.abs(variant) % this.sprites[type].length].draw(this.canvases,"mainCanvas", x, y);
         //Отрисовка справйта
     }
-    renderMap(canDo)
+
+    renderMap(canDo,offset)
     {
         if (canDo)
         {
-           //for (let i = Number.max(0,);i</*todo */,i++)
+            var leftHightCell = new PositionOnCanvas(Math.floor((offset.x) / 32)-1, Math.floor(((offset.y)) / 32)-1);
+            var rightBottomCell = new PositionOnCanvas(Math.floor((offset.x+this.canvases["mainCanvas"].width) / 32)+1, Math.floor(((offset.y+this.canvases["mainCanvas"].height)) / 32)+1);
+            leftHightCell.x = Math.max(0,leftHightCell.x);
+            leftHightCell.y = Math.max(0,leftHightCell.x);
+            rightBottomCell.x = Math.min(rightBottomCell.x,this.worldSize.width);
+            rightBottomCell.y = Math.min(rightBottomCell.y,this.worldSize.height);
+            for (let x = leftHightCell.x; x < rightBottomCell.x; x++)
+            {
+                for (let y = leftHightCell.y; y < rightBottomCell.y; y++)
+                {
+                    for (let z = 0; z < this.worldSize.depth; z++)
+                    {
+                        let cellInfo = this.engine.getCellInfo(x,y,z);
+                        if (cellInfo.visibility==0||cellInfo.type=="empty")
+                        {
+                            continue;
+                        }else
+                        {
+                            this.renderSprite(cellInfo.type,cellInfo.variant,x*BaseCellWidth,y*BaseCellHeight);
+                            if (cellInfo.visibility==-1)
+                            {
+                                this.renderSprite("smoke",0,x*BaseCellWidth,y*BaseCellHeight);
+                            }
+                        }
+                    }
+                }
+            }
 
             //game.engine.getCellInfo()
         }
