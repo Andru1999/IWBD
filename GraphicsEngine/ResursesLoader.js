@@ -20,6 +20,7 @@ function LoadBaseResurses(func)
             "Assets/OptionButton.png",
             "Assets/BackButton.png",
             "Assets/AttackMoveButton.png",
+            "Assets/NextButton.png",
         ], func);
 
     function LoadImg(urlArr, func) {
@@ -63,6 +64,7 @@ function LoadBaseResurses(func)
         AddBaseTexture(ImgArr["Assets/BackButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "BacktButton");
         AddBaseTexture(ImgArr["Assets/OptionButton.png"], ImgArr["Assets/OptionButton.png"].width, ImgArr["Assets/OptionButton.png"].height, "OptionButton");
         AddBaseTexture(ImgArr["Assets/AttackMoveButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "AttackMoveButton");
+        AddBaseTexture(ImgArr["Assets/NextButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "NextButton");
         genBaseSprites(func);
     }
 
@@ -91,6 +93,7 @@ function LoadBaseResurses(func)
         AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width/6, ImgArr["Assets/ExitButton.png"].height/6) , 0);         //2
         AddBaseSkin("buttons", "AttackMoveButton", new Size(ImgArr["Assets/ExitButton.png"].width/8, ImgArr["Assets/ExitButton.png"].height/8) , 0);    //3
         AddBaseSkin("buttons", "OptionButton",new Size(ImgArr["Assets/OptionButton.png"].width/8, ImgArr["Assets/OptionButton.png"].height/8) , 0);     //4
+        AddBaseSkin("buttons", "NextButton",new Size(ImgArr["Assets/ExitButton.png"].width/6, ImgArr["Assets/ExitButton.png"].height/6) , 0);           //5
         func(BaseSpritesArr);
     }
 

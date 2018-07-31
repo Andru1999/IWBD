@@ -37,6 +37,7 @@ class GuiControler
                 engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button);
             }
             IsMooving = false;
+            MosePresed = false;
         };
 
         this.mousemove = (event)=>

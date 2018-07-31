@@ -17,14 +17,18 @@ function GuiFasesGenerator(sprites, engine)
 
     function switchAttackMoveButtonFunction()
     {
-        if (this.sprite.index==0){
-            this.sprite.index=1;
+        if (this.sprite.index==1){
+            this.sprite.index=0;
             engine.setAction("move");
         }else
         {
-            this.sprite.index=0;
+            this.sprite.index=1;
             engine.setAction("attack");
         }
+    }
+    function nextButtonFunction()
+    {
+        engine.nextRound();
     }
 
     return[
@@ -45,7 +49,8 @@ function GuiFasesGenerator(sprites, engine)
             {
                 buttons:[
                     new Button(sprites.buttons[4],new PositionOnCanvas(0,0),"mainCanvas",optionButtonFunction),
-                    new Button(sprites.buttons[3],new PositionOnCanvas(0,500),"mainCanvas",switchAttackMoveButtonFunction)
+                    new Button(sprites.buttons[3],new PositionOnCanvas(0,700),"mainCanvas",switchAttackMoveButtonFunction),
+                    new Button(sprites.buttons[5],new PositionOnCanvas(900,700),"mainCanvas",nextButtonFunction),
                 ],
             },
 
