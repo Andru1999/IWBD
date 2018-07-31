@@ -9,6 +9,10 @@ class RenderControler {
     }
 
     renderSprite(type, variant, x, y) {
+        if(type=="mob")
+        {
+            type="hero";
+        }
         this.sprites[type][Math.abs(variant) % this.sprites[type].length].draw(this.canvases,"mainCanvas", x, y);
         //Отрисовка справйта
     }
@@ -17,8 +21,8 @@ class RenderControler {
     {
         if (canDo)
         {
-            var leftHightCell = new PositionOnCanvas(Math.floor((offset.x) / 32)-1, Math.floor(((offset.y)) / 32)-1);
-            var rightBottomCell = new PositionOnCanvas(Math.floor((offset.x+this.canvases["mainCanvas"].width) / 32)+1, Math.floor(((offset.y+this.canvases["mainCanvas"].height)) / 32)+1);
+            var leftHightCell = new PositionOnCanvas(Math.floor((-offset.x) / 32)-1, Math.floor(((-offset.y)) / 32)-1);
+            var rightBottomCell = new PositionOnCanvas(Math.floor((-offset.x+this.canvases["mainCanvas"].width) / 32)+1, Math.floor(((-offset.y+this.canvases["mainCanvas"].height)) / 32)+1);
             leftHightCell.x = Math.max(0,leftHightCell.x);
             leftHightCell.y = Math.max(0,leftHightCell.x);
             rightBottomCell.x = Math.min(rightBottomCell.x,this.worldSize.width);
@@ -35,10 +39,10 @@ class RenderControler {
                             continue;
                         }else
                         {
-                            this.renderSprite(cellInfo.type,cellInfo.variant,x*BaseCellWidth,y*BaseCellHeight);
+                            this.renderSprite(cellInfo.type,cellInfo.variant,x*BaseCellWidth + offset.x,y*BaseCellHeight + offset.y);
                             if (cellInfo.visibility==-1)
                             {
-                                this.renderSprite("smoke",0,x*BaseCellWidth,y*BaseCellHeight);
+                                this.renderSprite("smoke",0,x*BaseCellWidth + offset.x,y*BaseCellHeight + offset.y);
                             }
                         }
                     }
