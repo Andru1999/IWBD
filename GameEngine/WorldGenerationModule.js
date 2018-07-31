@@ -3,10 +3,10 @@
 class World {
     constructor(map, heroes_count, monsters_count) {
         this._map = map;
-        this._heroes = this.spawnUnits(heroes_count, "hero" , 
-					this._map.allAdmissibleCells(new Position(1,1,2,0,-1),heroes_count));
-        this._monsters = this.spawnUnits(monsters_count, "mob" , 
-					this._map.allAdmissibleCells(new Position(this._map._width-2,this._map._height-2,2,0,-1),monsters_count*10));
+        this._heroes = this.spawnUnits(heroes_count, "hero",
+            this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count));
+        this._monsters = this.spawnUnits(monsters_count, "mob",
+            this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1), monsters_count * 10));
     }
 
     generateUnit(position, name, objectType) {
@@ -32,17 +32,17 @@ class World {
         return mob;
     }
 
-    spawnUnits(count, type , coordinates) {
+    spawnUnits(count, type, coordinates) {
         let units = [];
-        for (let i = 0; i < count && coordinates.length; i++){
-                let curentIndex =getRandomInt(0,coordinates.length);
-                let unitPos = coordinates[curentIndex];
-				unitPos.wayLength = 0;
-				unitPos.previousIndexInQ = -1;
-				let unit= this.generateUnit(unitPos, type, type);
-                units.push(unit);
-                this._map._cells[unitPos.x][unitPos.y][unitPos.z] = unit;
-                coordinates.splice(curentIndex,1);
+        for (let i = 0; i < count && coordinates.length; i++) {
+            let curentIndex = getRandomInt(0, coordinates.length);
+            let unitPos = coordinates[curentIndex];
+            unitPos.wayLength = 0;
+            unitPos.previousIndexInQ = -1;
+            let unit = this.generateUnit(unitPos, type, type);
+            units.push(unit);
+            this._map._cells[unitPos.x][unitPos.y][unitPos.z] = unit;
+            coordinates.splice(curentIndex, 1);
 
         }
         return units;

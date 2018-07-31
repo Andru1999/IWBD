@@ -1,39 +1,33 @@
-"use strict"
+"use strict";
 
-class Size
-{
-    constructor(width,height)
-    {
-        this.width=width;
-        this.height=height;
+class Size {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
     }
 }
 
-class PositionOnCanvas
-{
-    constructor(x,y)
-    {
+class PositionOnCanvas {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }
-    set(x,y)
-    {
+
+    set(x, y) {
         this.x = x;
         this.y = y;
     }
 }
 
 class Texture {
-    constructor(img, dx, dy)
-    {
-        function getframe(Img, dx, dy)
-        {
+    constructor(img, dx, dy) {
+        function getframe(Img, dx, dy) {
             var img = Img;
             var frame = new Array(Math.floor(img.width / dx) * Math.floor(img.height / dy));
 
-            for (var i = 0; i < Math.floor(img.width / dx); i++){
+            for (var i = 0; i < Math.floor(img.width / dx); i++) {
                 for (var j = 0; j < Math.floor(img.height / dy); j++) {
-                    frame[i *  Math.floor(img.height / dy) + j] =
+                    frame[i * Math.floor(img.height / dy) + j] =
                         {
                             "x": i * dx,
                             "y": j * dy,
@@ -44,21 +38,20 @@ class Texture {
             }
             return frame;
         }
+
         this.frame = getframe(img, dx, dy);
         this.img = img;
     }
 }
 
-class BaseSprite
-{
-    constructor(texture, size, index)
-    {
-    this.texture = texture;
-    this.size = size;
-    this.index = index;
+class BaseSprite {
+    constructor(texture, size, index) {
+        this.texture = texture;
+        this.size = size;
+        this.index = index;
     }
-    draw(canvases, chosenCanvas, x, y)
-    {
+
+    draw(canvases, chosenCanvas, x, y) {
         let ctx = canvases[chosenCanvas].getContext("2d");
         let img = this.texture.img;
         let img_x = this.texture.frame[this.index].x;
@@ -72,31 +65,30 @@ class BaseSprite
 }
 
 class Button {
-    constructor(sprite,position,canvas,clickFunction)
-    {
-        this.sprite=sprite;
-        this.position=position;
-        this.size=sprite.size;
-        this.click=clickFunction;
-        this.canvas=canvas;
+    constructor(sprite, position, canvas, clickFunction) {
+        this.sprite = sprite;
+        this.position = position;
+        this.size = sprite.size;
+        this.click = clickFunction;
+        this.canvas = canvas;
 
     }
-    detect(x,y)
-    {
-        function inRect(x,y,x1,y1,width,height) {
-            return ((x<x1+width)&&(x>x1)&&(y<y1+height)&&(y>y1))
+
+    detect(x, y) {
+        function inRect(x, y, x1, y1, width, height) {
+            return ((x < x1 + width) && (x > x1) && (y < y1 + height) && (y > y1))
 
         }
-        if (inRect(x,y,this.position.x,this.position.y,this.size.width,this.size.height))
-        {
+
+        if (inRect(x, y, this.position.x, this.position.y, this.size.width, this.size.height)) {
             this.click();
             return true;
         }
         return false;
     }
-    draw(canvases)
-    {
-        this.sprite.draw(canvases,this.canvas, this.position.x,this.position.y);
+
+    draw(canvases) {
+        this.sprite.draw(canvases, this.canvas, this.position.x, this.position.y);
     }
 }
 
