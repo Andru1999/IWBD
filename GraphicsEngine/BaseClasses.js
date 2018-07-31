@@ -49,9 +49,6 @@ class Texture {
     }
 }
 
-
-
-
 class BaseSprite
 {
     constructor(texture, size, index)
@@ -60,8 +57,9 @@ class BaseSprite
     this.size = size;
     this.index = index;
     }
-    draw(ctx, x, y)
+    draw(canvases, chosenCanvas, x, y)
     {
+        let ctx = canvases[chosenCanvas].getContext("2d");
         let img = this.texture.img;
         let img_x = this.texture.frame[this.index].x;
         let img_y = this.texture.frame[this.index].y;
@@ -74,12 +72,13 @@ class BaseSprite
 }
 
 class Button {
-    constructor(sprite,position,size,clickFunction)
+    constructor(sprite,position,canvas,clickFunction)
     {
         this.sprite=sprite;
         this.position=position;
-        this.size=size;
+        this.size=sprite.size;
         this.click=clickFunction;
+        this.canvas=canvas;
 
     }
     detect(x,y)
@@ -95,9 +94,9 @@ class Button {
         }
         return false;
     }
-    draw(ctx)
+    draw(canvases)
     {
-        this.sprite.draw(ctx, this.position.x,this.position.y);
+        this.sprite.draw(canvases,this.canvas, this.position.x,this.position.y);
     }
 }
 

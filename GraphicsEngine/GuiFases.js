@@ -1,5 +1,5 @@
 //"use strict"
-function GuiFasesGenerator(Offset,sprites,setFunctions)
+function GuiFasesGenerator(sprites, engine)
 {
     //let setFunction = setFunctions.setUnitFase;
     function startButtonFunction()
@@ -19,40 +19,50 @@ function GuiFasesGenerator(Offset,sprites,setFunctions)
     {
         if (this.sprite.index==0){
             this.sprite.index=1;
-            setFunction("move");
+            engine.setAction("move");
         }else
         {
             this.sprite.index=0;
-            setFunction("attack");
+            engine.setAction("attack");
         }
-
     }
 
     return[
         {//StartGameFase
-            buttons:[
-                new Button(sprites.buttons[0],new PositionOnCanvas(500,500),sprites.buttons[0].size,startButtonFunction)
-            ],
+            GuiElements:
+            {
+                buttons:[
+                    new Button(sprites.buttons[0],new PositionOnCanvas(500,500),"mainCanvas",startButtonFunction)
+                ],///Тут могут быть другие обьекты
+            },
             canDrawMap:false,
             canDrag_n_Drop:false,
             canClickOnCells:false
 
         },
         {//mainGameFase
-            buttons:[
-                new Button(sprites.buttons[4],new PositionOnCanvas(0,0),sprites.buttons[4].size,optionButtonFunction),
-                new Button(sprites.buttons[3],new PositionOnCanvas(0,800),sprites.buttons[3].size,switchAttackMoveButtonFunction)
-            ],
+            GuiElements:
+            {
+                buttons:[
+                    new Button(sprites.buttons[4],new PositionOnCanvas(0,0),"mainCanvas",optionButtonFunction),
+                    new Button(sprites.buttons[3],new PositionOnCanvas(0,500),"mainCanvas",switchAttackMoveButtonFunction)
+                ],
+            },
+
             canDrawMap:true,
             canDrag_n_Drop:true,
             canClickOnCells:true
 
         },
         {//optionGameFase
-            buttons:[
-                new Button(sprites.buttons[2],new PositionOnCanvas(500,500),sprites.buttons[2].size,backButtonFunction),
-                new Button(sprites.buttons[1],new PositionOnCanvas(500,650),sprites.buttons[1].size,()=>{})
-            ],
+            GuiElements:
+            {
+                buttons:[
+                    new Button(sprites.buttons[2],new PositionOnCanvas(500,500),"mainCanvas",backButtonFunction),
+                    new Button(sprites.buttons[1],new PositionOnCanvas(500,650),"mainCanvas",()=>{})
+                ],
+            },
+
             canDrawMap:true,
             canDrag_n_Drop:false,
             canClickOnCells:false

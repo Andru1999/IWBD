@@ -1,14 +1,14 @@
 "use strict"
 class GuiControler
 {
-    constructor(callFunctions,_canvas , Offset)
+    constructor(engine,canvas)
     {
         this.buttonsControler=new ButtonControler();
         this.canDr_n_Dr = false;
         //Функции Реакций на кнопки
-        this.Offset= Offset;
+        this.Offset= new PositionOnCanvas(0,0);
         var MaxDragDist=4; //Константа
-        var canvas = _canvas;
+        var canvas = canvas;
         var LastXY = new PositionOnCanvas(0,0);
         var CurentXY = new PositionOnCanvas(0,0);
         var IsMooving = false;
