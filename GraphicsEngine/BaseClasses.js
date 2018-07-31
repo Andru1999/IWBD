@@ -9,6 +9,20 @@ class Size
     }
 }
 
+class PositionOnCanvas
+{
+    constructor(x,y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+    set(x,y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 class Texture {
     constructor(img, dx, dy)
     {
@@ -35,9 +49,6 @@ class Texture {
     }
 }
 
-
-
-
 class BaseSprite
 {
     constructor(texture, size, index)
@@ -46,8 +57,9 @@ class BaseSprite
     this.size = size;
     this.index = index;
     }
-    draw(ctx, x, y)
+    draw(canvases, chosenCanvas, x, y)
     {
+        let ctx = canvases[chosenCanvas].getContext("2d");
         let img = this.texture.img;
         let img_x = this.texture.frame[this.index].x;
         let img_y = this.texture.frame[this.index].y;
@@ -58,5 +70,35 @@ class BaseSprite
         ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
     }
 }
+
+class Button {
+    constructor(sprite,position,canvas,clickFunction)
+    {
+        this.sprite=sprite;
+        this.position=position;
+        this.size=sprite.size;
+        this.click=clickFunction;
+        this.canvas=canvas;
+
+    }
+    detect(x,y)
+    {
+        function inRect(x,y,x1,y1,width,height) {
+            return ((x<x1+width)&&(x>x1)&&(y<y1+height)&&(y>y1))
+
+        }
+        if (inRect(x,y,this.position.x,this.position.y,this.size.width,this.size.height))
+        {
+            this.click();
+            return true;
+        }
+        return false;
+    }
+    draw(canvases)
+    {
+        this.sprite.draw(canvases,this.canvas, this.position.x,this.position.y);
+    }
+}
+
 
 
