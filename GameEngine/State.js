@@ -14,5 +14,6 @@ class State{
     constructor(allies, enemies){
         this.allies = allies;
         this.enemies = enemies;
+        // Добавить волшебные предметы
     }
 }
