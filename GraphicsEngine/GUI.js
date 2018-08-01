@@ -1,12 +1,23 @@
-class GUI {
-    constructor(spriteArr, engine, canvases) {
+class GUI extends UI {
+    constructor(game, spriteArr) {
+        super(game);
+        this.canvases = {
+            mainCanvas: $("#main_game_canvas")[0],
+            infoCanvas: $("#info_game_canvas")[0] //todo
+        };
+
+        this.canvases.mainCanvas.width = 1400;
+        this.canvases.mainCanvas.height = 800;
+        this.canvases.infoCanvas.width = 400;
+        this.canvases.infoCanvas.height = 600;
 
         this.curentFase = 0;
         this.IsNeedToUpdate = 0; //Если = -1 не нужен update, иначе перейти на фазу с соответствующим индексом
-        this.fases = GuiFasesGenerator(spriteArr, engine);
-        this.controler = new GuiControler(engine, canvases.mainCanvas);
-        this.renderControler = new RenderControler(spriteArr, canvases, engine);
+        this.fases = GuiFasesGenerator(this, spriteArr, this.game.engine);
+        this.controler = new GuiControler(this.game.engine, this.canvases.mainCanvas);
+        this.renderControler = new RenderControler(spriteArr, this.canvases, this.game.engine);
 
+        $(this.canvases.mainCanvas).mousedown(this.controler.mousedown);
     }
 
     render() {

@@ -1,16 +1,16 @@
 //"use strict"
-function GuiFasesGenerator(sprites, engine) {
+function GuiFasesGenerator(gui,sprites, engine) {
     //let setFunction = setFunctions.setUnitFase;
     function startButtonFunction() {
-        game.Gui.IsNeedToUpdate = 1;
+        gui.IsNeedToUpdate = 1;
     }
 
     function optionButtonFunction() {
-        game.Gui.IsNeedToUpdate = 2;
+        gui.IsNeedToUpdate = 2;
     }
 
     function backButtonFunction() {
-        game.Gui.IsNeedToUpdate = 1;
+        gui.IsNeedToUpdate = 1;
     }
 
     function switchAttackMoveButtonFunction() {
