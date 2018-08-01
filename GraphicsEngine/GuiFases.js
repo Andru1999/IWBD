@@ -19,6 +19,10 @@ function GuiFasesGenerator(sprites, engine) {
         game.Gui.IsNeedToUpdate = 1;
     }
 
+    function magicButtonFunction() {
+        game.Gui.IsNeedToUpdate = 1;
+    }
+
     function switchAttackMoveButtonFunction() {
         if (this.sprite.index == 1) {
             this.sprite.index = 0;
@@ -54,6 +58,7 @@ function GuiFasesGenerator(sprites, engine) {
                         new Button(sprites.buttons[4], new PositionOnCanvas(0, 0), "mainCanvas", optionButtonFunction),
                         new Button(sprites.buttons[3], new PositionOnCanvas(0, 700), "mainCanvas", switchAttackMoveButtonFunction),
                         new Button(sprites.buttons[5], new PositionOnCanvas(900, 700), "mainCanvas", nextButtonFunction),
+                        new Button(sprites.buttons[7], new PositionOnCanvas(500, 700), "mainCanvas", magicButtonFunction),
                     ],
                 },
 

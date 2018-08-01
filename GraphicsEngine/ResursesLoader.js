@@ -20,6 +20,7 @@ function LoadBaseResurses(func) {
             "Assets/OptionButton.png",
             "Assets/BackButton.png",
             "Assets/AttackMoveButton.png",
+            "Assets/MagicButton.png",
             "Assets/NextButton.png",
             "Assets/mobs.png"
         ], func);
@@ -66,6 +67,7 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/OptionButton.png"], ImgArr["Assets/OptionButton.png"].width, ImgArr["Assets/OptionButton.png"].height, "OptionButton");
         AddBaseTexture(ImgArr["Assets/AttackMoveButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "AttackMoveButton");
         AddBaseTexture(ImgArr["Assets/NextButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "NextButton");
+        AddBaseTexture(ImgArr["Assets/MagicButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "MagicButton");
         genBaseSprites(func);
     }
 
@@ -99,7 +101,8 @@ function LoadBaseResurses(func) {
         AddBaseSkin("buttons", "AttackMoveButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), 0);      //3
         AddBaseSkin("buttons", "OptionButton", new Size(ImgArr["Assets/OptionButton.png"].width / 8, ImgArr["Assets/OptionButton.png"].height / 8), 0);      //4
         AddBaseSkin("buttons", "NextButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);            //5
-        AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 1);           //5
+        AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 1);           //6
+        AddBaseSkin("buttons", "MagicButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);           //7
         func(BaseSpritesArr);
     }
 
