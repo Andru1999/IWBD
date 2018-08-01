@@ -1,6 +1,4 @@
-"use strict";
-
-var game;
+var game; // Костыль. Убить!!!
 
 window.onload = () => {
     function eval_after_load_resurses(SpriteArr){
@@ -20,11 +18,3 @@ window.onload = () => {
     }
     loadBaseResurses(eval_after_load_resurses);
 };
-
-class Game {
-    constructor(){
-        this.engine = new SpaceWorld();
-    }
-}
-
-
