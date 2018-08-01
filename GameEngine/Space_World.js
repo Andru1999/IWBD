@@ -1,12 +1,21 @@
 "use strict";
 
 class SpaceWorld {
-    constructor() {
+    constructor(width,height,depth) {
         this._actionType = 1;//0 - nothing , 1 - move , 2 - attack
         this._attackField = [];
         this._walkableField = [];
-        this._world = new World(new GameMap(20, 20, 3), 1, 1);
+        this.worldSize={
+            width:width,
+            height:height,
+            depth:depth
+        };
+        this._world = null;
         this._currentCreature = null;
+    }
+
+    genWORLD(firstTeamCount,secondTeamCount,battleType){
+        this._world = new World(new GameMap(this.worldSize.width, this.worldSize.height, this.worldSize.depth), firstTeamCount, secondTeamCount,battleType);
         for (let elem of this._world._heroes) {
             this.setScope(true, elem);
         }
@@ -43,7 +52,7 @@ class SpaceWorld {
     }
 
     getWorldSize() {
-        return this._world._map.getMapSize();
+        return this.worldSize;
     }
 
     doAction(x, y, mouseButton) {
