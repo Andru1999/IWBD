@@ -1,7 +1,9 @@
 "use strict";
+// noinspection JSAnnotator
 
-class SpaceWorld {
+class GameEngine extends InterfaceGameEngine{
     constructor() {
+        super();
         this._actionType = 1;//0 - nothing , 1 - move , 2 - attack
         this._attackField = [];
         this._walkableField = [];
@@ -9,6 +11,20 @@ class SpaceWorld {
         this._currentCreature = null;
         for (let elem of this._world._heroes) {
             this.setScope(true, elem);
+        }
+    }
+
+    /**
+     * Метод выполняющий некоторое действие
+     * @param {BaseAction} action - Некоторое действие
+     */
+    // Пока реализовано как костыль
+    do_action(action){
+        switch (action) {
+            case ActionMove:
+                return this.setAction("move");
+            case ActionAttack:
+                return this.setAction("attack");
         }
     }
 
