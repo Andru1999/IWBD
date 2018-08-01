@@ -1,11 +1,11 @@
 /**
  * Класс исключения возникающего при вызове не реализованного метода.
  *
- * @property message {string} - Текстовое сообщение
+ * @property name {string} - Имя метода
  */
 class ExceptionNotImplemented extends BaseException{
-    constructor(message){
-        super(message || "Метод не реализван");
+    constructor(name){
+        super(`Метод ${name} не реализван`);
     }
 }
 
