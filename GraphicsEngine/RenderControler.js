@@ -9,9 +9,6 @@ class RenderControler {
     }
 
     renderSprite(type, variant, x, y) {
-        if (type == "mob") {
-            type = "hero";
-        }
         this.sprites[type][Math.abs(variant) % this.sprites[type].length].draw(this.canvases, "mainCanvas", x, y);
         //Отрисовка справйта
     }
