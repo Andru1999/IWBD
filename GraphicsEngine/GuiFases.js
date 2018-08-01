@@ -4,11 +4,13 @@ function GuiFasesGenerator(sprites, engine) {
     function startPVEButtonFunction() {
         game.Gui.IsNeedToUpdate = 1;
         game.engine.genWORLD(1,1,0);
+        game.engine.genWORLD();
     }
 
     function startPVPButtonFunction() {
         game.Gui.IsNeedToUpdate =1;
         game.engine.genWORLD(1,1,1);
+        game.engine.genWORLD();
     }
 
     function optionButtonFunction() {

@@ -15,10 +15,10 @@ class RenderControler {
 
     renderMap(canDo, offset) {
         if (canDo) {
-            var leftHightCell = new PositionOnCanvas(Math.floor((-offset.x) / 32) - 1, Math.floor(((-offset.y)) / 32) - 1);
-            var rightBottomCell = new PositionOnCanvas(Math.floor((-offset.x + this.canvases["mainCanvas"].width) / 32) + 1, Math.floor(((-offset.y + this.canvases["mainCanvas"].height)) / 32) + 1);
+            var leftHightCell = new PositionOnCanvas(Math.floor((-offset.x) / BaseCellWidth) - 1, Math.floor(((-offset.y)) / BaseCellHeight) - 1);
+            var rightBottomCell = new PositionOnCanvas(Math.floor((-offset.x + this.canvases["mainCanvas"].width) / BaseCellWidth) + 1, Math.floor(((-offset.y + this.canvases["mainCanvas"].height)) / BaseCellHeight) + 1);
             leftHightCell.x = Math.max(0, leftHightCell.x);
-            leftHightCell.y = Math.max(0, leftHightCell.x);
+            leftHightCell.y = Math.max(0, leftHightCell.y);
             rightBottomCell.x = Math.min(rightBottomCell.x, this.worldSize.width);
             rightBottomCell.y = Math.min(rightBottomCell.y, this.worldSize.height);
             for (let x = leftHightCell.x; x < rightBottomCell.x; x++) {
@@ -46,8 +46,6 @@ class RenderControler {
                     }
                 }
             }
-
-            //game.engine.getCellInfo()
         }
     }
 
