@@ -5,7 +5,7 @@ class GuiControler {
         this.buttonsControler = new ButtonControler();
         this.canDr_n_Dr = false;
         //Функции Реакций на кнопки
-        this.Offset = new PositionOnCanvas(60, 60);
+        this.Offset = new PositionOnCanvas(400, 60);
         var MaxDragDist = 15; //Константа
         var canvas = canvas;
         var LastXY = new PositionOnCanvas(0, 0);
@@ -51,7 +51,6 @@ class GuiControler {
                             this.Offset.x += (CurentXY.x - LastXY.x);
                             this.Offset.y += (CurentXY.y - LastXY.y);
                             LastXY.set(CurentXY.x, CurentXY.y);
-                            IsNeedToDraw = true;
                         }
                         IsMooving = true;
                     }

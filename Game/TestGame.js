@@ -17,12 +17,12 @@ window.onload = () => {
         }).start();
 
     }
-    loadBaseResurses(eval_after_load_resurses);
+    LoadBaseResurses(eval_after_load_resurses);
 };
 
 class Game {
     constructor(){
-        this.engine = new GameEngine();
+        this.engine = new SpaceWorld();
     }
 }
 
