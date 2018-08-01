@@ -18,7 +18,7 @@ window.onload = () => {
         }).start();
 
     }
-    LoadBaseResurses(eval_after_load_resurses);
+    loadBaseResurses(eval_after_load_resurses);
 };
 
 class Game {
