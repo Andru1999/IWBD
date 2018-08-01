@@ -28,13 +28,23 @@ class RenderControler {
                 for (let y = leftHightCell.y; y < rightBottomCell.y; y++) {
                     for (let z = 0; z < this.worldSize.depth; z++) {
                         let cellInfo = this.engine.getCellInfo(x, y, z);
+                        let count = 0;
                         if (cellInfo.visibility == 0 || cellInfo.type == "empty") {
                             continue;
                         } else {
-                            this.renderSprite(cellInfo.type, cellInfo.variant, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
+
                             if (cellInfo.visibility == -1) {
-                                this.renderSprite("smoke", 0, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
+                                count++;
+                                if(cellInfo.type!="hero"||cellInfo.type!="mob")
+                                    this.renderSprite(cellInfo.type, cellInfo.variant, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
+                            }else
+                            {
+                                this.renderSprite(cellInfo.type, cellInfo.variant, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
                             }
+                        }
+                        if (count!=0)
+                        {
+                            his.renderSprite("smoke", 0, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
                         }
                     }
                 }
