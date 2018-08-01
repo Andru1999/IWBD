@@ -20,10 +20,10 @@ class GameEngine extends InterfaceGameEngine{
      */
     // Пока реализовано как костыль
     do_action(action){
-        switch (action) {
-            case ActionMove:
+        switch (action.constructor.name) {
+            case ActionMove.name:
                 return this.setAction("move");
-            case ActionAttack:
+            case ActionAttack.name:
                 return this.setAction("attack");
         }
     }
