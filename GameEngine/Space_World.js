@@ -27,7 +27,16 @@ class SpaceWorld {
         }
     }
 
-    nextLevel
+    nextLvl(width, height, depth,secondTeamCount){
+        this._world._map=new GameMap(width, height, depth);
+        let fstTeamCoord = this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
+        let scndTeamCoord = this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
+            monsters_count * 10, null, null);
+        this._units[1] = this.spawnUnits(monsters_count, "mob", 1);
+        this.placeUnits(fstTeamCoord, this._units[0]);
+        this.placeUnits(scndTeamCoord, this._units[1]);
+        this._world._dungeon++;
+    }
 
     setAction(x) {
         this.deleteActionSpace();
@@ -154,7 +163,7 @@ class SpaceWorld {
                     let x=Math.round(X);
                     if (y<1 && y>this._world._map._height-2
                         &&x<1 && x>this._world._map.width-2) continue;
-                    if (x==fstPos.x && y==fstPos.y) continue;
+                    if ((x==fstPos.x && y==fstPos.y) || (x==secPos.x && y==secPos.y)) continue;
                     if (this._world._map._cells[x][y][2]){
                         curArr.splice(i,1);
                         break;
@@ -166,7 +175,7 @@ class SpaceWorld {
                 for (let y=Math.min(fstPos.y,secPos.y); y<=Math.max(fstPos.y,secPos.y);y++){
                     if (y<1 && y>this._world._map._height-2
                         &&x<1 && x>this._world._map.width-2) continue;
-                    if (x==fstPos.x && y==fstPos.y) continue;
+                    if ((x==fstPos.x && y==fstPos.y) || (x==secPos.x && y==secPos.y)) continue;
                     if (this._world._map._cells[x][y][2]){
                         curArr.splice(i,1);
                         break;
@@ -311,6 +320,51 @@ class SpaceWorld {
 
         if (this._world._units[0].length == 0) return "0 team lost";
         if (this._world._units[1].length == 0) return "1 team win";
+    }
+
+    useMagic(){
+        if (this._currentCreature && this._currentCreature._mannaPoints>0){
+            this._currentCreature._spell();
+        }
+    }
+
+    getGameObjectInfo(x,y){
+        let currCell=this._world._map._cells[x][y][2];
+        if (!currCell) return null;
+        let infoArr=[];
+        infoArr.push("ObjectType "+String(currCell._objectType));
+        infoArr.push("ID "+String(currCell._variant));
+        infoArr.push("Name "+String(currCell._name));
+        infoArr.push("HP "+String(currCell._hitPoint ));
+        infoArr.push("Armor "+String(currCell._armor ));
+        infoArr.push("BaseDamage "+String(currCell._baseDamage));
+        infoArr.push("ActionPoints "+String(currCell._actionPoints));
+        infoArr.push("Speed "+String(currCell._speed));
+        infoArr.push("Strength "+String(currCell._strength));
+        infoArr.push("Dexterity "+String(currCell._strength));
+        infoArr.push("Intelligence "+String(currCell._intelligence));
+        infoArr.push("Vision range "+String(currCell._rangeVision));
+        switch (currCell._basicCharacteristic) {
+            case 0:
+                infoArr.push("Strongman");
+                break;
+
+            case 1:
+                infoArr.push("Trickster");
+                break;
+
+            case 2:
+                infoArr.push("Wizard");
+                break;
+
+            default:
+                infoArr.push("No type");
+                break;
+        }
+        infoArr.push("AttackRange "+String(currCell._attackRange));
+        infoArr.push("Team "+String(currCell._team));
+        infoArr.push("Manna Points "+String(currCell._mannaPoints));
+        infoArr.push("Spell "+String(currCell._spell));
     }
 }
 

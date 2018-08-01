@@ -13,11 +13,6 @@ class Position {
         this.wayLength = wayLength;
         this.previousIndexInQ = previousIndexInQ;
     }
-
-    // TODO : Реализовать метод считающий дистанцию до другой позиции
-    distance_to(position) {
-        //return
-    }
 }
 
 function getVector3(x, y, z, fillObject) {
@@ -195,9 +190,9 @@ class GameObject {
 
 class Creature extends GameObject {
 
-    constructor(objectType, variant, name, walkable, visibility, position, hitPoint, armor, baseDamage,
-                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange,team) {
-        super(objectType, variant, name, walkable, visibility);
+    constructor(objectType, variant, name, walkable, position, hitPoint, armor, baseDamage,
+                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange,team,mannaPoints,spell) {
+        super(objectType, variant, name, walkable,mannaPoints);
         this._position = position;
         this._hitPoint = hitPoint;
         this._armor = armor;
@@ -211,6 +206,8 @@ class Creature extends GameObject {
         this._basicCharacteristic = basicCharacteristic;
         this._attackRange = attackRange;
         this._team=team;
+        this._mannaPoints=mannaPoints;
+        this._spell=spell;
     }
 
 
