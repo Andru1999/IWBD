@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>IWBD</title>
-    <script type="text/javascript" src="Jquery.js"></script>
+    <!-- Подключаем библиотеки -->
+    <script type="text/javascript" src="libs/Jquery.js"></script>
+    <!-- Подключаем компаненты графического движки -->
     <script type="text/javascript" src="GraphicsEngine/GlobalDisplayVariables.js"></script>
     <script type="text/javascript" src="GraphicsEngine/BaseClasses.js"></script>
     <script type="text/javascript" src="GraphicsEngine/ResursesLoader.js"></script>
@@ -12,18 +14,24 @@
     <script type="text/javascript" src="GraphicsEngine/RenderControler.js"></script>
     <script type="text/javascript" src="GraphicsEngine/GuiFases.js"></script>
     <script type="text/javascript" src="GraphicsEngine/GUI.js"></script>
-    <script type="text/javascript" src="GameEngine/Core.js"></script>
+    <!-- Подключаем компаненты графического движка -->
     <script type="text/javascript" src="GameEngine/WorldGenerationModule.js"></script>
     <script type="text/javascript" src="GameEngine/Space_World.js"></script>
-    <script type="text/javascript" src="TestGame.js"></script>
+    <script type="text/javascript" src="GameEngine/Core.js"></script>
+    <!-- Подключаем компаненты игры -->
+    <script type="text/javascript" src="Game/TestGame.js"></script>
 </head>
 <body>
-    <script type="text/javascript">
-        $("body").on("contextmenu", false);
-    </script>
-    <table>
-        <tr>
-            <td>
+<script type="text/javascript">
+    $(document).ready(() => {
+        // Отключаем контекстное меню на двух канвасах
+        $("#main_game_canvas").on("contextmenu", false);
+        $("#info_game_canvas").on("contextmenu", false);
+    });
+</script>
+<table>
+    <tr>
+        <td>
             <canvas id="main_game_canvas"></canvas>
         </td>
         <td valign="top">
