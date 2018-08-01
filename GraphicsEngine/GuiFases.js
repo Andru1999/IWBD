@@ -66,7 +66,7 @@ function GuiFasesGenerator(gui,sprites, engine) {
             canDrawMap: true,
             canDrag_n_Drop: true,
             canClickOnCells: true,
-            canUpdateAnimation:false
+            canUpdateAnimation:true
 
         },
         {//optionGameFase

@@ -18,8 +18,8 @@ class GUI extends UI {
         this.renderControler = new RenderControler(spriteArr, this.canvases, this.game.engine,animArr);
 
         $(this.canvases.mainCanvas).mousedown(this.controler.mousedown);
-       // $(this.canvases.mainCanvas).mouseup(this.controler.mouseup);
-       // $(this.canvases.mainCanvas).mousemove(this.controler.mousemove);
+        $(this.canvases.mainCanvas).mouseup(this.controler.mouseup);
+        $(this.canvases.mainCanvas).mousemove(this.controler.mousemove);
     }
 
     render() {
