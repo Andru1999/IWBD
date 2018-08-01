@@ -1,9 +1,14 @@
 //"use strict"
 function GuiFasesGenerator(sprites, engine) {
     //let setFunction = setFunctions.setUnitFase;
-    function startButtonFunction() {
+    function startPVEButtonFunction() {
         game.Gui.IsNeedToUpdate = 1;
         game.engine.genWORLD(1,1,0);
+    }
+
+    function startPVPButtonFunction() {
+        game.Gui.IsNeedToUpdate =1;
+        game.engine.genWORLD(1,1,1);
     }
 
     function optionButtonFunction() {
@@ -33,7 +38,8 @@ function GuiFasesGenerator(sprites, engine) {
             GuiElements:
                 {
                     buttons: [
-                        new Button(sprites.buttons[0], new PositionOnCanvas(500, 500), "mainCanvas", startButtonFunction)
+                        new Button(sprites.buttons[0], new PositionOnCanvas(500, 400), "mainCanvas", startPVEButtonFunction),
+                        new Button(sprites.buttons[6], new PositionOnCanvas(500, 500), "mainCanvas", startPVPButtonFunction),
                     ],///Тут могут быть другие обьекты
                 },
             canDrawMap: false,
