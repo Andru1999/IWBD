@@ -12,9 +12,9 @@ function LoadBaseResurses(func) {
             'Assets/WhiteWallAndFloor.png',
             "Assets/Void.png",
             "Assets/Hero.png",
-            "Assets/AttakSpase.png",
+            "Assets/AttackSpace.png",
             "Assets/Smoke.png",
-            "Assets/WalkableSpase.png",
+            "Assets/WalkableSpace.png",
             "Assets/ExitButton.png",
             "Assets/StartButton.png",
             "Assets/OptionButton.png",
@@ -58,8 +58,8 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr['Assets/WhiteWallAndFloor.png'], 64, 64, "WhiteWalls&Floor");
         AddBaseTexture(ImgArr['Assets/Void.png'], 64, 64, "VoidTexture");
         AddBaseTexture(ImgArr['Assets/Smoke.png'], 64, 64, "Smoke");
-        AddBaseTexture(ImgArr['Assets/WalkableSpase.png'], 64, 64, "WalkableSpase");
-        AddBaseTexture(ImgArr['Assets/AttakSpase.png'], 64, 64, "AttakSpase");
+        AddBaseTexture(ImgArr['Assets/WalkableSpace.png'], 64, 64, "WalkableSpase");
+        AddBaseTexture(ImgArr['Assets/AttackSpace.png'], 64, 64, "AttakSpase");
         AddBaseTexture(ImgArr["Assets/mobs.png"], 16, 16, "Mobs");
         AddBaseTexture(ImgArr['Assets/Hero.png'], 16, 21, "Hero");
         AddBaseTexture(ImgArr["Assets/ExitButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "ExitButton");
