@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>IWBD</title>
+    <!-- Подключаем библиотеки -->
+    <script type="text/javascript" src="libs/Jquery.js"></script>
+    <!-- Подключаем компаненты графического движка -->
+    <script type="text/javascript" src="GameEngine/base_classes/BaseAction.js"></script>
+    <script type="text/javascript" src="GameEngine/base_classes/BaseUnit.js"></script>
+    <script type="text/javascript" src="GameEngine/WorldGenerationModule.js"></script>
+    <script type="text/javascript" src="GameEngine/InterfaceGameEngine.js"></script>
+    <script type="text/javascript" src="GameEngine/GameEngine.js"></script>
+    <script type="text/javascript" src="GameEngine/Actions.js"></script>
+    <script type="text/javascript" src="GameEngine/State.js"></script>
+    <script type="text/javascript" src="GameEngine/Core.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(document).ready(() => {
+        // Отключаем контекстное меню на двух канвасах
+        $("#main_game_canvas").on("contextmenu", false);
+        $("#info_game_canvas").on("contextmenu", false);
+
+        var engine = new GameEngine();
+        engine.do_action(new ActionAttack(
+            new BaseUnit(new Position(1,2,4)),new Position(1,2,3)));
+    });
+</script>
+</body>
+</html>
