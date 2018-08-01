@@ -1,10 +1,32 @@
 "use strict";
 
 class RenderControler {
-    constructor(sprites, canvases, engine) {
+    constructor(sprites, canvases, engine,animArr) {
         this.sprites = sprites;
         this.canvases = canvases;
         this.engine = engine;
+        this.animations=animArr;
+    }
+
+    update(dt,canAnim)
+    {
+        if (canAnim)
+        {
+            for (let i=0; i<this.animations.length;i++)
+            {
+                let anim = this.animations[i];
+                if(anim.update==undefined)
+                {
+                    let pos=anim;
+                    this.animations[i]=new BaseAnimation(this.sprites["dmg"],pos,5,2);
+                }
+                let res = anim.update(dt);
+                if (res="end")
+                {
+                    this.animations.splice(i,1);
+                }
+            }
+        }
     }
 
     renderSprite(type, variant, x, y) {
@@ -47,6 +69,8 @@ class RenderControler {
                 }
             }
         }
+
+
     }
 
     renderBackground() {
@@ -59,6 +83,17 @@ class RenderControler {
         ctx = (canvas.getContext("2d"));
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    renderAnimation(canDo,offset)
+    {
+        if (canDo)
+        {
+            for (let anim of this.animations)
+            {
+                anim.draw(this.canvases, "mainCanvas",anim.position.x+BaseCellWidth+offset.x,anim.position.y*BaseCellHeight+offset.y);
+            }
+        }
     }
 
     renderGui(GuiElements) {

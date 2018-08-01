@@ -1,7 +1,7 @@
 "use strict";
 
 class GuiControler {
-    constructor(engine, canvas) {
+    constructor(engine, canvas,animArr) {
         this.buttonsControler = new ButtonControler();
         this.canDr_n_Dr = false;
         //Функции Реакций на кнопки
@@ -28,8 +28,13 @@ class GuiControler {
                 MosePresed = false;
             }
             if (!IsMooving) {
-                if (!this.buttonsControler.checkButtons(event.originalEvent.offsetX, event.originalEvent.offsetY) && this.canClickOnCells)
-                    engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button);
+                if (!this.buttonsControler.checkButtons(event.originalEvent.offsetX, event.originalEvent.offsetY) && this.canClickOnCells) {
+                    if (engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button)
+                    =="attack successfully")
+                    {
+                        animArr.push(new PositionOnCanvas(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32)));
+                    };
+                }
             }
             IsMooving = false;
             MosePresed = false;

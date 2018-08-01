@@ -68,14 +68,16 @@ class BaseSprite {
         ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
     }
 }
-class Animation {
-    constructor(baseSprite,speed,loop)
+class BaseAnimation {
+    constructor(baseSprite,position,speed,loop)
     {
         this.sprite=baseSprite;
         this.speed=speed;
         this.dt=speed;
         this.numberOfLoop=loop*this.sprite.frame.length;
+        this.position = position;
     }
+
     update(dt)
     {
         this.dt-=dt;
@@ -92,6 +94,7 @@ class Animation {
             return "procesed";
         }
     }
+
     draw(canvases,nameOfCanvas,x,y)
     {
         this.sprite.draw(canvases,nameOfCanvas,x,y,this.numberOfLoop%this.sprite.frame.length);

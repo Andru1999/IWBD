@@ -12,8 +12,9 @@ window.onload = () => {
         body.mousemove(gui.controler.mousemove);
 
         new AnimationLoop( (dt) => {
+            gui.updateGui(dt);
             gui.render();
-            gui.updateGui();
+
         }).start();
 
     }
