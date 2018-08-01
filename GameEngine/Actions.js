@@ -42,6 +42,5 @@ class ActionAttack extends BaseAction {
             }
         }
         return result;
-
     }
 }
