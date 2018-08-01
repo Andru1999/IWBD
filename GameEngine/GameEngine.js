@@ -14,6 +14,34 @@ class GameEngine extends InterfaceGameEngine{
         }
     }
 
+    genWORLD(width, height, depth,firstTeamCount,secondTeamCount,battleType){
+        this._world = new World(new GameMap(width, height, depth), firstTeamCount, secondTeamCount,battleType);
+        if (this._world._battleType==0)
+            for (let elem of this._world._units[0]) {
+                this.setScope(true, elem,0);
+            }
+
+        if (this._world._battleType==1){
+            for (let elem of this._world._units[0]) {
+                this.setScope(true, elem,0);
+            }
+            for (let elem of this._world._units[1]) {
+                this.setScope(true, elem,1);
+            }
+        }
+    }
+
+    nextLvl(width, height, depth,secondTeamCount){
+        this._world._map=new GameMap(width, height, depth);
+        let fstTeamCoord = this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
+        let scndTeamCoord = this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
+            monsters_count * 10, null, null);
+        this._units[1] = this.spawnUnits(monsters_count, "mob", 1);
+        this.placeUnits(fstTeamCoord, this._units[0]);
+        this.placeUnits(scndTeamCoord, this._units[1]);
+        this._world._dungeon++;
+    }
+
     /**
      * Метод выполняющий некоторое действие
      * @param {BaseAction} action - Некоторое действие
