@@ -1,7 +1,7 @@
 "use strict";
 
 class World {
-    constructor(map, heroes_count, monsters_count) {
+    constructor(map, heroes_count, monsters_count,battleType) {
         this._map = map;
         this._heroes = this.spawnUnits(heroes_count, "hero",
             this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count));
