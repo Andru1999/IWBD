@@ -22,7 +22,8 @@ function LoadBaseResurses(func) {
             "Assets/AttackMoveButton.png",
             "Assets/MagicButton.png",
             "Assets/NextButton.png",
-            "Assets/mobs.png"
+            "Assets/mobs.png",
+            "Assets/dmgsprite.png"
         ], func);
 
     function LoadImg(urlArr, func) {
@@ -68,41 +69,42 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/AttackMoveButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "AttackMoveButton");
         AddBaseTexture(ImgArr["Assets/NextButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "NextButton");
         AddBaseTexture(ImgArr["Assets/MagicButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "MagicButton");
+        AddBaseTexture(ImgArr["Assets/dmgsprite.png"], 39, 39, "DmgTexture");
         genBaseSprites(func);
     }
 
     function genBaseSprites(func) {
-        function AddBaseSkin(name, basetexture, size, index) {
+        function AddBaseSkin(name, basetexture, size, framesArr) {
             if (BaseSpritesArr[name] == undefined) {
                 BaseSpritesArr[name] = [];
             }
-            BaseSpritesArr[name].push(new BaseSprite(TexturesArr[basetexture], size, index));
+            BaseSpritesArr[name].push(new BaseSprite(TexturesArr[basetexture], size, framesArr));
         }
 
-        AddBaseSkin("wall", "BlueWalls&Floor", BaseCellSize, 0);
-        AddBaseSkin("floor", "BlueWalls&Floor", BaseCellSize, 1);
-        AddBaseSkin("wall", "GreyWalls&Floor", BaseCellSize, 0);
-        AddBaseSkin("floor", "GreyWalls&Floor", BaseCellSize, 1);
-        AddBaseSkin("wall", "WhiteWalls&Floor", BaseCellSize, 0);
-        AddBaseSkin("floor", "WhiteWalls&Floor", BaseCellSize, 1);
-        AddBaseSkin("void", "VoidTexture", BaseCellSize, 0);
-        AddBaseSkin("hero", "Hero", BaseCellSize, 0);
-        AddBaseSkin("hero", "Hero", BaseCellSize, 1);
-        AddBaseSkin("hero", "Hero", BaseCellSize, 2);
-        AddBaseSkin("hero", "Hero", BaseCellSize, 3);
-        AddBaseSkin("area", "WalkableSpase", BaseCellSize, 0);
-        AddBaseSkin("area", "AttakSpase", BaseCellSize, 0);
-        AddBaseSkin("smoke", "Smoke", BaseCellSize, 0);
-        AddBaseSkin("mob", "Mobs", BaseCellSize, 0);
-        AddBaseSkin("mob", "Mobs", BaseCellSize, 1);
-        AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);           //0
-        AddBaseSkin("buttons", "ExitButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);            //1
-        AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);           //2
-        AddBaseSkin("buttons", "AttackMoveButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), 0);      //3
-        AddBaseSkin("buttons", "OptionButton", new Size(ImgArr["Assets/OptionButton.png"].width / 8, ImgArr["Assets/OptionButton.png"].height / 8), 0);      //4
-        AddBaseSkin("buttons", "NextButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);            //5
-        AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 1);           //6
-        AddBaseSkin("buttons", "MagicButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);           //7
+        AddBaseSkin("wall", "BlueWalls&Floor", BaseCellSize, [0]);
+        AddBaseSkin("floor", "BlueWalls&Floor", BaseCellSize, [1]);
+        AddBaseSkin("wall", "GreyWalls&Floor", BaseCellSize, [0]);
+        AddBaseSkin("floor", "GreyWalls&Floor", BaseCellSize, [1]);
+        AddBaseSkin("wall", "WhiteWalls&Floor", BaseCellSize, [0]);
+        AddBaseSkin("floor", "WhiteWalls&Floor", BaseCellSize, [1]);
+        AddBaseSkin("void", "VoidTexture", BaseCellSize, [0]);
+        AddBaseSkin("hero", "Hero", BaseCellSize, [0]);
+        AddBaseSkin("hero", "Hero", BaseCellSize, [1]);
+        AddBaseSkin("hero", "Hero", BaseCellSize, [2]);
+        AddBaseSkin("hero", "Hero", BaseCellSize, [3]);
+        AddBaseSkin("area", "WalkableSpase", BaseCellSize, [0]);
+        AddBaseSkin("area", "AttakSpase", BaseCellSize, [0]);
+        AddBaseSkin("smoke", "Smoke", BaseCellSize, [0]);
+        AddBaseSkin("mob", "Mobs", BaseCellSize, [0]);
+        AddBaseSkin("mob", "Mobs", BaseCellSize, [1]);
+        AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0,1]);         //0
+        AddBaseSkin("buttons", "ExitButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);            //1
+        AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //2
+        AddBaseSkin("buttons", "AttackMoveButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), [0,1]);    //3
+        AddBaseSkin("buttons", "OptionButton", new Size(ImgArr["Assets/OptionButton.png"].width / 8, ImgArr["Assets/OptionButton.png"].height / 8), [0]);      //4
+        AddBaseSkin("buttons", "NextButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);            //5
+        AddBaseSkin("buttons", "MagicButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //6
+        AddBaseSkin("dng", "DmgTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);           //6
         func(BaseSpritesArr);
     }
 

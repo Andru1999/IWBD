@@ -45,33 +45,67 @@ class Texture {
 }
 
 class BaseSprite {
-    constructor(texture, size, index) {
+    constructor(texture,size,frameArray) {
         this.texture = texture;
         this.size = size;
-        this.index = index;
+        this.frames=frameArray;
     }
 
-    draw(canvases, chosenCanvas, x, y) {
+    draw(canvases, chosenCanvas, x, y, index) {
+        if (index==undefined)
+        {
+            index=0;
+        }
+        index%=this.frames.length;
         let ctx = canvases[chosenCanvas].getContext("2d");
         let img = this.texture.img;
-        let img_x = this.texture.frame[this.index].x;
-        let img_y = this.texture.frame[this.index].y;
-        let img_dx = this.texture.frame[this.index].w;
-        let img_dy = this.texture.frame[this.index].h;
+        let img_x = this.texture.frame[this.frames[index]].x;
+        let img_y = this.texture.frame[this.frames[index]].y;
+        let img_dx = this.texture.frame[this.frames[index]].w;
+        let img_dy = this.texture.frame[this.frames[index]].h;
         let width = this.size.width;
         let height = this.size.height;
         ctx.drawImage(img, img_x, img_y, img_dx, img_dy, x, y, width, height);
     }
 }
+class Animation {
+    constructor(baseSprite,speed,loop)
+    {
+        this.sprite=baseSprite;
+        this.speed=speed;
+        this.dt=speed;
+        this.numberOfLoop=loop*this.sprite.frame.length;
+    }
+    update(dt)
+    {
+        this.dt-=dt;
+        if(this.dt<0)
+        {
+            this.dt=this.speed;
+            this.numberOfLoop--;
+        }
+        if (this.numberOfLoop==-1)
+        {
+            return "end";
+        }else
+        {
+            return "procesed";
+        }
+    }
+    draw(canvases,nameOfCanvas,x,y)
+    {
+        this.sprite.draw(canvases,nameOfCanvas,x,y,this.numberOfLoop%this.sprite.frame.length);
+    }
+}
 
 class Button {
-    constructor(sprite, position, canvas, clickFunction) {
+    constructor(sprite, position, canvas, clickFunction, frameIndex) {
         this.sprite = sprite;
         this.position = position;
         this.size = sprite.size;
         this.click = clickFunction;
         this.canvas = canvas;
-
+        this.index = frameIndex;
     }
 
     detect(x, y) {
@@ -79,7 +113,6 @@ class Button {
             return ((x < x1 + width) && (x > x1) && (y < y1 + height) && (y > y1))
 
         }
-
         if (inRect(x, y, this.position.x, this.position.y, this.size.width, this.size.height)) {
             this.click();
             return true;
@@ -88,7 +121,7 @@ class Button {
     }
 
     draw(canvases) {
-        this.sprite.draw(canvases, this.canvas, this.position.x, this.position.y);
+        this.sprite.draw(canvases, this.canvas, this.position.x, this.position.y,this.index);
     }
 }
 

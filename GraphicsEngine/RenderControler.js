@@ -5,7 +5,6 @@ class RenderControler {
         this.sprites = sprites;
         this.canvases = canvases;
         this.engine = engine;
-        this.worldSize = this.engine.getWorldSize();
     }
 
     renderSprite(type, variant, x, y) {
@@ -14,17 +13,18 @@ class RenderControler {
     }
 
     renderMap(canDo, offset) {
-        if (canDo) {
+        var worldSize = this.engine.getWorldSize();
+        if (canDo&&worldSize) {
             var leftHightCell = new PositionOnCanvas(Math.floor((-offset.x) / BaseCellWidth) - 1, Math.floor(((-offset.y)) / BaseCellHeight) - 1);
             var rightBottomCell = new PositionOnCanvas(Math.floor((-offset.x + this.canvases["mainCanvas"].width) / BaseCellWidth) + 1, Math.floor(((-offset.y + this.canvases["mainCanvas"].height)) / BaseCellHeight) + 1);
             leftHightCell.x = Math.max(0, leftHightCell.x);
             leftHightCell.y = Math.max(0, leftHightCell.y);
-            rightBottomCell.x = Math.min(rightBottomCell.x, this.worldSize.width);
-            rightBottomCell.y = Math.min(rightBottomCell.y, this.worldSize.height);
+            rightBottomCell.x = Math.min(rightBottomCell.x, worldSize.width);
+            rightBottomCell.y = Math.min(rightBottomCell.y, worldSize.height);
             for (let x = leftHightCell.x; x < rightBottomCell.x; x++) {
                 for (let y = leftHightCell.y; y < rightBottomCell.y; y++) {
                     let count = 0;
-                    for (let z = 0; z < this.worldSize.depth; z++) {
+                    for (let z = 0; z < worldSize.depth; z++) {
                         let cellInfo = this.engine.getCellInfo(x, y, z);
                         if (cellInfo.visibility == 0 || cellInfo.type == "empty") {
                             continue;
