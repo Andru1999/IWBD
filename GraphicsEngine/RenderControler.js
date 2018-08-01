@@ -9,9 +9,6 @@ class RenderControler {
     }
 
     renderSprite(type, variant, x, y) {
-        if (type == "mob") {
-            type = "hero";
-        }
         this.sprites[type][Math.abs(variant) % this.sprites[type].length].draw(this.canvases, "mainCanvas", x, y);
         //Отрисовка справйта
     }
@@ -26,26 +23,26 @@ class RenderControler {
             rightBottomCell.y = Math.min(rightBottomCell.y, this.worldSize.height);
             for (let x = leftHightCell.x; x < rightBottomCell.x; x++) {
                 for (let y = leftHightCell.y; y < rightBottomCell.y; y++) {
+                    let count = 0;
                     for (let z = 0; z < this.worldSize.depth; z++) {
                         let cellInfo = this.engine.getCellInfo(x, y, z);
-                        let count = 0;
                         if (cellInfo.visibility == 0 || cellInfo.type == "empty") {
                             continue;
                         } else {
 
                             if (cellInfo.visibility == -1) {
                                 count++;
-                                if(cellInfo.type!="hero"||cellInfo.type!="mob")
+                                if(cellInfo.type!="hero"&&cellInfo.type!="mob")
                                     this.renderSprite(cellInfo.type, cellInfo.variant, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
                             }else
                             {
                                 this.renderSprite(cellInfo.type, cellInfo.variant, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
                             }
                         }
-                        if (count!=0)
-                        {
-                            his.renderSprite("smoke", 0, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
-                        }
+                    }
+                    if (count!=0)
+                    {
+                        this.renderSprite("smoke", 0, x * BaseCellWidth + offset.x, y * BaseCellHeight + offset.y);
                     }
                 }
             }

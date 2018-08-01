@@ -21,6 +21,7 @@ function LoadBaseResurses(func) {
             "Assets/BackButton.png",
             "Assets/AttackMoveButton.png",
             "Assets/NextButton.png",
+            "Assets/mobs.png"
         ], func);
 
     function LoadImg(urlArr, func) {
@@ -57,6 +58,7 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr['Assets/Smoke.png'], 64, 64, "Smoke");
         AddBaseTexture(ImgArr['Assets/WalkableSpase.png'], 64, 64, "WalkableSpase");
         AddBaseTexture(ImgArr['Assets/AttakSpase.png'], 64, 64, "AttakSpase");
+        AddBaseTexture(ImgArr["Assets/mobs.png"], 16, 16, "Mobs");
         AddBaseTexture(ImgArr['Assets/Hero.png'], 16, 21, "Hero");
         AddBaseTexture(ImgArr["Assets/ExitButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "ExitButton");
         AddBaseTexture(ImgArr["Assets/StartButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "StartButton");
@@ -83,9 +85,14 @@ function LoadBaseResurses(func) {
         AddBaseSkin("floor", "WhiteWalls&Floor", BaseCellSize, 1);
         AddBaseSkin("void", "VoidTexture", BaseCellSize, 0);
         AddBaseSkin("hero", "Hero", BaseCellSize, 0);
+        AddBaseSkin("hero", "Hero", BaseCellSize, 1);
+        AddBaseSkin("hero", "Hero", BaseCellSize, 2);
+        AddBaseSkin("hero", "Hero", BaseCellSize, 3);
         AddBaseSkin("area", "WalkableSpase", BaseCellSize, 0);
         AddBaseSkin("area", "AttakSpase", BaseCellSize, 0);
         AddBaseSkin("smoke", "Smoke", BaseCellSize, 0);
+        AddBaseSkin("mob", "Mobs", BaseCellSize, 0);
+        AddBaseSkin("mob", "Mobs", BaseCellSize, 1);
         AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);           //0
         AddBaseSkin("buttons", "ExitButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);            //1
         AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), 0);           //2
