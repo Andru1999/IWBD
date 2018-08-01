@@ -13,11 +13,6 @@ class Position {
         this.wayLength = wayLength;
         this.previousIndexInQ = previousIndexInQ;
     }
-
-    // TODO : Реализовать метод считающий дистанцию до другой позиции
-    distance_to(position) {
-        //return
-    }
 }
 
 function getVector3(x, y, z, fillObject) {
@@ -60,7 +55,7 @@ class GameMap {
         this._width = width;
         this._depth = depth;
         this._cells = getVector3(width, height, depth);
-        this._visionField = getVector2(width, height, cellVisibility);
+        this._visionField = getVector3(width, height, 2,cellVisibility);
         this.generateMap();
     }
 
@@ -123,7 +118,7 @@ class GameMap {
         return (wayPoints);
     }
 
-    allAdmissibleCells(position, dist, ignorType) {
+    allAdmissibleCells(position, dist, ignorType,ignorTeam) {
         let _visitid = getVector3(this._width, this._height, this._depth)
 
         for (let i = 0; i < _visitid.length; i++)
@@ -144,6 +139,10 @@ class GameMap {
             if (this._cells[queue[l].x][queue[l].y][queue[l].z] && ignorType != null
                 && this._cells[queue[l].x][queue[l].y][queue[l].z]._objectType === ignorType) continue;
 
+            if (this._cells[queue[l].x][queue[l].y][queue[l].z] && ignorTeam != null
+                && this._cells[queue[l].x][queue[l].y][queue[l].z]._team!=null
+                && this._cells[queue[l].x][queue[l].y][queue[l].z]._team === ignorTeam) continue;
+
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
 
@@ -156,7 +155,7 @@ class GameMap {
 
                         let curObj = this._cells[currentCoord.x][currentCoord.y][currentCoord.z];
 
-                        if (curObj == null || curObj._walkable || curObj._objectType == ignorType) {
+                        if (curObj == null || curObj._walkable || curObj._objectType == ignorType || (curObj._team!=null && curObj._team==ignorTeam)) {
                             queue.push(currentCoord);
                         }
                         _visitid[currentCoord.x][currentCoord.y][currentCoord.z] = true;
@@ -185,16 +184,15 @@ class GameObject {
         this._variant = variant;
         this._name = name;
         this._walkable = walkable;
-        this._referenceCount = 0;
     }
 }
 
 
 class Creature extends GameObject {
 
-    constructor(objectType, variant, name, walkable, visibility, position, hitPoint, armor, baseDamage,
-                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange) {
-        super(objectType, variant, name, walkable, visibility);
+    constructor(objectType, variant, name, walkable, position, hitPoint, armor, baseDamage,
+                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange,team,mannaPoints,spell) {
+        super(objectType, variant, name, walkable,mannaPoints);
         this._position = position;
         this._hitPoint = hitPoint;
         this._armor = armor;
@@ -207,6 +205,9 @@ class Creature extends GameObject {
         this._rangeVision = rangeVision;
         this._basicCharacteristic = basicCharacteristic;
         this._attackRange = attackRange;
+        this._team=team;
+        this._mannaPoints=mannaPoints;
+        this._spell=spell;
     }
 
 

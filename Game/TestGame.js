@@ -12,17 +12,18 @@ window.onload = () => {
         body.mousemove(gui.controler.mousemove);
 
         new AnimationLoop( (dt) => {
+            gui.updateGui(dt);
             gui.render();
-            gui.updateGui();
+
         }).start();
 
     }
-    loadBaseResurses(eval_after_load_resurses);
+    LoadBaseResurses(eval_after_load_resurses);
 };
 
 class Game {
     constructor(){
-        this.engine = new GameEngine();
+        this.engine = new SpaceWorld();
     }
 }
 

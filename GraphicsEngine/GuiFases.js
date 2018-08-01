@@ -1,8 +1,14 @@
 //"use strict"
 function GuiFasesGenerator(gui,sprites, engine) {
     //let setFunction = setFunctions.setUnitFase;
-    function startButtonFunction() {
+    function startPVEButtonFunction() {
         gui.IsNeedToUpdate = 1;
+        game.engine.genWORLD(20,20,3,5,15,0);
+    }
+
+    function startPVPButtonFunction() {
+        game.Gui.IsNeedToUpdate =1;
+        game.engine.genWORLD(20,20,3,5,15,0);
     }
 
     function optionButtonFunction() {
@@ -13,12 +19,16 @@ function GuiFasesGenerator(gui,sprites, engine) {
         gui.IsNeedToUpdate = 1;
     }
 
+    function magicButtonFunction() {
+        //todo
+    }
+
     function switchAttackMoveButtonFunction() {
-        if (this.sprite.index == 1) {
-            this.sprite.index = 0;
+        if (this.index == 1) {
+            this.index=0;
             engine.setAction("move");
         } else {
-            this.sprite.index = 1;
+            this.index=1;
             engine.setAction("attack");
         }
     }
@@ -32,42 +42,46 @@ function GuiFasesGenerator(gui,sprites, engine) {
             GuiElements:
                 {
                     buttons: [
-                        new Button(sprites.buttons[0], new PositionOnCanvas(500, 500), "mainCanvas", startButtonFunction)
+                        new Button(sprites.buttons[0], new PositionOnCanvas(500, 400), "mainCanvas", startPVEButtonFunction,0),
+                        new Button(sprites.buttons[0], new PositionOnCanvas(500, 500), "mainCanvas", startPVPButtonFunction,1),
                     ],///Тут могут быть другие обьекты
                 },
             canDrawMap: false,
             canDrag_n_Drop: false,
-            canClickOnCells: false
+            canClickOnCells: false,
+            canUpdateAnimation:false
 
         },
         {//mainGameFase
             GuiElements:
                 {
                     buttons: [
-                        new Button(sprites.buttons[4], new PositionOnCanvas(0, 0), "mainCanvas", optionButtonFunction),
-                        new Button(sprites.buttons[3], new PositionOnCanvas(0, 700), "mainCanvas", switchAttackMoveButtonFunction),
-                        new Button(sprites.buttons[5], new PositionOnCanvas(900, 700), "mainCanvas", nextButtonFunction),
+                        new Button(sprites.buttons[4], new PositionOnCanvas(10, 10), "mainCanvas", optionButtonFunction, 0),
+                        new Button(sprites.buttons[3], new PositionOnCanvas(0, 700), "mainCanvas", switchAttackMoveButtonFunction, 0),
+                        new Button(sprites.buttons[5], new PositionOnCanvas(900, 700), "mainCanvas", nextButtonFunction, 0),
+                        new Button(sprites.buttons[6], new PositionOnCanvas(500, 700), "mainCanvas", magicButtonFunction, 0),
                     ],
                 },
 
             canDrawMap: true,
             canDrag_n_Drop: true,
-            canClickOnCells: true
+            canClickOnCells: true,
+            canUpdateAnimation:false
 
         },
         {//optionGameFase
             GuiElements:
                 {
                     buttons: [
-                        new Button(sprites.buttons[2], new PositionOnCanvas(500, 500), "mainCanvas", backButtonFunction),
-                        new Button(sprites.buttons[1], new PositionOnCanvas(500, 650), "mainCanvas", () => {
-                        })
+                        new Button(sprites.buttons[2], new PositionOnCanvas(500, 500), "mainCanvas", backButtonFunction,0),
+                        new Button(sprites.buttons[1], new PositionOnCanvas(500, 650), "mainCanvas", () => {},0)
                     ],
                 },
 
             canDrawMap: true,
             canDrag_n_Drop: false,
-            canClickOnCells: false
+            canClickOnCells: false,
+            canUpdateAnimation:false
         }
     ];
 }

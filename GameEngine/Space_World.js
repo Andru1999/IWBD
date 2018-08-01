@@ -1,17 +1,13 @@
 "use strict";
-// noinspection JSAnnotator
 
-class GameEngine extends InterfaceGameEngine{
+class SpaceWorld {
     constructor() {
-        super();
         this._actionType = 1;//0 - nothing , 1 - move , 2 - attack
         this._attackField = [];
         this._walkableField = [];
-        this._world = new World(new GameMap(20, 20, 3), 1, 1);
+        this._world = null;
         this._currentCreature = null;
-        for (let elem of this._world._heroes) {
-            this.setScope(true, elem);
-        }
+        this._currentTeam=0;
     }
 
     genWORLD(width, height, depth,firstTeamCount,secondTeamCount,battleType){
@@ -42,31 +38,17 @@ class GameEngine extends InterfaceGameEngine{
         this._world._dungeon++;
     }
 
-    /**
-     * Метод выполняющий некоторое действие
-     * @param {BaseAction} action - Некоторое действие
-     */
-    // Пока реализовано как костыль
-    do_action(action){
-        switch (action.constructor.name) {
-            case ActionMove.name:
-                return this.setAction("move");
-            case ActionAttack.name:
-                return this.setAction("attack");
-        }
-    }
-
     setAction(x) {
         this.deleteActionSpace();
         if (x == "attack") this._actionType = 2;
         if (x == "move") this._actionType = 1;
-        this.rebuildActionSpace("mob");
+        this.rebuildActionSpace(null,(this._currentTeam+1)%2);
         return "action type=" + this._actionType;
     }
 
     getCellInfo(x, y, z) {
         let currentCell = this._world._map._cells[x][y][z];
-        let visionCell = this._world._map._visionField[x][y];
+        let visionCell = this._world._map._visionField[x][y][this._currentTeam];
         let _visibility = 0;
         if (visionCell._wasDiscovered == true) {
             _visibility = 1;
@@ -87,7 +69,9 @@ class GameEngine extends InterfaceGameEngine{
     }
 
     getWorldSize() {
+        if (this._world && this._world._map)
         return this._world._map.getMapSize();
+        else return null;
     }
 
     doAction(x, y, mouseButton) {
@@ -125,11 +109,11 @@ class GameEngine extends InterfaceGameEngine{
 
         if ((currentTopCell == null || currentTopCell._walkable === true) && (currentBottomCell != null)
             && (currentBottomCell._objectType === "area") && (currentBottomCell._variant === 0)) {
-            this.setScope(false, this._currentCreature);
+            this.setScope(false, this._currentCreature,this._currentTeam);
             this._world._map.move(this._currentCreature._position, actionPosition);
             this._currentCreature._actionPoints--;
-            this.rebuildActionSpace("mob");
-            this.setScope(true, this._currentCreature);
+            this.rebuildActionSpace(null,(this._currentTeam+1)%2);
+            this.setScope(true, this._currentCreature,this._currentTeam);
             return "move successfully";
         }
         else return "move unsuccessfully";
@@ -139,14 +123,14 @@ class GameEngine extends InterfaceGameEngine{
         let currentTopCell = this._world._map._cells[x][y][2];
         let currentBottomCell = this._world._map._cells[x][y][1];
 
-        if (currentBottomCell != null && currentTopCell != null && currentTopCell._objectType === "mob"
+        if (currentBottomCell != null && currentTopCell != null && currentTopCell._team != this._currentTeam
             && currentBottomCell._objectType === "area" && currentBottomCell._variant === 1) {
             this._currentCreature._actionPoints--;
 
             let status = currentTopCell.takeDamage(this._currentCreature.calcDamage());
             if (status === "die") this._world._map._cells[x][y][2] = null;
 
-            this.rebuildActionSpace("mob");
+            this.rebuildActionSpace(null,(this._currentTeam+1)%2);
             return "attack successfully";
         }
         else return "attack unsuccessfully";
@@ -155,24 +139,59 @@ class GameEngine extends InterfaceGameEngine{
     SelectUnit(x, y) {
         let currentTopCell = this._world._map._cells[x][y][2];
 
-        if (currentTopCell != null && currentTopCell._objectType === "hero") {
+        if (currentTopCell != null && currentTopCell._team === this._currentTeam) {
             this._currentCreature = currentTopCell;
-            this.rebuildActionSpace("mob");
+            this.rebuildActionSpace(null,(this._currentTeam+1)%2);
             return "select successfully";
         }
         else {
             this._currentCreature = null;
-            this.rebuildActionSpace("mob");
+            this.rebuildActionSpace(null,(this._currentTeam+1)%2);
             return "select unsuccessfully";
         }
     }
 
-    calcActionSpaces(ignorType) {
+    cutOffInvisible(curArr,fstPos){
+        for (let i= curArr.length-1;i>-1;i--){
+            let secPos=curArr[i];
+            let A=fstPos.y-secPos.y;
+            let B=secPos.x-fstPos.x;
+            let C=fstPos.x*secPos.y-secPos.x*fstPos.y;
+            if (B!=0){
+                for (let X=Math.min(fstPos.x,secPos.x); X<=Math.max(fstPos.x,secPos.x);X=X+0.1){
+                    let y=Math.round((-C-A*X) / B*1.0);
+                    let x=Math.round(X);
+                    if (y<1 && y>this._world._map._height-2
+                        &&x<1 && x>this._world._map.width-2) continue;
+                    if ((x==fstPos.x && y==fstPos.y) || (x==secPos.x && y==secPos.y)) continue;
+                    if (this._world._map._cells[x][y][2]){
+                        curArr.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            else{
+                let x=fstPos.x;
+                for (let y=Math.min(fstPos.y,secPos.y); y<=Math.max(fstPos.y,secPos.y);y++){
+                    if (y<1 && y>this._world._map._height-2
+                        &&x<1 && x>this._world._map.width-2) continue;
+                    if ((x==fstPos.x && y==fstPos.y) || (x==secPos.x && y==secPos.y)) continue;
+                    if (this._world._map._cells[x][y][2]){
+                        curArr.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+	
+    calcActionSpaces(ignorType,ignorTeam) {
         if (this._currentCreature != null) {
             this._walkableField = this._world._map.allAdmissibleCells(this._currentCreature._position,
-                this._currentCreature._speed);
+                this._currentCreature._speed,null,null);
             this._attackField = this._world._map.allAdmissibleCells(this._currentCreature._position,
-                this._currentCreature._attackRange, ignorType);
+                this._currentCreature._attackRange, ignorType,ignorTeam);
+            this.cutOffInvisible(this._attackField,this._currentCreature._position);
             this._walkableField.splice(0, 1);
             this._attackField.splice(0, 1);
         }
@@ -215,13 +234,13 @@ class GameEngine extends InterfaceGameEngine{
             }
     }
 
-    rebuildActionSpace(ignorType) {
+    rebuildActionSpace(ignorType,ignorTeam) {
         this.deleteActionSpace();
-        this.calcActionSpaces(ignorType);
+        this.calcActionSpaces(ignorType,ignorTeam);
         this.makeActionSpace();
     }
 
-    setScope(flag, currentCreature) {
+    setScope(flag, currentCreature,index) {
         let map = this._world._map;
         for (let x = Math.max(0, currentCreature._position.x - currentCreature._rangeVision);
              x <= Math.min(map._width - 1, currentCreature._position.x + currentCreature._rangeVision); x++)
@@ -229,11 +248,11 @@ class GameEngine extends InterfaceGameEngine{
                  y <= Math.min(map._height - 1, currentCreature._position.y + currentCreature._rangeVision); y++)
                 if (this._world._map._visionField[x][y])
                     if (flag) {
-                        this._world._map._visionField[x][y]._wasDiscovered = true;
-                        this._world._map._visionField[x][y]._visibleLinks++;
+                        this._world._map._visionField[x][y][index]._wasDiscovered = true;
+                        this._world._map._visionField[x][y][index]._visibleLinks++;
                     }
                     else
-                        this._world._map._visionField[x][y]._visibleLinks--;
+                        this._world._map._visionField[x][y][index]._visibleLinks--;
 
     }
 
@@ -242,9 +261,9 @@ class GameEngine extends InterfaceGameEngine{
         let attackFields = this.getCurrentAreaArray();
         for (let elem of attackFields) {
             let currentCell = this._world._map._cells[elem.x][elem.y][elem.z];
-            if (currentCell && currentCell._objectType == "hero" && this._currentCreature._actionPoints > 0) {
+            if (currentCell && currentCell._team != this._currentTeam && this._currentCreature._actionPoints > 0) {
                 let status = currentCell.takeDamage(this._currentCreature.calcDamage());
-                if (status === "die") this._world._map._cells[currentCell.x][currentCell.y][2] = null;
+                if (status === "die") this._world._map._cells[currentCell._position.x][currentCell._position.y][2] = null;
             }
             if (this._currentCreature._actionPoints <= 0) break;
         }
@@ -254,7 +273,7 @@ class GameEngine extends InterfaceGameEngine{
         this._actionType = 1;
         let moveFields = this.getCurrentAreaArray();
         let randomIndex = getRandomInt(0, moveFields.length);
-        let point = new Position(moveFields[randomIndex].x, moveFields[randomIndex].y, 2);
+        let point = new Position(moveFields[randomIndex].x, moveFields[randomIndex].y, 2,0,-1);
         this._world._map.move(this._currentCreature._position, point);
         this._currentCreature._actionPoints--;
     }
@@ -267,27 +286,85 @@ class GameEngine extends InterfaceGameEngine{
     }
 
     nextRound() {
+        let lastAction=this._actionType;
         this.deleteActionSpace();
         this._currentCreature = null;
-        this.updateCreatureStatus(this._world._heroes);
-        this.updateCreatureStatus(this._world._monsters);
 
-        for (this._currentCreature of this._world._monsters) {
-            this.calcActionSpaces("hero");
-            if (this._currentCreature._actionPoints > 0)
-                this.tryAttackHero();
-            if (this._currentCreature._actionPoints > 0)
-                this.tryMoveMob();
+        for (let i=0;i<this._world._units.length;i++) {
+            this.updateCreatureStatus(this._world._units[i]);
         }
 
-        this._currentCreature = null;
-        this.rebuildActionSpace("mob");
+        this._currentTeam=(this._currentTeam+1) % 2;
 
-        this.updateCreatureStatus(this._world._heroes);
-        this.updateCreatureStatus(this._world._monsters);
+        if (this._world._battleType==0){
+            for (this._currentCreature of this._world._units[1]) {
+                this.calcActionSpaces(null,(this._currentTeam+1)%2);
+                if (this._currentCreature._actionPoints > 0)
+                    this.tryAttackHero();
+                if (this._currentCreature._actionPoints > 0)
+                    this.tryMoveMob();
+            }
 
-        if (this._world._heroes.length == 0) return "lost";
-        if (this._world._monsters.length == 0) return "win";
+            this._currentCreature = null;
+            this._actionType=lastAction;
+            this.rebuildActionSpace(null,(this._currentTeam+1)%2);
+
+            for (let i=0;i<this._world._units.length;i++) {
+                this.updateCreatureStatus(this._world._units[i]);
+            }
+
+            this._currentTeam=(this._currentTeam+1) % 2;
+        }
+
+
+
+        if (this._world._units[0].length == 0) return "0 team lost";
+        if (this._world._units[1].length == 0) return "1 team win";
+    }
+
+    useMagic(){
+        if (this._currentCreature && this._currentCreature._mannaPoints>0){
+            this._currentCreature._spell();
+        }
+    }
+
+    getGameObjectInfo(x,y){
+        let currCell=this._world._map._cells[x][y][2];
+        if (!currCell) return null;
+        let infoArr=[];
+        infoArr.push("ObjectType "+String(currCell._objectType));
+        infoArr.push("ID "+String(currCell._variant));
+        infoArr.push("Name "+String(currCell._name));
+        infoArr.push("HP "+String(currCell._hitPoint ));
+        infoArr.push("Armor "+String(currCell._armor ));
+        infoArr.push("BaseDamage "+String(currCell._baseDamage));
+        infoArr.push("ActionPoints "+String(currCell._actionPoints));
+        infoArr.push("Speed "+String(currCell._speed));
+        infoArr.push("Strength "+String(currCell._strength));
+        infoArr.push("Dexterity "+String(currCell._strength));
+        infoArr.push("Intelligence "+String(currCell._intelligence));
+        infoArr.push("Vision range "+String(currCell._rangeVision));
+        switch (currCell._basicCharacteristic) {
+            case 0:
+                infoArr.push("Strongman");
+                break;
+
+            case 1:
+                infoArr.push("Trickster");
+                break;
+
+            case 2:
+                infoArr.push("Wizard");
+                break;
+
+            default:
+                infoArr.push("No type");
+                break;
+        }
+        infoArr.push("AttackRange "+String(currCell._attackRange));
+        infoArr.push("Team "+String(currCell._team));
+        infoArr.push("Manna Points "+String(currCell._mannaPoints));
+        infoArr.push("Spell "+String(currCell._spell));
     }
 }
 
