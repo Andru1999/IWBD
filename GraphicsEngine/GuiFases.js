@@ -3,6 +3,7 @@ function GuiFasesGenerator(sprites, engine) {
     //let setFunction = setFunctions.setUnitFase;
     function startButtonFunction() {
         game.Gui.IsNeedToUpdate = 1;
+        game.engine.genWORLD(1,1,0);
     }
 
     function optionButtonFunction() {
