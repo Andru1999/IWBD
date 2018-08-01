@@ -29,7 +29,7 @@ window.onload = () => {
 
 class Game {
     init(SpriteArr, canvases) {
-        let engine = new SpaceWorld(15,15,3);
+        let engine = new SpaceWorld();
 
         this.engine = engine;
         this.Gui = new GUI(SpriteArr, engine, canvases);

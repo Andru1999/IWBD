@@ -1,18 +1,17 @@
 "use strict";
 
 class SpaceWorld {
-    constructor(width,height,depth) {
+    constructor() {
         this._actionType = 1;//0 - nothing , 1 - move , 2 - attack
         this._attackField = [];
         this._walkableField = [];
-        this.worldSize={width:width,height:height,depth:depth};
         this._world = null;
         this._currentCreature = null;
         this._currentTeam=0;
     }
 
-    genWORLD(firstTeamCount,secondTeamCount,battleType){
-        this._world = new World(new GameMap(this.worldSize.width, this.worldSize.height, this.worldSize.depth), firstTeamCount, secondTeamCount,battleType);
+    genWORLD(width, height, depth,firstTeamCount,secondTeamCount,battleType){
+        this._world = new World(new GameMap(width, height, depth), firstTeamCount, secondTeamCount,battleType);
         if (this._world._battleType==0)
             for (let elem of this._world._units[0]) {
                 this.setScope(true, elem,0);
@@ -26,8 +25,8 @@ class SpaceWorld {
                 this.setScope(true, elem,1);
             }
         }
-
     }
+
 
     setAction(x) {
         this.deleteActionSpace();
@@ -60,7 +59,9 @@ class SpaceWorld {
     }
 
     getWorldSize() {
-        return this.worldSize;
+        if (this._world && this._world._map)
+        return this._world._map.getMapSize();
+        else return null;
     }
 
     doAction(x, y, mouseButton) {
@@ -140,12 +141,47 @@ class SpaceWorld {
         }
     }
 
+    cutOffInvisible(curArr,fstPos){
+        for (let i= curArr.length-1;i>-1;i--){
+            let secPos=curArr[i];
+            let A=fstPos.y-secPos.y;
+            let B=secPos.x-fstPos.x;
+            let C=fstPos.x*secPos.y-secPos.x*fstPos.y;
+            if (B!=0){
+                for (let X=Math.min(fstPos.x,secPos.x); X<=Math.max(fstPos.x,secPos.x);X=X+0.1){
+                    let y=Math.round((-C-A*X) / B*1.0);
+                    let x=Math.round(X);
+                    if (y<1 && y>this._world._map._height-2
+                        &&x<1 && x>this._world._map.width-2) continue;
+                    if (x==fstPos.x && y==fstPos.y) continue;
+                    if (this._world._map._cells[x][y][2]){
+                        curArr.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            else{
+                let x=fstPos.x;
+                for (let y=Math.min(fstPos.y,secPos.y); y<=Math.max(fstPos.y,secPos.y);y++){
+                    if (y<1 && y>this._world._map._height-2
+                        &&x<1 && x>this._world._map.width-2) continue;
+                    if (x==fstPos.x && y==fstPos.y) continue;
+                    if (this._world._map._cells[x][y][2]){
+                        curArr.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+	
     calcActionSpaces(ignorType,ignorTeam) {
         if (this._currentCreature != null) {
             this._walkableField = this._world._map.allAdmissibleCells(this._currentCreature._position,
                 this._currentCreature._speed,null,null);
             this._attackField = this._world._map.allAdmissibleCells(this._currentCreature._position,
                 this._currentCreature._attackRange, ignorType,ignorTeam);
+            this.cutOffInvisible(this._attackField,this._currentCreature._position);
             this._walkableField.splice(0, 1);
             this._attackField.splice(0, 1);
         }
