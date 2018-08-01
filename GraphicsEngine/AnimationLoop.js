@@ -43,7 +43,7 @@ class AnimationLoop {
      *
      * @this {AnimationLoop}
      * @param {number} lastTime - Время последнего вызова функции
-     * по умолчанию текущее.
+     * (по умолчанию текущее).
      */
     _loop(lastTime = Date.now()) {
         var external_this = this; // Необходим для решения проблемы с вызовом методо внутри requestAnimFrame
