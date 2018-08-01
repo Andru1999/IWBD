@@ -20,7 +20,7 @@ function GuiFasesGenerator(gui,sprites, engine) {
     }
 
     function magicButtonFunction() {
-        game.Gui.IsNeedToUpdate = 1;
+        //todo
     }
 
     function switchAttackMoveButtonFunction() {
@@ -48,7 +48,8 @@ function GuiFasesGenerator(gui,sprites, engine) {
                 },
             canDrawMap: false,
             canDrag_n_Drop: false,
-            canClickOnCells: false
+            canClickOnCells: false,
+            canUpdateAnimation:false
 
         },
         {//mainGameFase
@@ -64,7 +65,8 @@ function GuiFasesGenerator(gui,sprites, engine) {
 
             canDrawMap: true,
             canDrag_n_Drop: true,
-            canClickOnCells: true
+            canClickOnCells: true,
+            canUpdateAnimation:false
 
         },
         {//optionGameFase
@@ -78,7 +80,8 @@ function GuiFasesGenerator(gui,sprites, engine) {
 
             canDrawMap: true,
             canDrag_n_Drop: false,
-            canClickOnCells: false
+            canClickOnCells: false,
+            canUpdateAnimation:false
         }
     ];
 }
