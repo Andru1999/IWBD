@@ -47,8 +47,9 @@ class AnimationLoop {
      */
     _loop(lastTime = Date.now()) {
         var external_this = this; // Необходим для решения проблемы с вызовом методо внутри requestAnimFrame
-        this.func((Date.now() - lastTime) / 1000);
-        this.requestAnimationFrame.call(window, (curentTime) => {
+        var curentTime = Date.now()
+        this.func((curentTime - lastTime) / 1000);
+        this.requestAnimationFrame.call(window, () => {
             external_this._loop(curentTime);
         });
     }
