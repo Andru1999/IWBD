@@ -269,4 +269,19 @@ class UnitParams{
     }
 }
 
+class Spawner{
+    constructor(position,units){
+        this._units=units;
+        this._team=1;
+        this._position=position;
+        this._hitPoint=10;
+        this._variant=0;
+        this._objectType="spawner"
+    }
+
+    spawnUnit(x,y,z){
+        return this._units[getRandomInt(0,100)%this._units.length](new Position(x,y,z),"mob",1);
+    }
+}
+
 
