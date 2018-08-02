@@ -398,7 +398,8 @@ class SpaceWorld {
 			if (typeof(elem) != "function"){
 				infArr.push(String(elem));
 			}
-		}	
+		}
+		return infArr;
 	}
 	
 	exitWorld(){

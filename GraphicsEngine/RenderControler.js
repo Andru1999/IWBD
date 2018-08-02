@@ -6,6 +6,7 @@ class RenderControler {
         this.canvases = canvases;
         this.engine = engine;
         this.animationConnroler = new AnimationControler(sprites);
+        this.info_menu = new InfoPanel(this.engine);
     }
 
     update(dt,canAnim)
@@ -69,6 +70,8 @@ class RenderControler {
         let ctx = (canvas.getContext("2d"));
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        this.info_menu.drow();
     }
 
     renderAnimation(canDo,offset)
