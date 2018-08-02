@@ -29,6 +29,7 @@ function LoadBaseResurses(func) {
             "Assets/hurricane.png",
             "Assets/Corruption.png",
             "Assets/Reset.png",
+            "Assets/MainMenue.jpg"
             ],func);
 
     function LoadImg(urlArr, func) {
@@ -80,6 +81,7 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/boost.png"], 39, 39, "BoostTexture");
         AddBaseTexture(ImgArr["Assets/hurricane.png"], 39, 39, "HurTexture");
         AddBaseTexture(ImgArr["Assets/Corruption.png"], 64, 64, "Corruption");
+        AddBaseTexture(ImgArr["Assets/MainMenue.jpg"], ImgArr["Assets/MainMenue.jpg"].width, ImgArr["Assets/MainMenue.jpg"].height, "MainMenu");
         genBaseSprites(func);
     }
 
@@ -120,6 +122,7 @@ function LoadBaseResurses(func) {
         AddBaseSkin("heal", "HealTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         AddBaseSkin("boost", "BoostTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         AddBaseSkin("hurricane", "HurTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
+        AddBaseSkin("background", "MainMenu", BaseCellSize, [0]);
         func(BaseSpritesArr);
     }
 

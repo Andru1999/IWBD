@@ -64,10 +64,14 @@ class RenderControler {
 
     }
 
-    renderBackground() {
+    renderBackground(background) {
         let canvas = this.canvases["mainCanvas"];
         let ctx = (canvas.getContext("2d"));
         ctx.fillStyle = "black";
+        if (background)
+        {
+            ctx.drawImage(background.texture.img,0,0,canvas.width, canvas.height)
+        }else
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         canvas = this.canvases["infoCanvas"];

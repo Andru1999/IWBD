@@ -23,7 +23,7 @@ class GUI extends UI {
     }
 
     render() {
-        this.renderControler.renderBackground();
+        this.renderControler.renderBackground(this.fases[this.curentFase].background);
         this.renderControler.renderMap(this.fases[this.curentFase].canDrawMap, this.controler.Offset);
         this.renderControler.renderAnimation(this.fases[this.curentFase].canDrawMap,this.controler.Offset)
         this.renderControler.renderGui(this.fases[this.curentFase].GuiElements);

@@ -60,7 +60,8 @@ function GuiFasesGenerator(gui,sprites, engine) {
             canDrawMap: false,
             canDrag_n_Drop: false,
             canClickOnCells: false,
-            canUpdateAnimation:false
+            canUpdateAnimation:false,
+            background:sprites["background"][0],
 
         },
         {//mainGameFase
