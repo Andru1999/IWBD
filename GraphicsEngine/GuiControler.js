@@ -1,7 +1,7 @@
 "use strict";
 
 class GuiControler {
-    constructor(engine, canvas,animArr) {
+    constructor(engine, canvas,animContr) {
         this.buttonsControler = new ButtonControler();
         this.canDr_n_Dr = false;
         //Функции Реакций на кнопки
@@ -32,7 +32,7 @@ class GuiControler {
                     if (engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button)
                     =="attack successfully")
                     {
-                        animArr.push(new PositionOnCanvas(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32)));
+                        animContr.addAnimation(new PositionOnCanvas(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32)),"dmg",0,5,20);
                     };
                 }
             }

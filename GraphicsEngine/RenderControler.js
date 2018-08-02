@@ -5,28 +5,13 @@ class RenderControler {
         this.sprites = sprites;
         this.canvases = canvases;
         this.engine = engine;
-        this.animations=animArr;
+        this.animationConnroler = new AnimationControler(sprites);
     }
 
     update(dt,canAnim)
     {
-        if (canAnim)
-        {
-            for (let i=0; i<this.animations.length;i++)
-            {
-                let anim = this.animations[i];
-                if(anim.update==undefined)
-                {
-                    let pos=anim;
-                    this.animations[i]=new BaseAnimation(this.sprites["dmg"][0],pos,5,1);
-                }else {
-                    let res = anim.update(dt);
-                    if (res == "end") {
-                        this.animations.splice(i, 1);
-                    }
-                }
-            }
-        }
+        if(canAnim)
+        this.animationConnroler.update(dt);
     }
 
     renderSprite(type, variant, x, y) {
@@ -89,7 +74,7 @@ class RenderControler {
     {
         if (canDo)
         {
-            for (let anim of this.animations)
+            for (let anim of this.animationConnroler.animArray)
             {
                 anim.draw(this.canvases, "mainCanvas",anim.position.x*BaseCellWidth+offset.x,anim.position.y*BaseCellHeight+offset.y);
             }
