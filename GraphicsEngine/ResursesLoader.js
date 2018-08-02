@@ -24,8 +24,10 @@ function LoadBaseResurses(func) {
             "Assets/NextButton.png",
             "Assets/mobs.png",
             "Assets/dmgsprite.png",
-            "Assets/Corruption.png",
-        ], func);
+            "Assets/heal.png",
+            "Assets/boost.png",
+            "Assets/hurricane.png"
+            ],func);
 
     function LoadImg(urlArr, func) {
         let SothigToFixAJAX = urlArr.length;
@@ -71,7 +73,9 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/NextButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "NextButton");
         AddBaseTexture(ImgArr["Assets/MagicButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "MagicButton");
         AddBaseTexture(ImgArr["Assets/dmgsprite.png"], 39, 39, "DmgTexture");
-        AddBaseTexture(ImgArr["Assets/Corruption.png"], 64, 64, "Corruption");
+        AddBaseTexture(ImgArr["Assets/heal.png"], 39, 39, "HealTexture");
+        AddBaseTexture(ImgArr["Assets/boost.png"], 39, 39, "BoostTexture");
+        AddBaseTexture(ImgArr["Assets/hurricane.png"], 39, 39, "HurTexture");
         genBaseSprites(func);
     }
 
@@ -104,10 +108,12 @@ function LoadBaseResurses(func) {
         AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //2
         AddBaseSkin("buttons", "AttackMoveButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), [0,1]);    //3
         AddBaseSkin("buttons", "OptionButton", new Size(ImgArr["Assets/OptionButton.png"].width / 8, ImgArr["Assets/OptionButton.png"].height / 8), [0]);      //4
-        AddBaseSkin("buttons", "NextButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), [0]);            //5
-        AddBaseSkin("buttons", "MagicButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), [0]);           //6
+        AddBaseSkin("buttons", "NextButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);            //5
+        AddBaseSkin("buttons", "MagicButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //6
         AddBaseSkin("attack", "DmgTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
-        AddBaseSkin("spawner", "Corruption", BaseCellSize, [0]);
+        AddBaseSkin("heal", "HealTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
+        AddBaseSkin("boost", "BoostTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
+        AddBaseSkin("hurricane", "HurTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         func(BaseSpritesArr);
     }
 
