@@ -12,7 +12,7 @@ var requestAnimationFrame =
 
 window.onload = () => {
     function eval_after_load_resurses(SpriteArr){
-        game = new Game();
+        let game = new Game();
         let gui = new GUI(game, SpriteArr);
         requestAnimationFrame(()=> {
             loop(gui, Date.now())

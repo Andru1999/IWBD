@@ -136,10 +136,10 @@ class GameMap {
 
             if (queue[l].wayLength * 1.0 >= dist * 1.0) continue;
 
-            if (this._cells[queue[l].x][queue[l].y][queue[l].z] && ignorType != null
+            if (this._cells[queue[l].x][queue[l].y][queue[l].z] && ignorType != null //ignor object type
                 && this._cells[queue[l].x][queue[l].y][queue[l].z]._objectType === ignorType) continue;
 
-            if (this._cells[queue[l].x][queue[l].y][queue[l].z] && ignorTeam != null
+            if (this._cells[queue[l].x][queue[l].y][queue[l].z] && ignorTeam != null    //ignor team number
                 && this._cells[queue[l].x][queue[l].y][queue[l].z]._team!=null
                 && this._cells[queue[l].x][queue[l].y][queue[l].z]._team === ignorTeam) continue;
 
@@ -189,25 +189,27 @@ class GameObject {
 
 
 class Creature extends GameObject {
-
-    constructor(objectType, variant, name, walkable, position, hitPoint, armor, baseDamage,
-                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic, attackRange,team,mannaPoints,spell) {
-        super(objectType, variant, name, walkable,mannaPoints);
-        this._position = position;
-        this._hitPoint = hitPoint;
-        this._armor = armor;
-        this._baseDamage = baseDamage;
-        this._actionPoints = actionPoints;
-        this._speed = speed;
-        this._strength = strength;
-        this._dexterity = dexterity;
-        this._intelligence = intelligence;
-        this._rangeVision = rangeVision;
-        this._basicCharacteristic = basicCharacteristic;
-        this._attackRange = attackRange;
-        this._team=team;
-        this._mannaPoints=mannaPoints;
-        this._spell=spell;
+    /*(objectType, variant, name, walkable, position, hitPoint, armor, baseDamage,
+                actionPoints, speed, strength, dexterity, intelligence, rangeVision, basicCharacteristic,
+                attackRange,team,mannaPoints,spell) {
+        super(objectType, variant, name, walkable,mannaPoints);*/
+    constructor(params) {
+        super(params.objectType, params.variant, params.name, params.walkable,params.mannaPoints);
+        this._position = params.position;
+        this._hitPoint = params.hitPoint;
+        this._armor = params.armor;
+        this._baseDamage = params.baseDamage;
+        this._actionPoints = params.actionPoints;
+        this._speed = params.speed;
+        this._strength = params.strength;
+        this._dexterity = params.dexterity;
+        this._intelligence = params.intelligence;
+        this._rangeVision = params.rangeVision;
+        this._basicCharacteristic = params.basicCharacteristic;
+        this._attackRange = params.attackRange;
+        this._team=params.team;
+        this._mannaPoints=params.mannaPoints;
+        this._spell=params.spell;
     }
 
 
@@ -240,6 +242,45 @@ class Creature extends GameObject {
                 return this._baseDamage;
                 break;
         }
+    }
+}
+
+class UnitParams{
+    constructor(){
+        this.position=null;
+        this.objectType=null;
+        this.team=null;
+        this.variant = null;
+        this.walkable = null;
+        this.armor = null;
+        this.baseDamage = null;
+        this.actionPoints = null;
+        this.speed = null;
+        this.strength = null;
+        this.dexterity = null;
+        this.intelligence = null;
+        this.rangeVision = null;
+        this.basicCharacteristic = null;
+        this.hitPoint = null;
+        this.attackRange =null;
+        this.name = null;
+        this.mannaPoints=null;
+        this.spell=null;
+    }
+}
+
+class Spawner{
+    constructor(position,units){
+        this._units=units;
+        this._team=1;
+        this._position=position;
+        this._hitPoint=10;
+        this._variant=0;
+        this._objectType="spawner"
+    }
+
+    spawnUnit(x,y,z){
+        return this._units[getRandomInt(0,100)%this._units.length](new Position(x,y,z),"mob",1);
     }
 }
 
