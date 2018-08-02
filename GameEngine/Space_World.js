@@ -9,6 +9,7 @@ class SpaceWorld {
         this._currentCreature = null;
         this._currentTeam=0;
         this._animations=new engineAnim();
+		this._curSelectedObj=null;
     }
 
     newAnimations()
@@ -17,8 +18,8 @@ class SpaceWorld {
     }
 
     genWORLD(battleType){
-        let width=getRandomInt(20,45);
-        let height=getRandomInt(20,45);
+        let width=getRandomInt(10,10);
+        let height=getRandomInt(10,10);
         let depth=3;
         let firstTeamCount=5;
         let secondTeamCount=0//Math.round(width*height / 150);
@@ -146,8 +147,10 @@ class SpaceWorld {
             this._currentCreature._actionPoints--;
 
             let status = currentTopCell.takeDamage(this._currentCreature.calcDamage());
-            if (status === "die") this._world._map._cells[x][y][2] = null;
-
+            if (status === "die"){ 
+				this.setScope(false,this._world._map._cells[x][y][2],this._world._map._cells[x][y][2]._team);
+				this._world._map._cells[x][y][2] = null;
+			}
             this.rebuildActionSpace(null,(this._currentTeam+1)%2);
             return "attack successfully";
         }
@@ -156,7 +159,8 @@ class SpaceWorld {
 
     SelectUnit(x, y) {
         let currentTopCell = this._world._map._cells[x][y][2];
-
+		if (currentTopCell)
+			this._curSelectedObj = currentTopCell; 
         if (currentTopCell != null && currentTopCell._team === this._currentTeam) {
             this._currentCreature = currentTopCell;
             this.rebuildActionSpace(null,(this._currentTeam+1)%2);
@@ -176,7 +180,7 @@ class SpaceWorld {
             let B=secPos.x-fstPos.x;
             let C=fstPos.x*secPos.y-secPos.x*fstPos.y;
             if (B!=0){
-                for (let X=Math.min(fstPos.x,secPos.x); X<=Math.max(fstPos.x,secPos.x);X=X+0.1){
+                for (let X=Math.min(fstPos.x,secPos.x); X<=Math.max(fstPos.x,secPos.x);X=X+0.001){
                     let y=Math.round((-C-A*X) / B*1.0);
                     let x=Math.round(X);
                     if (y<1 && y>this._world._map._height-2
@@ -284,6 +288,7 @@ class SpaceWorld {
                 let status = currentCell.takeDamage(this._currentCreature.calcDamage());
                 this._animations.pushAnim("attack",0,currentCell._position.x,currentCell._position.y);
                 if (status === "die") {
+					this.setScope(false,this._world._map._cells[currentCell._position.x][currentCell._position.y][2],currentCell._team);
                     this._world._map._cells[currentCell._position.x][currentCell._position.y][2] = null;
                 }
             }
@@ -336,10 +341,13 @@ class SpaceWorld {
             }
             for (let elem of this._world._spawners){
                 let curField=this._world._map.allAdmissibleCells(elem._position,10,null,null);
+				curField[0]=curField[1];
                 let curCell=curField[getRandomInt(0,100) % curField.length];
-                let unit=elem.spawnUnit(curCell.x,curCell.y,curCell.z);
-                this._world._units[1].push(unit);
-                this._world._map._cells[unit._position.x][unit._position.y][unit._position.z]=unit;
+				if (curCell){
+					let unit=elem.spawnUnit(curCell.x,curCell.y,curCell.z);
+					this._world._units[1].push(unit);
+					this._world._map._cells[unit._position.x][unit._position.y][unit._position.z]=unit;
+				}
             }
             this._currentTeam=(this._currentTeam+1) % 2;
         }
@@ -356,43 +364,13 @@ class SpaceWorld {
         }
     }
 
-    getGameObjectInfo(x,y){
-        let currCell=this._world._map._cells[x][y][2];
-        if (!currCell) return null;
-        let infoArr=[];
-        infoArr.push("ObjectType "+String(currCell._objectType));
-        infoArr.push("ID "+String(currCell._variant));
-        infoArr.push("Name "+String(currCell._name));
-        infoArr.push("HP "+String(currCell._hitPoint ));
-        infoArr.push("Armor "+String(currCell._armor ));
-        infoArr.push("BaseDamage "+String(currCell._baseDamage));
-        infoArr.push("ActionPoints "+String(currCell._actionPoints));
-        infoArr.push("Speed "+String(currCell._speed));
-        infoArr.push("Strength "+String(currCell._strength));
-        infoArr.push("Dexterity "+String(currCell._strength));
-        infoArr.push("Intelligence "+String(currCell._intelligence));
-        infoArr.push("Vision range "+String(currCell._rangeVision));
-        switch (currCell._basicCharacteristic) {
-            case 0:
-                infoArr.push("Strongman");
-                break;
-
-            case 1:
-                infoArr.push("Trickster");
-                break;
-
-            case 2:
-                infoArr.push("Wizard");
-                break;
-
-            default:
-                infoArr.push("No type");
-                break;
-        }
-        infoArr.push("AttackRange "+String(currCell._attackRange));
-        infoArr.push("Team "+String(currCell._team));
-        infoArr.push("Manna Points "+String(currCell._mannaPoints));
-        infoArr.push("Spell "+String(currCell._spell));
-    }
+    getCurSelectedObjInf(){
+		let infArr=[];
+		for (elem of this._curSelectedObj){
+			if (typeof(elem) != "function"){
+				infArr.push(String(elem));
+			}
+		}	
+	}
 }
 
