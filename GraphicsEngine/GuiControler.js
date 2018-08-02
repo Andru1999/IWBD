@@ -52,6 +52,11 @@ class GuiControler {
                         if (this.canDr_n_Dr) {
                             this.Offset.x += (CurentXY.x - LastXY.x);
                             this.Offset.y += (CurentXY.y - LastXY.y);
+                            this.Offset.x=Math.min(this.Offset.x,canvas.width-50);
+                            this.Offset.y=Math.min(this.Offset.y,canvas.height-50);
+                            let worldParams = engine.getWorldSize();
+                            this.Offset.x=Math.max(-worldParams.width*BaseCellWidth+50,this.Offset.x);
+                            this.Offset.y=Math.max(-worldParams.height*BaseCellHeight+50,this.Offset.y);
                             LastXY.set(CurentXY.x, CurentXY.y);
                         }
                         IsMooving = true;
