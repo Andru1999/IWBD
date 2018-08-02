@@ -26,7 +26,8 @@ function LoadBaseResurses(func) {
             "Assets/dmgsprite.png",
             "Assets/heal.png",
             "Assets/boost.png",
-            "Assets/hurricane.png"
+            "Assets/hurricane.png",
+            "Assets/Corruption.png"
             ],func);
 
     function LoadImg(urlArr, func) {
@@ -76,6 +77,7 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/heal.png"], 39, 39, "HealTexture");
         AddBaseTexture(ImgArr["Assets/boost.png"], 39, 39, "BoostTexture");
         AddBaseTexture(ImgArr["Assets/hurricane.png"], 39, 39, "HurTexture");
+        AddBaseTexture(ImgArr["Assets/Corruption.png"], 39, 39, "Corruption");
         genBaseSprites(func);
     }
 
@@ -103,6 +105,7 @@ function LoadBaseResurses(func) {
         AddBaseSkin("smoke", "Smoke", BaseCellSize, [0]);
         AddBaseSkin("mob", "Mobs", BaseCellSize, [0]);
         AddBaseSkin("mob", "Mobs", BaseCellSize, [1]);
+        AddBaseSkin("spawner", "Corruption", BaseCellSize, [0]);
         AddBaseSkin("buttons", "StartButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0,1]);         //0
         AddBaseSkin("buttons", "ExitButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);            //1
         AddBaseSkin("buttons", "BacktButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //2
