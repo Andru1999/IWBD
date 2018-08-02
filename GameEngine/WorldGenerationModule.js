@@ -8,18 +8,23 @@ class World {
         this._units = getVector2(2, 1);
         this._dungeon=1;
         this._units[0] = this.spawnUnits(heroes_count, "hero", 0);
+        this._spawners=[];
         let scndTeamCoord;
         let fstTeamCoord = this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
         if (battleType == 0) {
             this._units[1] = this.spawnUnits(monsters_count, "mob", 1);
             scndTeamCoord = this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
                                                         monsters_count * 10, null, null);
+            for (let i=0;i<1;i++)
+                this._spawners.push(new Spawner(new Position(0,0,0),this.characterClasses));
+            this.placeUnits(scndTeamCoord,this._spawners);
         }
         if (battleType == 1) {
             this._units[1] = this.spawnUnits(monsters_count, "hero", 1);
             scndTeamCoord = this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
                                                         monsters_count, null, null);
         }
+
         this.placeUnits(fstTeamCoord, this._units[0]);
         this.placeUnits(scndTeamCoord, this._units[1]);
     }
