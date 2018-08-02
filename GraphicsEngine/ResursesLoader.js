@@ -31,7 +31,10 @@ function LoadBaseResurses(func) {
             "Assets/Reset.png",
             "Assets/IndicatorSpace.png",
             "Assets/MainMenue.jpg",
-            "Assets/point.png"
+            "Assets/point.png",
+            "Assets/1_2_win.png",
+            "Assets/Next_Round_win.png",
+            "Assets/ResetLose.png",
             ],func);
 
     function LoadImg(urlArr, func) {
@@ -79,6 +82,9 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/AttackMoveButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "AttackMoveButton");
         AddBaseTexture(ImgArr["Assets/NextButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "NextButton");
         AddBaseTexture(ImgArr["Assets/MagicButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "MagicButton");
+        AddBaseTexture(ImgArr["Assets/1_2_win.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "1_2_Button");
+        AddBaseTexture(ImgArr["Assets/Next_Round_win.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "Next_Round_winButton");
+        AddBaseTexture(ImgArr["Assets/ResetLose.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "ResetLose");
         AddBaseTexture(ImgArr["Assets/dmgsprite.png"], 39, 39, "DmgTexture");
         AddBaseTexture(ImgArr["Assets/heal.png"], 39, 39, "HealTexture");
         AddBaseTexture(ImgArr["Assets/boost.png"], 39, 39, "BoostTexture");
@@ -123,6 +129,13 @@ function LoadBaseResurses(func) {
         AddBaseSkin("buttons", "NextButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), [0]);            //5
         AddBaseSkin("buttons", "MagicButton", new Size(ImgArr["Assets/ExitButton.png"].width / 8, ImgArr["Assets/ExitButton.png"].height / 8), [0]);           //6
         AddBaseSkin("buttons", "ResetButton", new Size(ImgArr["Assets/OptionButton.png"].width / 8, ImgArr["Assets/OptionButton.png"].height / 8), [0]);       //7
+
+        AddBaseSkin("buttons", "1_2_Button", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //8
+        AddBaseSkin("buttons", "1_2_Button", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [1]);           //9
+        AddBaseSkin("buttons", "Next_Round_winButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //10
+        AddBaseSkin("buttons", "Next_Round_winButton", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [1]);           //11
+        AddBaseSkin("buttons", "ResetLose", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [0]);           //12
+        AddBaseSkin("buttons", "ResetLose", new Size(ImgArr["Assets/ExitButton.png"].width / 6, ImgArr["Assets/ExitButton.png"].height / 6), [1]);           //13
         AddBaseSkin("attack", "DmgTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         AddBaseSkin("heal", "HealTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         AddBaseSkin("boost", "BoostTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
