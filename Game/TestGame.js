@@ -1,7 +1,4 @@
 "use strict";
-
-var game;
-
 var requestAnimationFrame =
     window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
