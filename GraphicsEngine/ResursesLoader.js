@@ -29,7 +29,9 @@ function LoadBaseResurses(func) {
             "Assets/hurricane.png",
             "Assets/Corruption.png",
             "Assets/Reset.png",
-            "Assets/MainMenue.jpg"
+            "Assets/IndicatorSpace.png",
+            "Assets/MainMenue.jpg",
+            "Assets/point.png"
             ],func);
 
     function LoadImg(urlArr, func) {
@@ -66,6 +68,7 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr['Assets/Smoke.png'], 64, 64, "Smoke");
         AddBaseTexture(ImgArr['Assets/WalkableSpace.png'], 64, 64, "WalkableSpase");
         AddBaseTexture(ImgArr['Assets/AttackSpace.png'], 64, 64, "AttakSpase");
+        AddBaseTexture(ImgArr['Assets/IndicatorSpace.png'], 64, 64, "IndicatorSpace");
         AddBaseTexture(ImgArr["Assets/mobs.png"], 16, 16, "Mobs");
         AddBaseTexture(ImgArr['Assets/Hero.png'], 16, 21, "Hero");
         AddBaseTexture(ImgArr["Assets/ExitButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "ExitButton");
@@ -80,6 +83,7 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/heal.png"], 39, 39, "HealTexture");
         AddBaseTexture(ImgArr["Assets/boost.png"], 39, 39, "BoostTexture");
         AddBaseTexture(ImgArr["Assets/hurricane.png"], 39, 39, "HurTexture");
+        AddBaseTexture(ImgArr["Assets/point.png"], 32, 32, "Point");
         AddBaseTexture(ImgArr["Assets/Corruption.png"], 64, 64, "Corruption");
         AddBaseTexture(ImgArr["Assets/MainMenue.jpg"], ImgArr["Assets/MainMenue.jpg"].width, ImgArr["Assets/MainMenue.jpg"].height, "MainMenu");
         genBaseSprites(func);
@@ -106,6 +110,7 @@ function LoadBaseResurses(func) {
         AddBaseSkin("hero", "Hero", BaseCellSize, [3]);
         AddBaseSkin("area", "WalkableSpase", BaseCellSize, [0]);
         AddBaseSkin("area", "AttakSpase", BaseCellSize, [0]);
+        AddBaseSkin("area", "IndicatorSpace", BaseCellSize, [0]);
         AddBaseSkin("smoke", "Smoke", BaseCellSize, [0]);
         AddBaseSkin("mob", "Mobs", BaseCellSize, [0]);
         AddBaseSkin("mob", "Mobs", BaseCellSize, [1]);
@@ -122,6 +127,7 @@ function LoadBaseResurses(func) {
         AddBaseSkin("heal", "HealTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         AddBaseSkin("boost", "BoostTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
         AddBaseSkin("hurricane", "HurTexture", BaseCellSize, [0,1,2,3,4,5,6,7,8,9,10,11,12]);
+        AddBaseSkin("click", "Point", BaseCellSize, [0,1,2,3,4]);
         AddBaseSkin("background", "MainMenu", BaseCellSize, [0]);
         func(BaseSpritesArr);
     }
