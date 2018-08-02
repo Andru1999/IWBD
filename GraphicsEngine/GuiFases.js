@@ -21,6 +21,7 @@ function GuiFasesGenerator(gui,sprites, engine) {
 
     function magicButtonFunction() {
         //todo
+        engine.useMagic(engine);
     }
 
     function switchAttackMoveButtonFunction() {

@@ -11,12 +11,18 @@ class RenderControler {
     update(dt,canAnim)
     {
         if(canAnim)
-        this.animationConnroler.update(dt);
+        this.animationConnroler.update(dt,this.engine.newAnimations());
     }
 
     renderSprite(type, variant, x, y) {
-        this.sprites[type][Math.abs(variant) % this.sprites[type].length].draw(this.canvases, "mainCanvas", x, y);
-        //Отрисовка справйта
+
+        try {
+            this.sprites[type][Math.abs(variant) % this.sprites[type].length].draw(this.canvases, "mainCanvas", x, y);
+        }
+        catch(e)
+        {
+            console.log(type);
+        }//Отрисовка справйта
     }
 
     renderMap(canDo, offset) {

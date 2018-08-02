@@ -6,7 +6,7 @@ class AnimationControler
         this.sprites = sprites;
         this.animArray = [];
     }
-    update(dt)
+    update(dt,animArr)
     {
         for (let i=0; i<this.animArray.length;i++)
         {
@@ -14,6 +14,10 @@ class AnimationControler
             if (res == "end") {
                 this.animArray.splice(i, 1);
             }
+        }
+        for (let newAnim of animArr)
+        {
+            this.addAnimation(new PositionOnCanvas(newAnim.x,newAnim.y),newAnim.type,newAnim.variant,2,1);
         }
     }
     addAnimation(position,type,variant,speed,number)
