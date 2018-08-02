@@ -29,9 +29,9 @@ function hurricane(game) {
          x <= game._currentCreature._position.x + 1; x++)
         for (let y = game._currentCreature._position.y - 1;
              y <= game._currentCreature._position.y + 1; y++) {
+			if (game._currentCreature._position.x==x && game._currentCreature._position.y==y) continue;		
             if (game._world._map._cells[x][y][2] && game._world._map._cells[x][y][2]._hitPoint){
-                game._world._map._cells[x][y][2]._hitPoint-=(game._currentCreature._strength/50+1)
-                                                            *game._currentCreature._baseDamage;
+                game._world._map._cells[x][y][2]._hitPoint-=game._currentCreature._strength*game._currentCreature._baseDamage;
                 game._animations.pushAnim("hurricane",0,x,y);
             }
         }
