@@ -6,6 +6,11 @@ function GuiFasesGenerator(gui,sprites, engine) {
         engine.genWORLD(0);
     }
 
+    function resetButtonFunction() {
+        gui.IsNeedToUpdate = 1;
+        engine.genWORLD(engine._world._battleType);
+    }
+
     function startPVPButtonFunction() {
         gui.IsNeedToUpdate =1;
         engine.genWORLD(1);
@@ -17,6 +22,11 @@ function GuiFasesGenerator(gui,sprites, engine) {
 
     function backButtonFunction() {
         gui.IsNeedToUpdate = 1;
+    }
+
+    function exitButtonFunction() {
+        gui.IsNeedToUpdate = 0;
+        gui.controler.Offset = new PositionOnCanvas(400, 60);
     }
 
     function magicButtonFunction() {
@@ -58,6 +68,7 @@ function GuiFasesGenerator(gui,sprites, engine) {
                 {
                     buttons: [
                         new Button(sprites.buttons[4], new PositionOnCanvas(10, 10), "mainCanvas", optionButtonFunction, 0),
+                        new Button(sprites.buttons[7], new PositionOnCanvas(10, 100), "mainCanvas", resetButtonFunction, 0),
                         new Button(sprites.buttons[3], new PositionOnCanvas(50, 700), "mainCanvas", switchAttackMoveButtonFunction, 0),
                         new Button(sprites.buttons[5], new PositionOnCanvas(900, 700), "mainCanvas", nextButtonFunction, 0),
                         new Button(sprites.buttons[6], new PositionOnCanvas(500, 700), "mainCanvas", magicButtonFunction, 0),
@@ -78,7 +89,7 @@ function GuiFasesGenerator(gui,sprites, engine) {
                 {
                     buttons: [
                         new Button(sprites.buttons[2], new PositionOnCanvas(500, 500), "mainCanvas", backButtonFunction,0),
-                        new Button(sprites.buttons[1], new PositionOnCanvas(500, 650), "mainCanvas", () => {},0)
+                        new Button(sprites.buttons[1], new PositionOnCanvas(500, 650), "mainCanvas", exitButtonFunction,0)
                     ],
                 },
 
