@@ -72,18 +72,18 @@ class BaseAnimation {
     constructor(baseSprite,position,speed,loop)
     {
         this.sprite=baseSprite;
-        this.speed=speed;
+        this.speed=1/(speed*this.sprite.frames.length);
         this.dt=speed;
-        this.numberOfLoop=loop*this.sprite.frame.length;
+        this.numberOfLoop=loop*this.sprite.frames.length;
         this.position = position;
     }
 
     update(dt)
     {
-        this.dt-=dt;
+        this.dt-=(dt*1000);
         if(this.dt<0)
         {
-            this.dt=this.speed;
+            this.dt=1/(this.speed*this.sprite.frames.length);
             this.numberOfLoop--;
         }
         if (this.numberOfLoop==-1)
@@ -97,7 +97,7 @@ class BaseAnimation {
 
     draw(canvases,nameOfCanvas,x,y)
     {
-        this.sprite.draw(canvases,nameOfCanvas,x,y,this.numberOfLoop%this.sprite.frame.length);
+        this.sprite.draw(canvases,nameOfCanvas,x,y,this.numberOfLoop%this.sprite.frames.length);
     }
 }
 

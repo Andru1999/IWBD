@@ -18,12 +18,12 @@ class RenderControler {
                 if(anim.update==undefined)
                 {
                     let pos=anim;
-                    this.animations[i]=new BaseAnimation(this.sprites["dmg"],pos,5,2);
-                }
-                let res = anim.update(dt);
-                if (res="end")
-                {
-                    this.animations.splice(i,1);
+                    this.animations[i]=new BaseAnimation(this.sprites["dmg"][0],pos,5,1);
+                }else {
+                    let res = anim.update(dt);
+                    if (res == "end") {
+                        this.animations.splice(i, 1);
+                    }
                 }
             }
         }
@@ -91,7 +91,7 @@ class RenderControler {
         {
             for (let anim of this.animations)
             {
-                anim.draw(this.canvases, "mainCanvas",anim.position.x+BaseCellWidth+offset.x,anim.position.y*BaseCellHeight+offset.y);
+                anim.draw(this.canvases, "mainCanvas",anim.position.x*BaseCellWidth+offset.x,anim.position.y*BaseCellHeight+offset.y);
             }
         }
     }
