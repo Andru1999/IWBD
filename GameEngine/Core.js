@@ -282,6 +282,12 @@ class Spawner{
     spawnUnit(x,y,z){
         return this._units[getRandomInt(0,100)%this._units.length](new Position(x,y,z),"mob",1);
     }
+	
+	 takeDamage(damage) {
+            this._hitPoint = this._hitPoint - damage ;
+            if (this._hitPoint <= 0) return "die";
+            else return "попал";
+    }
 }
 
 
