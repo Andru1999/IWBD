@@ -280,7 +280,7 @@ class Spawner{
     }
 
     spawnUnit(x,y,z){
-        return this._units[getRandomInt(0,100)%this._units.length](new Position(x,y,z),"mob",1);
+		return this._units[getRandomInt(0,100)%this._units.length](new Position(x,y,z),"mob",1);
     }
 	
 	 takeDamage(damage) {

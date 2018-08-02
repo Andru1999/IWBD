@@ -101,12 +101,11 @@ class SpaceWorld {
     doAction(x, y, mouseButton) {
         if (x < 0 || y < 0 || x >= this._world._map._width || y >= this._world._map._height) return "not on map";
         let state;
+		if (this._currentCreature)
+			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1]=null;
+		let actionArea = new GameObject("area", 2, "area", true, 1);
         if (mouseButton === 0) {
-			let actionArea = new GameObject("area", 3, "area", true, 1);
-			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1];
             state = this.SelectUnit(x, y);
-			if (state=="select successfully")
-				this._world._map._cells[x][y][1]=actionArea;
         }
 
         if (mouseButton === 2) {
@@ -129,11 +128,21 @@ class SpaceWorld {
                 }
 
             }
-			if (this._currentCreature._actionPoints<1)
+			if (this._currentCreature._actionPoints<1){
 				this._currentCreature=null;	
+				for (let i=0;i<this._world._units[this._currentTeam].length;i++){
+					if(this._world._units[this._currentTeam][i]._actionPoints>0){
+						this._currentCreature=this._world._units[this._currentTeam][i];
+						break;
+					}						
+				}
+			}
         }
-		this._animations.pushAnim("click",0,x,y);
         else state="no hero selected";
+		if (this._currentCreature)
+				this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1]=actionArea;
+		this._animations.pushAnim("click",0,x,y);
+		this.rebuildActionSpace(null,(this._currentTeam+1)%2);
         return state;
     }
 
@@ -331,6 +340,8 @@ class SpaceWorld {
     nextRound() {
         let lastAction=this._actionType;
         this.deleteActionSpace();
+		if (this._currentCreature)
+			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1]=null;
         this._currentCreature = null;
 
         for (let i=0;i<this._world._units.length;i++) {
@@ -359,7 +370,7 @@ class SpaceWorld {
                 let curField=this._world._map.allAdmissibleCells(elem._position,10,null,null);
 				curField[0]=curField[1];
                 let curCell=curField[getRandomInt(0,100) % curField.length];
-				if (curCell){
+				if (curCell && !this._world._map._cells[curCell.x][curCell.y][2]){
 					let unit=elem.spawnUnit(curCell.x,curCell.y,curCell.z);
 					this._world._units[1].push(unit);
 					this._world._map._cells[unit._position.x][unit._position.y][unit._position.z]=unit;
@@ -369,7 +380,6 @@ class SpaceWorld {
         }
 
 
-
         if (this._world._units[0].length == 0) return "0 team lost";
         if (this._world._units[1].length == 0) return "1 team win";
     }
@@ -377,7 +387,8 @@ class SpaceWorld {
     useMagic(game){
         if (this._currentCreature && this._currentCreature._mannaPoints>0){
             this._currentCreature._spell(game);
-        }
+			this.rebuildActionSpace(null,(this._currentTeam+1)%2);
+        }		
     }
 
     getCurSelectedObjInf(){
