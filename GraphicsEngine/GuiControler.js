@@ -32,7 +32,7 @@ class GuiControler {
                     if (engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button)
                     =="attack successfully")
                     {
-                        animContr.addAnimation(new PositionOnCanvas(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32)),"dmg",0,5,20);
+                        animContr.addAnimation(new PositionOnCanvas(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32)),"dmg",0,1,1);
                     };
                 }
             }
