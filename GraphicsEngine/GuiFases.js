@@ -58,10 +58,13 @@ function GuiFasesGenerator(gui,sprites, engine) {
                 {
                     buttons: [
                         new Button(sprites.buttons[4], new PositionOnCanvas(10, 10), "mainCanvas", optionButtonFunction, 0),
-                        new Button(sprites.buttons[3], new PositionOnCanvas(20, 700), "mainCanvas", switchAttackMoveButtonFunction, 0),
+                        new Button(sprites.buttons[3], new PositionOnCanvas(50, 700), "mainCanvas", switchAttackMoveButtonFunction, 0),
                         new Button(sprites.buttons[5], new PositionOnCanvas(900, 700), "mainCanvas", nextButtonFunction, 0),
                         new Button(sprites.buttons[6], new PositionOnCanvas(500, 700), "mainCanvas", magicButtonFunction, 0),
                     ],
+                    infoPanels:[
+                        //new InfoPanel();
+                    ]
                 },
 
             canDrawMap: true,
