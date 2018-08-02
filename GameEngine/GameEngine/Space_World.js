@@ -50,15 +50,19 @@ class SpaceWorld {
 
     nextLvl(){
         let _oldWorldSize = this.getWorldSize();
-        this._world._map=new GameMap(Math.round(_oldWorldSize.width*0.2),
-                                    Math.round(_oldWorldSize.height*0.2),
+		let heroes_count=this._world._units[0].length
+		let  monsters_count=Math.round(_oldWorldSize.width*1.2*_oldWorldSize.height*1.2 / 150);
+		
+        this._world._map=new GameMap(Math.round(_oldWorldSize.width*1.2),
+                                    Math.round(_oldWorldSize.height*1.2),
                                     Math.round(_oldWorldSize.depth));
+									
         let fstTeamCoord = this._world._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
-        let scndTeamCoord = this._world._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
+        let scndTeamCoord = this._world._map.allAdmissibleCells(new Position(this._world._map._width - 2, this._world._map._height - 2, 2, 0, -1),
             monsters_count * 10, null, null);
-        this._units[1] = this.spawnUnits(monsters_count, "mob", 1);
-        this.placeUnits(fstTeamCoord, this._units[0]);
-        this.placeUnits(scndTeamCoord, this._units[1]);
+        this._world._units[1] = this._world.spawnUnits(monsters_count, "mob", 1);
+        this._world.placeUnits(fstTeamCoord, this._world._units[0]);
+        this._world.placeUnits(scndTeamCoord, this._world._units[1]);
         this._world._dungeon++;
     }
 
