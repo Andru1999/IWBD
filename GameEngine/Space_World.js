@@ -18,11 +18,19 @@ class SpaceWorld {
     }
 
     genWORLD(battleType){
-        let width=getRandomInt(10,10);
-        let height=getRandomInt(10,10);
+        let width=getRandomInt(25,50);
+        let height=getRandomInt(25,50);
         let depth=3;
-        let firstTeamCount=5;
-        let secondTeamCount=0//Math.round(width*height / 150);
+		let firstTeamCount;
+		let secondTeamCount;
+		if (battleType==0){
+			 firstTeamCount=5;
+			 secondTeamCount=Math.round(width*height / 150);
+		}
+		if (battleType==1){
+			firstTeamCount=6;
+			secondTeamCount=6;
+		}
         this._world = new World(new GameMap(width, height, depth), firstTeamCount, secondTeamCount,battleType);
 
         if (this._world._battleType==0)
@@ -94,7 +102,11 @@ class SpaceWorld {
         if (x < 0 || y < 0 || x >= this._world._map._width || y >= this._world._map._height) return "not on map";
         let state;
         if (mouseButton === 0) {
+			let actionArea = new GameObject("area", 3, "area", true, 1);
+			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1];
             state = this.SelectUnit(x, y);
+			if (state=="select successfully")
+				this._world._map._cells[x][y][1]=actionArea;
         }
 
         if (mouseButton === 2) {
@@ -115,8 +127,12 @@ class SpaceWorld {
                         this._animations.pushAnim("attack",0,x,y);
                         break;
                 }
+
             }
+			if (this._currentCreature._actionPoints<1)
+				this._currentCreature=null;	
         }
+		this._animations.pushAnim("click",0,x,y);
         else state="no hero selected";
         return state;
     }
@@ -208,7 +224,7 @@ class SpaceWorld {
     }
 	
     calcActionSpaces(ignorType,ignorTeam) {
-        if (this._currentCreature != null) {
+        if (this._currentCreature != null && this._currentCreature._actionPoints>0) {
             this._walkableField = this._world._map.allAdmissibleCells(this._currentCreature._position,
                 this._currentCreature._speed,null,null);
             this._attackField = this._world._map.allAdmissibleCells(this._currentCreature._position,
@@ -366,11 +382,23 @@ class SpaceWorld {
 
     getCurSelectedObjInf(){
 		let infArr=[];
+		if (this._curSelectedObj)
 		for (elem of this._curSelectedObj){
 			if (typeof(elem) != "function"){
 				infArr.push(String(elem));
 			}
 		}	
+	}
+	
+	exitWorld(){
+		this._actionType = 1;//0 - nothing , 1 - move , 2 - attack
+        this._attackField = [];
+        this._walkableField = [];
+        this._world = null;
+        this._currentCreature = null;
+        this._currentTeam=0;
+        this._animations=new engineAnim();
+		this._curSelectedObj=null;
 	}
 }
 
