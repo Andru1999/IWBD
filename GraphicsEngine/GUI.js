@@ -40,5 +40,17 @@ class GUI extends UI {
             this.switchFase(this.IsNeedToUpdate);
         }
         this.renderControler.update(dt,this.fases[this.curentFase].canUpdateAnimation);
+
+    }
+
+    updateElements(GuiElements) {
+        for (let Element in GuiElements) {
+            if (typeof(GuiElements[Element]["update"]) != "undefined") {
+                GuiElements[Element].update();
+            }
+            else {
+                this.updateElements(GuiElements[Element]);
+            }
+        }
     }
 }
