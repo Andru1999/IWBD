@@ -10,8 +10,14 @@ class SpaceWorld {
         this._currentTeam=0;
     }
 
-    genWORLD(width, height, depth,firstTeamCount,secondTeamCount,battleType){
+    genWORLD(battleType){
+        let width=getRandomInt(20,45);
+        let height=getRandomInt(20,45);
+        let depth=3;
+        let firstTeamCount=5;
+        let secondTeamCount=Math.round(width*height / 150);
         this._world = new World(new GameMap(width, height, depth), firstTeamCount, secondTeamCount,battleType);
+
         if (this._world._battleType==0)
             for (let elem of this._world._units[0]) {
                 this.setScope(true, elem,0);
@@ -27,8 +33,11 @@ class SpaceWorld {
         }
     }
 
-    nextLvl(width, height, depth,secondTeamCount){
-        this._world._map=new GameMap(width, height, depth);
+    nextLvl(){
+        let _oldWorldSize = this.getWorldSize();
+        this._world._map=new GameMap(Math.round(_oldWorldSize.width*0.2),
+                                    Math.round(_oldWorldSize.height*0.2),
+                                    Math.round(_oldWorldSize.depth*0.2));
         let fstTeamCoord = this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
         let scndTeamCoord = this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
             monsters_count * 10, null, null);
