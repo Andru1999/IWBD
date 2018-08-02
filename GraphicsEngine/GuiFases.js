@@ -3,12 +3,12 @@ function GuiFasesGenerator(gui,sprites, engine) {
     //let setFunction = setFunctions.setUnitFase;
     function startPVEButtonFunction() {
         gui.IsNeedToUpdate = 1;
-        game.engine.genWORLD(20,20,3,5,15,0);
+        engine.genWORLD(20,20,3,5,15,0);
     }
 
     function startPVPButtonFunction() {
-        game.Gui.IsNeedToUpdate =1;
-        game.engine.genWORLD(20,20,3,5,15,0);
+        gui.IsNeedToUpdate =1;
+        engine.genWORLD(20,20,3,5,15,0);
     }
 
     function optionButtonFunction() {
