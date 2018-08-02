@@ -82,9 +82,11 @@ function LoadBaseResurses(func) {
         AddBaseTexture(ImgArr["Assets/AttackMoveButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "AttackMoveButton");
         AddBaseTexture(ImgArr["Assets/NextButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "NextButton");
         AddBaseTexture(ImgArr["Assets/MagicButton.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "MagicButton");
-        AddBaseTexture(ImgArr["Assets/1_2_win.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "1_2_Button");
-        AddBaseTexture(ImgArr["Assets/Next_Round_win.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "Next_Round_winButton");
-        AddBaseTexture(ImgArr["Assets/ResetLose.png"], ImgArr["Assets/ExitButton.png"].width, ImgArr["Assets/ExitButton.png"].height, "ResetLose");
+
+        AddBaseTexture(ImgArr["Assets/1_2_win.png"], 400, 84, "1_2_Button");
+        AddBaseTexture(ImgArr["Assets/Next_Round_win.png"], 400, 84, "Next_Round_winButton");
+        AddBaseTexture(ImgArr["Assets/ResetLose.png"], 400, 84, "ResetLose");
+
         AddBaseTexture(ImgArr["Assets/dmgsprite.png"], 39, 39, "DmgTexture");
         AddBaseTexture(ImgArr["Assets/heal.png"], 39, 39, "HealTexture");
         AddBaseTexture(ImgArr["Assets/boost.png"], 39, 39, "BoostTexture");
