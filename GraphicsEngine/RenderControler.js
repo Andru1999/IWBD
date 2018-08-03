@@ -6,6 +6,7 @@ class RenderControler {
         this.canvases = canvases;
         this.engine = engine;
         this.animationConnroler = new AnimationControler(sprites);
+        this.info_menu = new InfoPanel(this.engine);
     }
 
     update(dt,canAnim)
@@ -74,7 +75,7 @@ class RenderControler {
         }else
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-
+        this.info_menu.drow();
     }
 
     renderAnimation(canDo,offset)

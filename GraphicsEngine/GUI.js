@@ -9,7 +9,7 @@ class GUI extends UI {
         this.canvases.mainCanvas.width = 1400;
         this.canvases.mainCanvas.height = 800;
         this.canvases.infoCanvas.width = 400;
-        this.canvases.infoCanvas.height = 600;
+        this.canvases.infoCanvas.height = 800;
         this.curentFase = 0;
         this.IsNeedToUpdate = 0; //Если = -1 не нужен update, иначе перейти на фазу с соответствующим индексом
         this.fases = GuiFasesGenerator(this, spriteArr, this.game.engine);
