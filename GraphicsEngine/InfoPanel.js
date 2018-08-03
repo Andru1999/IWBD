@@ -41,7 +41,7 @@ class InfoPanel {
 
         this.ctx.fillStyle = "#00F";
         this.ctx.strokeStyle = "#F00";
-        this.ctx.font = "italic 30pt Arial";
+        this.ctx.font = "italic 25pt Arial";
 
         this.ctx.drawImage(this.background, 0, 0);
         var info = this.engine.getCurSelectedObjInf();
@@ -51,6 +51,12 @@ class InfoPanel {
             this.ctx.fillText("HP : " + Math.ceil(info._hitPoint), 20, 200);
             this.ctx.fillText("MP : " + Math.ceil(info._mannaPoints), 20, 250);
             this.ctx.fillText("AP : " + Math.ceil(info._actionPoints), 20, 300);
+            if(typeof(info._spell)=="string")
+                this.ctx.fillText("Spell : " + info._spell, 20, 350);
+            else
+            {   let buf=info._spell.name;
+                this.ctx.fillText("Spell : " + buf, 20, 350);
+            }
         }
 
 

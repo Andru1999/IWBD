@@ -395,7 +395,7 @@ class SpaceWorld {
     }
 
     useMagic(game){
-        if (this._currentCreature && this._currentCreature._mannaPoints>0){
+        if (this._currentCreature && this._currentCreature._mannaPoints>0 && this._currentCreature._actionPoints>0){
             this._currentCreature._spell(game);
 			this._currentCreature._actionPoints--;
 			this.rebuildActionSpace(null,(this._currentTeam+1)%2);
