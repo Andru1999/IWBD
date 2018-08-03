@@ -103,7 +103,7 @@ class BaseAnimation {
 
 class Button {
     constructor(sprite, position, canvas, clickFunction, frameIndex) {
-        this.sprite = sprite;
+    this.sprite = sprite;
         this.position = position;
         this.size = sprite.size;
         this.click = clickFunction;

@@ -1,7 +1,7 @@
 "use strict";
 
 class GuiControler {
-    constructor(engine, canvas,animArr) {
+    constructor(engine, canvas,animContr) {
         this.buttonsControler = new ButtonControler();
         this.canDr_n_Dr = false;
         //Функции Реакций на кнопки
@@ -29,11 +29,8 @@ class GuiControler {
             }
             if (!IsMooving) {
                 if (!this.buttonsControler.checkButtons(event.originalEvent.offsetX, event.originalEvent.offsetY) && this.canClickOnCells) {
-                    if (engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button)
-                    =="attack successfully")
-                    {
-                        animArr.push(new PositionOnCanvas(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32)));
-                    };
+                    engine.doAction(Math.floor((event.originalEvent.offsetX - this.Offset.x) / 32), Math.floor(((event.originalEvent.offsetY - this.Offset.y)) / 32), event.originalEvent.button);
+
                 }
             }
             IsMooving = false;
@@ -55,6 +52,11 @@ class GuiControler {
                         if (this.canDr_n_Dr) {
                             this.Offset.x += (CurentXY.x - LastXY.x);
                             this.Offset.y += (CurentXY.y - LastXY.y);
+                            this.Offset.x=Math.min(this.Offset.x,canvas.width-50);
+                            this.Offset.y=Math.min(this.Offset.y,canvas.height-50);
+                            let worldParams = engine.getWorldSize();
+                            this.Offset.x=Math.max(-worldParams.width*BaseCellWidth+50,this.Offset.x);
+                            this.Offset.y=Math.max(-worldParams.height*BaseCellHeight+50,this.Offset.y);
                             LastXY.set(CurentXY.x, CurentXY.y);
                         }
                         IsMooving = true;

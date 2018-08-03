@@ -11,4 +11,13 @@ class BaseAction {
     constructor(unit) {
         this.unit = unit;
     }
+
+    /**
+     * Проверяет некоторое действие на возможность
+     * корректного выполнения.
+     *
+     * @this  {BaseAction}
+     * @return {Boolean} Возвращает true или false в завсимости от выполнимост действия.
+     */
+    is_correct();
 }

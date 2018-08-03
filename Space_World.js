@@ -50,19 +50,15 @@ class SpaceWorld {
 
     nextLvl(){
         let _oldWorldSize = this.getWorldSize();
-		let heroes_count=this._world._units[0].length
-		let  monsters_count=Math.round(_oldWorldSize.width*1.2*_oldWorldSize.height*1.2 / 150);
-		
-        this._world._map=new GameMap(Math.round(_oldWorldSize.width*1.2),
-                                    Math.round(_oldWorldSize.height*1.2),
+        this._world._map=new GameMap(Math.round(_oldWorldSize.width*0.2),
+                                    Math.round(_oldWorldSize.height*0.2),
                                     Math.round(_oldWorldSize.depth));
-									
-        let fstTeamCoord = this._world._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
-        let scndTeamCoord = this._world._map.allAdmissibleCells(new Position(this._world._map._width - 2, this._world._map._height - 2, 2, 0, -1),
+        let fstTeamCoord = this._map.allAdmissibleCells(new Position(1, 1, 2, 0, -1), heroes_count, null, null);
+        let scndTeamCoord = this._map.allAdmissibleCells(new Position(this._map._width - 2, this._map._height - 2, 2, 0, -1),
             monsters_count * 10, null, null);
-        this._world._units[1] = this._world.spawnUnits(monsters_count, "mob", 1);
-        this._world.placeUnits(fstTeamCoord, this._world._units[0]);
-        this._world.placeUnits(scndTeamCoord, this._world._units[1]);
+        this._units[1] = this.spawnUnits(monsters_count, "mob", 1);
+        this.placeUnits(fstTeamCoord, this._units[0]);
+        this.placeUnits(scndTeamCoord, this._units[1]);
         this._world._dungeon++;
     }
 
@@ -105,11 +101,12 @@ class SpaceWorld {
     doAction(x, y, mouseButton) {
         if (x < 0 || y < 0 || x >= this._world._map._width || y >= this._world._map._height) return "not on map";
         let state;
-		if (this._currentCreature)
-			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1]=null;
-		let actionArea = new GameObject("area", 2, "area", true, 1);
         if (mouseButton === 0) {
+			let actionArea = new GameObject("area", 3, "area", true, 1);
+			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1];
             state = this.SelectUnit(x, y);
+			if (state=="select successfully")
+				this._world._map._cells[x][y][1]=actionArea;
         }
 
         if (mouseButton === 2) {
@@ -132,21 +129,11 @@ class SpaceWorld {
                 }
 
             }
-			if (this._currentCreature._actionPoints<1){
+			if (this._currentCreature._actionPoints<1)
 				this._currentCreature=null;	
-				for (let i=0;i<this._world._units[this._currentTeam].length;i++){
-					if(this._world._units[this._currentTeam][i]._actionPoints>0){
-						this._currentCreature=this._world._units[this._currentTeam][i];
-						break;
-					}						
-				}
-			}
         }
         else state="no hero selected";
-		if (this._currentCreature)
-				this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1]=actionArea;
 		this._animations.pushAnim("click",0,x,y);
-		this.rebuildActionSpace(null,(this._currentTeam+1)%2);
         return state;
     }
 
@@ -344,8 +331,6 @@ class SpaceWorld {
     nextRound() {
         let lastAction=this._actionType;
         this.deleteActionSpace();
-		if (this._currentCreature)
-			this._world._map._cells[this._currentCreature._position.x][this._currentCreature._position.y][1]=null;
         this._currentCreature = null;
 
         for (let i=0;i<this._world._units.length;i++) {
@@ -371,10 +356,10 @@ class SpaceWorld {
                 this.updateCreatureStatus(this._world._units[i]);
             }
             for (let elem of this._world._spawners){
-                let curField=this._world._map.allAdmissibleCells(elem._position,5,null,null);
+                let curField=this._world._map.allAdmissibleCells(elem._position,10,null,null);
 				curField[0]=curField[1];
                 let curCell=curField[getRandomInt(0,100) % curField.length];
-				if (curCell && !this._world._map._cells[curCell.x][curCell.y][2]){
+				if (curCell){
 					let unit=elem.spawnUnit(curCell.x,curCell.y,curCell.z);
 					this._world._units[1].push(unit);
 					this._world._map._cells[unit._position.x][unit._position.y][unit._position.z]=unit;
@@ -383,33 +368,27 @@ class SpaceWorld {
             this._currentTeam=(this._currentTeam+1) % 2;
         }
 
-		if (this._world._battleType==0){
-			if (this._world._units[0].length == 0) return "you've lost";
-			if (this._world._units[1].length == 0) return "you've win";
-		}
-		
-		if (this._world._battleType==1){
-			if (this._world._units[0].length == 0) return "second team win";
-			if (this._world._units[1].length == 0) return "first team win";
-		}
+
+
+        if (this._world._units[0].length == 0) return "0 team lost";
+        if (this._world._units[1].length == 0) return "1 team win";
     }
 
     useMagic(game){
-        if (this._currentCreature && this._currentCreature._mannaPoints>0 && this._currentCreature._actionPoints>0){
+        if (this._currentCreature && this._currentCreature._mannaPoints>0){
             this._currentCreature._spell(game);
-			this._currentCreature._actionPoints--;
-			this.rebuildActionSpace(null,(this._currentTeam+1)%2);
-        }		
+        }
     }
 
     getCurSelectedObjInf(){
-        let infArr=[];
-        if (this._curSelectedObj)
-        {
-            return this._curSelectedObj;
-        }else
-        return null;
-    }
+		let infArr=[];
+		if (this._curSelectedObj)
+		for (elem of this._curSelectedObj){
+			if (typeof(elem) != "function"){
+				infArr.push(String(elem));
+			}
+		}	
+	}
 	
 	exitWorld(){
 		this._actionType = 1;//0 - nothing , 1 - move , 2 - attack

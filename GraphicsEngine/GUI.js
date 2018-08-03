@@ -9,13 +9,13 @@ class GUI extends UI {
         this.canvases.mainCanvas.width = 1400;
         this.canvases.mainCanvas.height = 800;
         this.canvases.infoCanvas.width = 400;
-        this.canvases.infoCanvas.height = 600;
-        let animArr=[];
+        this.canvases.infoCanvas.height = 800;
         this.curentFase = 0;
         this.IsNeedToUpdate = 0; //Если = -1 не нужен update, иначе перейти на фазу с соответствующим индексом
         this.fases = GuiFasesGenerator(this, spriteArr, this.game.engine);
-        this.controler = new GuiControler(this.game.engine, this.canvases.mainCanvas,animArr);
-        this.renderControler = new RenderControler(spriteArr, this.canvases, this.game.engine,animArr);
+        this.renderControler = new RenderControler(spriteArr, this.canvases, this.game.engine);
+        this.controler = new GuiControler(this.game.engine, this.canvases.mainCanvas,this.renderControler.animationConnroler);
+
 
         $(this.canvases.mainCanvas).mousedown(this.controler.mousedown);
         $(this.canvases.mainCanvas).mouseup(this.controler.mouseup);
@@ -23,7 +23,7 @@ class GUI extends UI {
     }
 
     render() {
-        this.renderControler.renderBackground();
+        this.renderControler.renderBackground(this.fases[this.curentFase].background);
         this.renderControler.renderMap(this.fases[this.curentFase].canDrawMap, this.controler.Offset);
         this.renderControler.renderAnimation(this.fases[this.curentFase].canDrawMap,this.controler.Offset)
         this.renderControler.renderGui(this.fases[this.curentFase].GuiElements);
@@ -40,5 +40,17 @@ class GUI extends UI {
             this.switchFase(this.IsNeedToUpdate);
         }
         this.renderControler.update(dt,this.fases[this.curentFase].canUpdateAnimation);
+
+    }
+
+    updateElements(GuiElements) {
+        for (let Element in GuiElements) {
+            if (typeof(GuiElements[Element]["update"]) != "undefined") {
+                GuiElements[Element].update();
+            }
+            else {
+                this.updateElements(GuiElements[Element]);
+            }
+        }
     }
 }
