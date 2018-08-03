@@ -371,7 +371,7 @@ class SpaceWorld {
                 this.updateCreatureStatus(this._world._units[i]);
             }
             for (let elem of this._world._spawners){
-                let curField=this._world._map.allAdmissibleCells(elem._position,10,null,null);
+                let curField=this._world._map.allAdmissibleCells(elem._position,5,null,null);
 				curField[0]=curField[1];
                 let curCell=curField[getRandomInt(0,100) % curField.length];
 				if (curCell && !this._world._map._cells[curCell.x][curCell.y][2]){
@@ -397,6 +397,7 @@ class SpaceWorld {
     useMagic(game){
         if (this._currentCreature && this._currentCreature._mannaPoints>0){
             this._currentCreature._spell(game);
+			this._currentCreature._actionPoints--;
 			this.rebuildActionSpace(null,(this._currentTeam+1)%2);
         }		
     }
