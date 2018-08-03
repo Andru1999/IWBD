@@ -276,7 +276,12 @@ class Spawner{
         this._position=position;
         this._hitPoint=10;
         this._variant=0;
-        this._objectType="spawner"
+        this._objectType="spawner";
+        this._name="Portal";
+        this._mannaPoints=0;
+        this._spell="Summon";
+        this._actionPoints=0;
+
     }
 
     spawnUnit(x,y,z){

@@ -34,7 +34,7 @@ class InfoPanel {
      * @this {InfoPanel}
      * @param {Map.<string,ctx>} ctxes - Канвас на котором надо отрисовать информацию
      */
-    drow(ctxes = null) {
+    drow(sprites,canvases) {
         if (!this.background_loaded) {
             return;
         }
@@ -45,9 +45,14 @@ class InfoPanel {
 
         this.ctx.drawImage(this.background, 0, 0);
         var info = this.engine.getCurSelectedObjInf();
-        for (var i = 0; i < info.length; i++) {
-            this.ctx.strokeText(info[i], 20, 50 * (i + 1));
+        if (info) {
+            sprites[info._objectType][info._variant].draw(canvases, "infoCanvas", 20, 50, 0);
+            this.ctx.fillText("Class : " + info._name, 20, 150);
+            this.ctx.fillText("HP : " + Math.ceil(info._hitPoint), 20, 200);
+            this.ctx.fillText("MP : " + Math.ceil(info._mannaPoints), 20, 250);
+            this.ctx.fillText("AP : " + Math.ceil(info._actionPoints), 20, 300);
         }
+
 
 
         // Получаем информацию о ctx для настройки отображения данных

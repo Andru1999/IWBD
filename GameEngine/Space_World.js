@@ -405,12 +405,10 @@ class SpaceWorld {
     getCurSelectedObjInf(){
         let infArr=[];
         if (this._curSelectedObj)
-        for (let elem of this._curSelectedObj){
-            if (typeof(elem) != "function"){
-                infArr.push(String(elem));
-            }
-        }
-        return infArr;
+        {
+            return this._curSelectedObj;
+        }else
+        return null;
     }
 	
 	exitWorld(){

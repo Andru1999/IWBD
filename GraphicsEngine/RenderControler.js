@@ -75,7 +75,7 @@ class RenderControler {
         }else
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        this.info_menu.drow();
+        this.info_menu.drow(this.sprites,this.canvases);
     }
 
     renderAnimation(canDo,offset)

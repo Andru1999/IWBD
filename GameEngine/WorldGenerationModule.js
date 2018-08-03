@@ -181,7 +181,7 @@ class World {
 			if (type=="hero")
 				unit = this.characterClasses[getRandomInt(0,1000) % this.characterClasses.length](new Position(0,0,0),type,team);
 			if (type=="mob")
-				unit = this.characterClasses[getRandomInt(0,1000) % this.mobClasses.length](new Position(0,0,0),type,team);
+				unit = this.mobClasses[getRandomInt(0,1000) % this.mobClasses.length](new Position(0,0,0),type,team);
 			units.push(unit);
         }
         return units;
